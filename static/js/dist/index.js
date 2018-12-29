@@ -8095,6 +8095,14 @@ function () {
       window.PG.grid = grid;
     }
   }, {
+    key: "typeArray",
+    get: function get() {
+      return window.PG.typeArray;
+    },
+    set: function set(typeArray) {
+      window.PG.typeArray = typeArray;
+    }
+  }, {
     key: "canvas",
     get: function get() {
       return window.PG.canvas;
@@ -8132,6 +8140,15 @@ function () {
 }();
 
 module.exports = Globals;
+},{}],"modules/Constants.js":[function(require,module,exports) {
+module.exports = {
+  molecules: {
+    Particle: 0,
+    Empty: 1,
+    Powder: 2,
+    Snow: 3
+  }
+};
 },{}],"molecules/Particle.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -8141,14 +8158,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var Globals = require('../modules/Globals.js');
 
+var Constants = require('../modules/Constants');
+
 var Particle =
 /*#__PURE__*/
 function () {
-  function Particle(coords) {
+  function Particle(coords, options) {
     _classCallCheck(this, Particle);
 
+    if (typeof options === 'undefined') options = {};
     this.coords = coords;
-    this.type = 'Particle';
+    this.type = Constants.molecules.Particle;
     this.colour = 'purple';
   }
 
@@ -8169,7 +8189,7 @@ function () {
 }();
 
 module.exports = Particle;
-},{"../modules/Globals.js":"modules/Globals.js"}],"molecules/Empty.js":[function(require,module,exports) {
+},{"../modules/Globals.js":"modules/Globals.js","../modules/Constants":"modules/Constants.js"}],"molecules/Empty.js":[function(require,module,exports) {
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8194,19 +8214,27 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var Particle = require('./Particle.js');
 
+var Constants = require('../modules/Constants');
+
 var Empty =
 /*#__PURE__*/
 function (_Particle) {
   _inherits(Empty, _Particle);
 
-  function Empty(coords) {
+  function Empty(coords, options) {
     var _this;
 
     _classCallCheck(this, Empty);
 
+    if (typeof options === 'undefined') options = {};
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Empty).call(this, coords));
-    _this.type = 'Empty';
+    _this.type = Constants.molecules.Empty;
     _this.colour = 'black';
+
+    if (options.draw) {
+      _this.draw();
+    }
+
     return _this;
   }
 
@@ -8226,7 +8254,7 @@ function (_Particle) {
 }(Particle);
 
 module.exports = Empty;
-},{"./Particle.js":"molecules/Particle.js"}],"molecules/Powder.js":[function(require,module,exports) {
+},{"./Particle.js":"molecules/Particle.js","../modules/Constants":"modules/Constants.js"}],"molecules/Powder.js":[function(require,module,exports) {
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8253,7 +8281,13 @@ var Particle = require('./Particle.js');
 
 var Globals = require('../modules/Globals.js');
 
+var Constants = require('../modules/Constants');
+
 var Empty = require('./Empty.js');
+
+var empty = {
+  type: Constants.molecules.Empty
+};
 
 var Powder =
 /*#__PURE__*/
@@ -8270,7 +8304,7 @@ function (_Particle) {
       x: 0,
       y: 1
     };
-    _this.type = 'Powder';
+    _this.type = Constants.molecules.Powder;
     _this.colour = 'yellow';
     _this.gravity = 0;
     return _this;
@@ -8291,32 +8325,24 @@ function (_Particle) {
   }, {
     key: "move",
     value: function move(relativeX, relativeY) {
-      var oldX = this.coords.x;
-      var oldY = this.coords.y;
-      var newX = this.coords.x + relativeX;
-      var newY = this.coords.y + relativeY; // ADD SELF
+      // ADD EMPTY
+      empty.coords = this.coords;
+      Globals.grid.set(empty);
+      Globals.canvas.fillStyle = 'black';
+      Globals.canvas.fillRect(empty.coords.x * Globals.resolution, empty.coords.y * Globals.resolution, Globals.resolution, Globals.resolution); // ADD SELF
 
-      var self = Globals.grid[oldX][oldY];
-      self.coords = {
-        x: newX,
-        y: newY
+      this.coords = {
+        x: this.coords.x + relativeX,
+        y: this.coords.y + relativeY
       };
 
-      if (self.coords.y < Globals.widthY) {
-        Globals.grid[newX][newY] = self;
-        Globals.grid[newX][newY].draw();
-        Globals.grid[newX][newY].inactive = true;
+      if (this.coords.y < Globals.widthY) {
+        Globals.grid.set(this);
+        this.inactive = true;
+        this.draw();
       } else {
         delete this;
-      } // ADD EMPTY
-
-
-      var empty = new Empty({
-        x: oldX,
-        y: oldY
-      });
-      Globals.grid[oldX][oldY] = empty;
-      Globals.grid[oldX][oldY].draw();
+      }
     }
   }, {
     key: "tick",
@@ -8338,22 +8364,14 @@ function (_Particle) {
 }(Particle);
 
 module.exports = Powder;
-},{"./Particle.js":"molecules/Particle.js","../modules/Globals.js":"modules/Globals.js","./Empty.js":"molecules/Empty.js"}],"molecules/Snow.js":[function(require,module,exports) {
+},{"./Particle.js":"molecules/Particle.js","../modules/Globals.js":"modules/Globals.js","../modules/Constants":"modules/Constants.js","./Empty.js":"molecules/Empty.js"}],"molecules/Snow.js":[function(require,module,exports) {
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
@@ -8363,34 +8381,136 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var Powder = require('./Powder.js');
 
+var Constants = require('../modules/Constants');
+
 var Snow =
 /*#__PURE__*/
 function (_Powder) {
   _inherits(Snow, _Powder);
 
-  function Snow(coords) {
+  function Snow(coords, options) {
     var _this;
 
     _classCallCheck(this, Snow);
 
+    if (typeof options === 'undefined') options = {};
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Snow).call(this, coords));
-    _this.type = 'Snow';
+    _this.type = Constants.molecules.Snow;
     _this.colour = 'white';
+
+    if (options.draw) {
+      _this.draw();
+    }
+
     return _this;
   }
-
-  _createClass(Snow, [{
-    key: "tick",
-    value: function tick() {
-      _get(_getPrototypeOf(Snow.prototype), "tick", this).call(this);
-    }
-  }]);
 
   return Snow;
 }(Powder);
 
 module.exports = Snow;
-},{"./Powder.js":"molecules/Powder.js"}],"index.js":[function(require,module,exports) {
+},{"./Powder.js":"molecules/Powder.js","../modules/Constants":"modules/Constants.js"}],"modules/Coords.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Coords =
+/*#__PURE__*/
+function () {
+  function Coords() {
+    _classCallCheck(this, Coords);
+  }
+
+  _createClass(Coords, null, [{
+    key: "toXY",
+    value: function toXY(item, width) {
+      return {
+        y: Math.floor(item / width),
+        x: item % width
+      };
+    }
+  }, {
+    key: "toSingle",
+    value: function toSingle(_ref, width) {
+      var x = _ref.x,
+          y = _ref.y;
+      return y * width + x;
+    }
+  }]);
+
+  return Coords;
+}();
+
+module.exports = Coords;
+},{}],"modules/Grid.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Empty = require('../molecules/Empty.js');
+
+var Constants = require('./Constants.js');
+
+var Globals = require('./Globals.js');
+
+var Coords = require('./Coords.js');
+
+var Grid =
+/*#__PURE__*/
+function () {
+  function Grid(widthX, widthY) {
+    _classCallCheck(this, Grid);
+
+    this.widthX = widthX;
+    this.slim = new Uint8Array(widthX * widthY);
+    this.full = [];
+
+    for (var y = 0; y < widthY; y++) {
+      var row = [];
+
+      for (var x = 0; x < widthX; x++) {
+        row.push(new Empty({
+          x: x,
+          y: y
+        }, {
+          draw: true
+        }));
+      }
+
+      this.full.push(row);
+    } // this.full = (new Array(widthX)).map((_, index) => this.emptyRow(index, widthY))
+
+  }
+
+  _createClass(Grid, [{
+    key: "emptyRow",
+    value: function emptyRow(y, len) {
+      return new Array(len).map(function (_, index) {
+        return new Empty({
+          y: y,
+          x: index
+        }, {
+          draw: true
+        });
+      });
+    }
+  }, {
+    key: "set",
+    value: function set(molecule) {
+      this.full[molecule.coords.x][molecule.coords.y] = molecule;
+      this.slim[Coords.toSingle(molecule.coords, this.widthX)] = molecule.type;
+    }
+  }]);
+
+  return Grid;
+}();
+
+module.exports = Grid;
+},{"../molecules/Empty.js":"molecules/Empty.js","./Constants.js":"modules/Constants.js","./Globals.js":"modules/Globals.js","./Coords.js":"modules/Coords.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("babel-polyfill");
@@ -8403,15 +8523,26 @@ var Empty = require('./molecules/Empty');
 
 var Snow = require('./molecules/Snow');
 
+var Constants = require('./modules/Constants');
+
 var Globals = require('./modules/Globals');
+
+var Grid = require('./modules/Grid');
+
+var Coords = require('./modules/Coords');
 
 var pixelX = 520;
 var pixelY = 520;
-Globals.resolution = 4;
+Globals.resolution = 2;
 Globals.widthX = pixelX / Globals.resolution;
 Globals.widthY = pixelY / Globals.resolution;
+var widthX = Globals.widthX;
 if (parseInt(Globals.widthX) !== Globals.widthX) throw 'Invalid resolution for X';
 if (parseInt(Globals.widthY) !== Globals.widthY) throw 'Invalid resolution for Y';
+
+function pad3(num) {
+  return ('   ' + num).slice(-3);
+}
 
 function pause(_x) {
   return _pause.apply(this, arguments);
@@ -8443,28 +8574,7 @@ function init() {
   $('#game').attr('height', Globals.widthY * Globals.resolution);
   $('#game').attr('width', Globals.widthX * Globals.resolution);
   Globals.canvas = document.getElementById('game').getContext('2d');
-  Globals.grid = [];
-
-  for (var y = 0; y < Globals.widthY; y++) {
-    var column = [];
-
-    for (var x = 0; x < Globals.widthX; x++) {
-      column.push(new Empty({
-        x: x,
-        y: y
-      }));
-      column[column.length - 1].draw();
-    }
-
-    Globals.grid.push(column);
-  } // Globals.grid[2][0] = new Snow({ x: 2, y: 0 })
-  // Globals.grid[3][5] = new Snow({ x: 3, y: 5 })
-  // Globals.grid[4][10] = new Snow({ x: 4, y: 10 })
-  // Globals.grid[5][15] = new Snow({ x: 5, y: 15 })
-  // Globals.grid[6][20] = new Snow({ x: 6, y: 20 })
-
-
-  console.log('Created snow');
+  Globals.grid = new Grid(Globals.widthX, Globals.widthY);
 }
 
 function loop(_x2) {
@@ -8475,71 +8585,49 @@ function _loop() {
   _loop = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee2(timestamp) {
-    var x, y, _x3;
-
+    var tickStart, slim, full, tickStop, x;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            console.time('frame');
-            _context2.t0 = regeneratorRuntime.keys(Globals.grid);
+            tickStart = performance.now();
+            slim = Globals.grid.slim;
+            full = Globals.grid.full;
+            slim.map(function (item, index) {
+              if (item !== 1) {
+                var _Coords$toXY = Coords.toXY(index, widthX),
+                    x = _Coords$toXY.x,
+                    y = _Coords$toXY.y;
 
-          case 2:
-            if ((_context2.t1 = _context2.t0()).done) {
-              _context2.next = 15;
-              break;
-            }
+                var molecule = full[x][y];
 
-            x = _context2.t1.value;
-            _context2.t2 = regeneratorRuntime.keys(Globals.grid[x]);
+                if (molecule.inactive) {
+                  molecule.inactive = false;
+                  return;
+                }
 
-          case 5:
-            if ((_context2.t3 = _context2.t2()).done) {
-              _context2.next = 13;
-              break;
-            }
+                molecule.tick();
+              }
+            });
+            tickStop = performance.now();
 
-            y = _context2.t3.value;
-
-            if (!Globals.grid[x][y].inactive) {
-              _context2.next = 10;
-              break;
-            }
-
-            Globals.grid[x][y].inactive = false;
-            return _context2.abrupt("continue", 5);
-
-          case 10:
-            if (Globals.grid[x][y].type === 'Snow') {
-              Globals.grid[x][y].tick();
-            }
-
-            _context2.next = 5;
-            break;
-
-          case 13:
-            _context2.next = 2;
-            break;
-
-          case 15:
-            for (_x3 = 0; _x3 < Globals.widthX; _x3++) {
-              if (Math.random() > 0.999) {
-                Globals.grid[_x3][0] = new Snow({
-                  x: _x3,
+            for (x = 0; x < Globals.widthX; x++) {
+              if (Math.random() > 0.95) {
+                Globals.grid.set(new Snow({
+                  x: x,
                   y: 0
-                });
-
-                Globals.grid[_x3][0].draw();
+                }, {
+                  draw: true
+                }));
               }
             }
 
-            console.timeEnd('frame'); // TODO: remove
+            console.log("tick ".concat(pad3(tickStop - tickStart), "ms")); // getFull ${pad3(getFullStop - getFullStart)}ms molecules ${pad3(moleculesStop - moleculesStart)}ms`)
+            // TODO: remove
 
-            setTimeout(function () {
-              window.requestAnimationFrame(loop);
-            }, 2);
+            window.requestAnimationFrame(loop);
 
-          case 18:
+          case 8:
           case "end":
             return _context2.stop();
         }
@@ -8551,7 +8639,7 @@ function _loop() {
 
 init();
 window.requestAnimationFrame(loop);
-},{"babel-polyfill":"../../../node_modules/babel-polyfill/lib/index.js","./molecules/Empty":"molecules/Empty.js","./molecules/Snow":"molecules/Snow.js","./modules/Globals":"modules/Globals.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"babel-polyfill":"../../../node_modules/babel-polyfill/lib/index.js","./molecules/Empty":"molecules/Empty.js","./molecules/Snow":"molecules/Snow.js","./modules/Constants":"modules/Constants.js","./modules/Globals":"modules/Globals.js","./modules/Grid":"modules/Grid.js","./modules/Coords":"modules/Coords.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8578,7 +8666,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53327" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55775" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -1,11 +1,18 @@
 const Particle = require('./Particle.js')
+const Constants = require('../modules/Constants')
 
 class Empty extends Particle {
-    constructor(coords) {
+    constructor(coords, options) {
+        if (typeof options === 'undefined') options = {}
+
         super(coords)
 
-        this.type = 'Empty'
+        this.type = Constants.molecules.Empty
         this.colour = 'black'
+
+        if (options.draw) {
+            this.draw()
+        }
     }
 
     tick() {

@@ -11,6 +11,14 @@ class Globals {
         window.PG.grid = grid   
     }
 
+    static get typeArray() {
+        return window.PG.typeArray
+    }
+
+    static set typeArray(typeArray) {
+        window.PG.typeArray = typeArray
+    }
+
     static get canvas() {
         return window.PG.canvas
     }

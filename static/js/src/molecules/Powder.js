@@ -1,13 +1,16 @@
 const Particle = require('./Particle.js')
 const Globals = require('../modules/Globals.js')
+const Constants = require('../modules/Constants')
 const Empty = require('./Empty.js')
+
+const empty = { type: Constants.molecules.Empty }
 
 class Powder extends Particle {
     constructor(coords) {
         super(coords)
 
         this.speed = { x: 0, y: 1 }
-        this.type = 'Powder'
+        this.type = Constants.molecules.Powder
         this.colour = 'yellow'
         this.gravity = 0
     }
@@ -23,28 +26,23 @@ class Powder extends Particle {
     }
 
     move(relativeX, relativeY) {
-        const oldX = this.coords.x
-        const oldY = this.coords.y
+        // ADD EMPTY
+        empty.coords = this.coords
+        Globals.grid.set(empty)
 
-        const newX = this.coords.x + relativeX
-        const newY = this.coords.y + relativeY
+        Globals.canvas.fillStyle = 'black'
+        Globals.canvas.fillRect(empty.coords.x * Globals.resolution, empty.coords.y * Globals.resolution, Globals.resolution, Globals.resolution)
 
         // ADD SELF
-        const self = Globals.grid[oldX][oldY]
-        self.coords = { x: newX, y: newY }
+        this.coords = { x: this.coords.x + relativeX, y: this.coords.y + relativeY }
 
-        if (self.coords.y < Globals.widthY) {
-            Globals.grid[newX][newY] = self
-            Globals.grid[newX][newY].draw()
-            Globals.grid[newX][newY].inactive = true
+        if (this.coords.y < Globals.widthY) {
+            Globals.grid.set(this)
+            this.inactive = true
+            this.draw()
         } else {
             delete this
         }
-
-        // ADD EMPTY
-        const empty = new Empty({ x: oldX, y: oldY })
-        Globals.grid[oldX][oldY] = empty
-        Globals.grid[oldX][oldY].draw()
     }
 
     tick() {

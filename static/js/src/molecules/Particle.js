@@ -1,10 +1,13 @@
 const Globals = require('../modules/Globals.js')
+const Constants = require('../modules/Constants')
 
 class Particle {
-    constructor(coords) {
+    constructor(coords, options) {
+        if (typeof options === 'undefined') options = {}
+        
         this.coords = coords
 
-        this.type = 'Particle'
+        this.type = Constants.molecules.Particle
         this.colour = 'purple'
     }
 

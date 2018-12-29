@@ -1,15 +1,18 @@
 const Powder = require('./Powder.js')
+const Constants = require('../modules/Constants')
 
 class Snow extends Powder {
-    constructor(coords) {
+    constructor(coords, options) {
+        if (typeof options === 'undefined') options = {}
+
         super(coords)
 
-        this.type = 'Snow'
+        this.type = Constants.molecules.Snow
         this.colour = 'white'
-    }
 
-    tick() {
-        super.tick()
+        if (options.draw) {
+            this.draw()
+        }
     }
 }
 
