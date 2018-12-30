@@ -8126,14 +8126,6 @@ function () {
     set: function set(widthY) {
       window.PG.widthY = widthY;
     }
-  }, {
-    key: "resolution",
-    get: function get() {
-      return window.PG.resolution;
-    },
-    set: function set(resolution) {
-      window.PG.resolution = resolution;
-    }
   }]);
 
   return Globals;
@@ -8147,7 +8139,12 @@ module.exports = {
     Empty: 1,
     Powder: 2,
     Snow: 3
-  }
+  },
+  width: {
+    x: 520,
+    y: 520
+  },
+  resolution: 2
 };
 },{}],"molecules/Particle.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8181,7 +8178,7 @@ function () {
       // console.log(`Drawing ${this.colour} at ${this.coords.x} ${this.coords.y}`)
       // draw it with 'this.colour'
       Globals.canvas.fillStyle = this.colour;
-      Globals.canvas.fillRect(this.coords.x * Globals.resolution, this.coords.y * Globals.resolution, Globals.resolution, Globals.resolution);
+      Globals.canvas.fillRect(this.coords.x * Constants.resolution, this.coords.y * Constants.resolution, Constants.resolution, Constants.resolution);
     }
   }]);
 
@@ -8329,7 +8326,7 @@ function (_Particle) {
       empty.coords = this.coords;
       Globals.grid.set(empty);
       Globals.canvas.fillStyle = 'black';
-      Globals.canvas.fillRect(empty.coords.x * Globals.resolution, empty.coords.y * Globals.resolution, Globals.resolution, Globals.resolution); // ADD SELF
+      Globals.canvas.fillRect(empty.coords.x * Constants.resolution, empty.coords.y * Constants.resolution, Constants.resolution, Constants.resolution); // ADD SELF
 
       this.coords = {
         x: this.coords.x + relativeX,
@@ -8510,7 +8507,112 @@ function () {
 }();
 
 module.exports = Grid;
-},{"../molecules/Empty.js":"molecules/Empty.js","./Constants.js":"modules/Constants.js","./Globals.js":"modules/Globals.js","./Coords.js":"modules/Coords.js"}],"index.js":[function(require,module,exports) {
+},{"../molecules/Empty.js":"molecules/Empty.js","./Constants.js":"modules/Constants.js","./Globals.js":"modules/Globals.js","./Coords.js":"modules/Coords.js"}],"modules/WebGL.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var vertexShaderScript = "\n    attribute vec2 a_position;\n\n    uniform vec2 u_resolution;\n\n    void main() {\n        // convert the rectangle from pixels to 0.0 to 1.0\n        vec2 zeroToOne = a_position / u_resolution;\n\n        // convert from 0 -> 1 to 0 -> 2\n        vec2 zeroToTwo = zeroToOne * 2.0;\n\n        // convert from 0 -> 2 to -1 -> +1 (clipspace)\n        vec2 clipSpace = zeroToTwo - 1.0;\n\n        // Flip 0,0 from bottom left to conventional 2D top left.\n        gl_PointSize = 1.0;\n        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);\n    }\n";
+var fragmentShaderScript = "\n    precision mediump float;\n\n\tuniform vec4 u_color;\n\n\tvoid main() {\n  \t    gl_FragColor = u_color;\n\t}\n";
+
+var WebGL =
+/*#__PURE__*/
+function () {
+  function WebGL(id) {
+    _classCallCheck(this, WebGL);
+
+    this.canvas = document.getElementById(id);
+    this.gl = this.canvas.getContext("webgl", {
+      antialias: false
+    });
+    this.vertexShader = this.createShader(vertexShaderScript, this.gl.VERTEX_SHADER);
+    this.fragmentShader = this.createShader(fragmentShaderScript, this.gl.FRAGMENT_SHADER);
+    this.createGLProgram([this.vertexShader, this.fragmentShader]);
+    this.gl.useProgram(this.program); // Store color location.
+
+    this.colorLocation = this.gl.getUniformLocation(this.program, "u_color"); // Look up where the vertex data needs to go.
+
+    this.positionLocation = this.gl.getAttribLocation(this.program, "a_position"); // Set the resolution.
+
+    this.resolutionLocation = this.gl.getUniformLocation(this.program, "u_resolution");
+    this.gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height); // Create a buffer.
+
+    this.buffer = this.gl.createBuffer();
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
+    this.gl.enableVertexAttribArray(this.positionLocation); // Send the vertex data to the shader program.
+
+    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, false, 0, 0); // Set background colour
+
+    this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+  }
+
+  _createClass(WebGL, [{
+    key: "createGLProgram",
+    value: function createGLProgram(shaders) {
+      this.program = this.gl.createProgram();
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = shaders[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var shader = _step.value;
+          this.gl.attachShader(this.program, shader);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this.gl.linkProgram(this.program);
+      var linked = this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS);
+
+      if (!linked) {
+        var lastError = this.gl.getProgramInfoLog(this.program);
+        console.error("Error in program linking: " + lastError);
+        this.gl.deleteProgram(this.program);
+        this.program = null;
+      }
+    }
+  }, {
+    key: "createShader",
+    value: function createShader(shaderScriptText, shaderType) {
+      var shader = this.gl.createShader(shaderType);
+      this.gl.shaderSource(shader, shaderScriptText);
+      this.gl.compileShader(shader);
+      return shader;
+    }
+  }, {
+    key: "setColour",
+    value: function setColour(r, g, b, a) {
+      this.gl.uniform4f(this.colorLocation, r, g, b, a);
+    }
+  }, {
+    key: "setPixel",
+    value: function setPixel(x, y) {
+      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array([x + 0.5, y + 0.5]), this.gl.STATIC_DRAW);
+      this.gl.drawArrays(this.gl.POINTS, 0, 1);
+    }
+  }]);
+
+  return WebGL;
+}();
+
+module.exports = WebGL;
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("babel-polyfill");
@@ -8533,9 +8635,8 @@ var Coords = require('./modules/Coords');
 
 var pixelX = 520;
 var pixelY = 520;
-Globals.resolution = 2;
-Globals.widthX = pixelX / Globals.resolution;
-Globals.widthY = pixelY / Globals.resolution;
+Globals.widthX = Constants.width.x / Constants.resolution;
+Globals.widthY = Constants.width.y / Constants.resolution;
 var widthX = Globals.widthX;
 if (parseInt(Globals.widthX) !== Globals.widthX) throw 'Invalid resolution for X';
 if (parseInt(Globals.widthY) !== Globals.widthY) throw 'Invalid resolution for Y';
@@ -8571,8 +8672,8 @@ function _pause() {
 }
 
 function init() {
-  $('#game').attr('height', Globals.widthY * Globals.resolution);
-  $('#game').attr('width', Globals.widthX * Globals.resolution);
+  $('#game').attr('height', Globals.widthY * Constants.resolution);
+  $('#game').attr('width', Globals.widthX * Constants.resolution);
   Globals.canvas = document.getElementById('game').getContext('2d');
   Globals.grid = new Grid(Globals.widthX, Globals.widthY);
 }
@@ -8590,6 +8691,7 @@ function _loop() {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
+            meter.tickStart();
             tickStart = performance.now();
             slim = Globals.grid.slim;
             full = Globals.grid.full;
@@ -8612,7 +8714,7 @@ function _loop() {
             tickStop = performance.now();
 
             for (x = 0; x < Globals.widthX; x++) {
-              if (Math.random() > 0.95) {
+              if (Math.random() > 0.999) {
                 Globals.grid.set(new Snow({
                   x: x,
                   y: 0
@@ -8625,9 +8727,10 @@ function _loop() {
             console.log("tick ".concat(pad3(tickStop - tickStart), "ms")); // getFull ${pad3(getFullStop - getFullStart)}ms molecules ${pad3(moleculesStop - moleculesStart)}ms`)
             // TODO: remove
 
+            meter.tick();
             window.requestAnimationFrame(loop);
 
-          case 8:
+          case 10:
           case "end":
             return _context2.stop();
         }
@@ -8637,9 +8740,28 @@ function _loop() {
   return _loop.apply(this, arguments);
 }
 
-init();
-window.requestAnimationFrame(loop);
-},{"babel-polyfill":"../../../node_modules/babel-polyfill/lib/index.js","./molecules/Empty":"molecules/Empty.js","./molecules/Snow":"molecules/Snow.js","./modules/Constants":"modules/Constants.js","./modules/Globals":"modules/Globals.js","./modules/Grid":"modules/Grid.js","./modules/Coords":"modules/Coords.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var WebGL = require('./modules/WebGL.js');
+
+var webGL = new WebGL('game');
+console.time('draw'); // 0.2ms per call, 2,000 ms in total
+// webGL.setColour(1.0, 0.5, 0.0, 1.0)
+// for (let i = 0; i < 100; i++) {
+//     for (let j = 0; j < 100; j++) {
+//         webGL.setPixel(i, j)
+//     }
+// }
+
+for (var i = 0; i < 10000; i++) {
+  webGL.setPixel(100, 100);
+}
+
+console.timeEnd('draw');
+console.time('single');
+webGL.setColour(1.0, 0.5, 0.0, 1.0);
+webGL.setPixel(1, 1);
+console.timeEnd('single'); // init()
+// window.requestAnimationFrame(loop)
+},{"babel-polyfill":"../../../node_modules/babel-polyfill/lib/index.js","./molecules/Empty":"molecules/Empty.js","./molecules/Snow":"molecules/Snow.js","./modules/Constants":"modules/Constants.js","./modules/Globals":"modules/Globals.js","./modules/Grid":"modules/Grid.js","./modules/Coords":"modules/Coords.js","./modules/WebGL.js":"modules/WebGL.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8666,7 +8788,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55775" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58960" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

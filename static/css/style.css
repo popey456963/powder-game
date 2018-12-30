@@ -1,3 +1,12 @@
-.game {
+/* .game {
     border: 2px solid black;
+} */
+
+.game {
+	display: block;
+	outline: 1px dashed blue;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: pixelated;
+	transform: scale(5);
+	transform-origin: left top;
 }

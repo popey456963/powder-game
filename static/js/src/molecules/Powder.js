@@ -31,7 +31,7 @@ class Powder extends Particle {
         Globals.grid.set(empty)
 
         Globals.canvas.fillStyle = 'black'
-        Globals.canvas.fillRect(empty.coords.x * Globals.resolution, empty.coords.y * Globals.resolution, Globals.resolution, Globals.resolution)
+        Globals.canvas.fillRect(empty.coords.x * Constants.resolution, empty.coords.y * Constants.resolution, Constants.resolution, Constants.resolution)
 
         // ADD SELF
         this.coords = { x: this.coords.x + relativeX, y: this.coords.y + relativeY }

@@ -18,6 +18,20 @@
         </canvas>
 
         <script src="/reload/reload.js"></script>
+        <script src="/js/src/fpsmeter.js"></script>
+        <script>
+            var meter = new FPSMeter({
+                theme: 'dark',
+
+                left: 'auto',
+                right: '5px',
+                top: '5px',
+                bottom: 'auto',
+
+                graph: 1,
+                history: 20
+            });
+        </script>
         <script src="/js/src/jquery.js"></script>
         <script src="/js/dist/index.js"></script>
     </body>

@@ -42,14 +42,6 @@ class Globals {
     static set widthY(widthY) {
         window.PG.widthY = widthY
     }
-
-    static get resolution() {
-        return window.PG.resolution
-    }
-
-    static set resolution(resolution) {
-        window.PG.resolution = resolution
-    }
 }
 
 module.exports = Globals

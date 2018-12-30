@@ -11,9 +11,8 @@ const Coords = require('./modules/Coords')
 const pixelX = 520
 const pixelY = 520
 
-Globals.resolution = 2
-Globals.widthX = pixelX / Globals.resolution
-Globals.widthY = pixelY / Globals.resolution
+Globals.widthX = Constants.width.x / Constants.resolution
+Globals.widthY = Constants.width.y / Constants.resolution
 
 const widthX = Globals.widthX
 
@@ -31,14 +30,16 @@ async function pause(time) {
 }
 
 function init() {
-    $('#game').attr('height', Globals.widthY * Globals.resolution)
-    $('#game').attr('width', Globals.widthX * Globals.resolution)
+    $('#game').attr('height', Globals.widthY * Constants.resolution)
+    $('#game').attr('width', Globals.widthX * Constants.resolution)
 
     Globals.canvas = document.getElementById('game').getContext('2d')
     Globals.grid = new Grid(Globals.widthX, Globals.widthY)
 }
 
 async function loop(timestamp) {
+    meter.tickStart()
+
     const tickStart = performance.now()
     const slim = Globals.grid.slim
     const full = Globals.grid.full
@@ -60,7 +61,7 @@ async function loop(timestamp) {
     const tickStop = performance.now()
 
     for (let x = 0; x < Globals.widthX; x++) {
-        if (Math.random() > 0.95) {
+        if (Math.random() > 0.999) {
             Globals.grid.set(new Snow({ x, y: 0 }, { draw: true }))
         }
     }
@@ -68,8 +69,33 @@ async function loop(timestamp) {
     console.log(`tick ${pad3(tickStop - tickStart)}ms`)// getFull ${pad3(getFullStop - getFullStart)}ms molecules ${pad3(moleculesStop - moleculesStart)}ms`)
 
     // TODO: remove
+    meter.tick()
     window.requestAnimationFrame(loop)
 }
 
-init()
-window.requestAnimationFrame(loop)
+const WebGL = require('./modules/WebGL.js')
+const webGL = new WebGL('game')
+
+console.time('draw')
+
+// 0.2ms per call, 2,000 ms in total
+// webGL.setColour(1.0, 0.5, 0.0, 1.0)
+// for (let i = 0; i < 100; i++) {
+//     for (let j = 0; j < 100; j++) {
+//         webGL.setPixel(i, j)
+//     }
+// }
+
+for (let i = 0; i < 10000; i++) {
+    webGL.setPixel(100, 100)
+}
+
+console.timeEnd('draw')
+
+console.time('single')
+webGL.setColour(1.0, 0.5, 0.0, 1.0)
+webGL.setPixel(1, 1)
+console.timeEnd('single')
+
+// init()
+// window.requestAnimationFrame(loop)
