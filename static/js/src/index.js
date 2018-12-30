@@ -85,11 +85,7 @@ console.time('draw')
 //         webGL.setPixel(i, j)
 //     }
 // }
-
-for (let i = 0; i < 10000; i++) {
-    webGL.setPixel(100, 100)
-}
-
+// 
 console.timeEnd('draw')
 
 console.time('single')
