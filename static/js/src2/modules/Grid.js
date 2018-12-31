@@ -42,13 +42,27 @@ class Grid {
         const length = Globals.width.x * Globals.width.y
 
         for (let i = 0; i < length; i++) {
-            this.set(new Molecule({ pos: i }), i)
+            this.set(new Molecule({ pos: i }))
         }
     }
 
-    set(molecule, pos) {
-        this.grid[pos] = molecule
-        this.types[pos] = molecule.type
+    set(molecule) {
+        // if (molecule.constructor.name === 'Snow') {
+        //     console.log(`Setting ${molecule.constructor.name} on pos ${molecule.pos}`)
+
+        //     this.grid[molecule.pos] = molecule
+        //     this.types[molecule.pos] = 0 // molecule.type
+
+        //     this.render()
+        //     this.draw()
+        //     greger
+        // }
+        
+        this.grid[molecule.pos] = molecule
+        this.types[molecule.pos] = 0 // molecule.type
+
+        this.render()
+        this.draw()
     }
 
     setXY(molecule, x, y) {
@@ -56,13 +70,14 @@ class Grid {
     }
 
     tick() {
-        const grid = this.grid
-        const types = this.types
-
-        types.forEach((item, index) => {
+        this.types.forEach((item, index) => {
             // Check area is not empty
             if (item !== 1) {
-                const molecule = grid[index]
+                const molecule = this.grid[index]
+
+                // if (molecule.constructor.name === 'Snow') {
+                    // console.log('Ticking snow')
+                // }
 
                 if (molecule.inactive) {
                     molecule.inactive = false
@@ -75,12 +90,32 @@ class Grid {
     }
 
     render() {
+        // console.log(this.grid[0].constructor.name)
+        // console.log(this.grid[0])
+        // console.log(this.colours[0])
+
         // Keep local references, significant speed up.
         const grid = this.grid
         const colours = this.colours
 
+        this.types.forEach((item, index) => {
+            if (!item) return
+
+            const molecule = grid[index]
+
+            if (molecule.constructor.name === 'Snow') {
+                // console.log('Rendering snow')
+            }
+        })
+
         grid.forEach((molecule, pos) => {
+            if (!molecule) return
+            
             const colour = molecule.render()
+
+            if (molecule.constructor.name === 'Snow') {
+                // console.log('Rendering snow')
+            }
 
             colours[pos] = colour
             // colours[pos] =
