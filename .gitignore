@@ -75,4 +75,9 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# .vscode 
+.vscode
+
+# Ignore the 'compiled' code 
 static/js/dist
+
