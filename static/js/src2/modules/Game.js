@@ -1,6 +1,7 @@
 const Empty = require('../molecules/Empty.js')
 const Snow = require('../molecules/Snow.js')
 
+const Utils = require('./Utils.js')
 const Grid = require('./Grid.js')
 
 class Game {
@@ -17,7 +18,7 @@ class Game {
         Globals.Empty = Empty
     }
 
-    loop(time) {
+    async loop(time) {
         Globals.grid.tick()
         Globals.grid.render()
         Globals.grid.draw()
@@ -29,6 +30,7 @@ class Game {
         }
 
         meter.tick()
+        await Utils.pause(500)
         window.requestAnimationFrame(this.loop.bind(this))
     }
 
