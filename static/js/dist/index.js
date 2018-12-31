@@ -8070,123 +8070,37 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-},{"core-js/shim":"../../../node_modules/core-js/shim.js","regenerator-runtime/runtime":"../../../node_modules/babel-polyfill/node_modules/regenerator-runtime/runtime.js","core-js/fn/regexp/escape":"../../../node_modules/core-js/fn/regexp/escape.js"}],"modules/Globals.js":[function(require,module,exports) {
+},{"core-js/shim":"../../../node_modules/core-js/shim.js","regenerator-runtime/runtime":"../../../node_modules/babel-polyfill/node_modules/regenerator-runtime/runtime.js","core-js/fn/regexp/escape":"../../../node_modules/core-js/fn/regexp/escape.js"}],"molecules/Particle.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-window.PG = {};
-
-var Globals =
-/*#__PURE__*/
-function () {
-  function Globals() {
-    _classCallCheck(this, Globals);
-  }
-
-  _createClass(Globals, null, [{
-    key: "grid",
-    get: function get() {
-      return window.PG.grid;
-    },
-    set: function set(grid) {
-      window.PG.grid = grid;
-    }
-  }, {
-    key: "typeArray",
-    get: function get() {
-      return window.PG.typeArray;
-    },
-    set: function set(typeArray) {
-      window.PG.typeArray = typeArray;
-    }
-  }, {
-    key: "canvas",
-    get: function get() {
-      return window.PG.canvas;
-    },
-    set: function set(canvas) {
-      window.PG.canvas = canvas;
-    }
-  }, {
-    key: "widthX",
-    get: function get() {
-      return window.PG.widthX;
-    },
-    set: function set(widthX) {
-      window.PG.widthX = widthX;
-    }
-  }, {
-    key: "widthY",
-    get: function get() {
-      return window.PG.widthY;
-    },
-    set: function set(widthY) {
-      window.PG.widthY = widthY;
-    }
-  }]);
-
-  return Globals;
-}();
-
-module.exports = Globals;
-},{}],"modules/Constants.js":[function(require,module,exports) {
-module.exports = {
-  molecules: {
-    Particle: 0,
-    Empty: 1,
-    Powder: 2,
-    Snow: 3
-  },
-  width: {
-    x: 520,
-    y: 520
-  },
-  resolution: 2
-};
-},{}],"molecules/Particle.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Globals = require('../modules/Globals.js');
-
-var Constants = require('../modules/Constants');
 
 var Particle =
 /*#__PURE__*/
 function () {
-  function Particle(coords, options) {
+  function Particle(options) {
     _classCallCheck(this, Particle);
 
-    if (typeof options === 'undefined') options = {};
-    this.coords = coords;
-    this.type = Constants.molecules.Particle;
-    this.colour = 'purple';
+    this.options = options;
   }
 
   _createClass(Particle, [{
+    key: "render",
+    value: function render() {
+      return 4286578816;
+    }
+  }, {
     key: "tick",
     value: function tick() {}
-  }, {
-    key: "draw",
-    value: function draw() {
-      // console.log(`Drawing ${this.colour} at ${this.coords.x} ${this.coords.y}`)
-      // draw it with 'this.colour'
-      Globals.canvas.fillStyle = this.colour;
-      Globals.canvas.fillRect(this.coords.x * Constants.resolution, this.coords.y * Constants.resolution, Constants.resolution, Constants.resolution);
-    }
   }]);
 
   return Particle;
 }();
 
 module.exports = Particle;
-},{"../modules/Globals.js":"modules/Globals.js","../modules/Constants":"modules/Constants.js"}],"molecules/Empty.js":[function(require,module,exports) {
+},{}],"molecules/Empty.js":[function(require,module,exports) {
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8199,10 +8113,6 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -8211,39 +8121,21 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var Particle = require('./Particle.js');
 
-var Constants = require('../modules/Constants');
-
 var Empty =
 /*#__PURE__*/
 function (_Particle) {
   _inherits(Empty, _Particle);
 
-  function Empty(coords, options) {
-    var _this;
-
+  function Empty(options) {
     _classCallCheck(this, Empty);
 
-    if (typeof options === 'undefined') options = {};
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Empty).call(this, coords));
-    _this.type = Constants.molecules.Empty;
-    _this.colour = 'black';
-
-    if (options.draw) {
-      _this.draw();
-    }
-
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(Empty).call(this, options));
   }
 
   _createClass(Empty, [{
-    key: "tick",
-    value: function tick() {
-      _get(_getPrototypeOf(Empty.prototype), "tick", this).call(this);
-    }
-  }, {
-    key: "draw",
-    value: function draw() {
-      _get(_getPrototypeOf(Empty.prototype), "draw", this).call(this);
+    key: "render",
+    value: function render() {
+      return 4278190080;
     }
   }]);
 
@@ -8251,197 +8143,126 @@ function (_Particle) {
 }(Particle);
 
 module.exports = Empty;
-},{"./Particle.js":"molecules/Particle.js","../modules/Constants":"modules/Constants.js"}],"molecules/Powder.js":[function(require,module,exports) {
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+},{"./Particle.js":"molecules/Particle.js"}],"modules/Grid.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
-
-function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Particle = require('./Particle.js');
-
-var Globals = require('../modules/Globals.js');
-
-var Constants = require('../modules/Constants');
-
-var Empty = require('./Empty.js');
-
-var empty = {
-  type: Constants.molecules.Empty
-};
-
-var Powder =
+/*
+ * We have three different representations of the grid, each used for various
+ * operations.  These are:
+ *  - colours = Array of 8 bit pixel colour values
+ *  - types = Array of 16 bit pixel types
+ *  - full = Array of objects, describing metadata of each molecule
+ */
+var Grid =
 /*#__PURE__*/
-function (_Particle) {
-  _inherits(Powder, _Particle);
+function () {
+  function Grid(context) {
+    _classCallCheck(this, Grid);
 
-  function Powder(coords) {
-    var _this;
+    this.context = context;
+    this.imageData = this.context.createImageData(Globals.width.x, Globals.width.y);
+    this.buf = new ArrayBuffer(this.imageData.data.length);
+    this.buf8 = new Uint8ClampedArray(this.buf);
+    this.colours = new Uint32Array(this.buf);
+    this.types = new Uint16Array(Globals.width.x * Globals.width.y);
+    this.grid = new Array(Globals.width.x * Globals.width.y);
+  }
 
-    _classCallCheck(this, Powder);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Powder).call(this, coords));
-    _this.speed = {
-      x: 0,
-      y: 1
-    };
-    _this.type = Constants.molecules.Powder;
-    _this.colour = 'yellow';
-    _this.gravity = 0;
-    return _this;
-  } // TODO
-
-
-  _createClass(Powder, [{
-    key: "floating",
-    value: function floating() {
-      return true;
+  _createClass(Grid, [{
+    key: "abs",
+    value: function abs(pos) {
+      return this.grid[pos];
     }
   }, {
-    key: "fall",
-    value: function fall() {
-      this.move(this.speed.x, this.speed.y);
-      this.speed.y += this.gravity;
+    key: "absXY",
+    value: function absXY(x, y) {
+      return this.abs(y * Globals.width.x + x);
     }
   }, {
-    key: "move",
-    value: function move(relativeX, relativeY) {
-      // ADD EMPTY
-      empty.coords = this.coords;
-      Globals.grid.set(empty);
-      Globals.canvas.fillStyle = 'black';
-      Globals.canvas.fillRect(empty.coords.x * Constants.resolution, empty.coords.y * Constants.resolution, Constants.resolution, Constants.resolution); // ADD SELF
+    key: "rel",
+    value: function rel(pos, diff) {
+      // TODO: Add in safety checks
+      return this.abs(pos + diff);
+    }
+  }, {
+    key: "relXY",
+    value: function relXY(pos, x, y) {
+      // TODO: Add in safety checks
+      return this.rel(pos, y * Globals.width.x + x);
+    }
+  }, {
+    key: "fill",
+    value: function fill(Molecule) {
+      var length = Globals.width.x * Globals.width.y;
 
-      this.coords = {
-        x: this.coords.x + relativeX,
-        y: this.coords.y + relativeY
-      };
-
-      if (this.coords.y < Globals.widthY) {
-        Globals.grid.set(this);
-        this.inactive = true;
-        this.draw();
-      } else {
-        delete this;
+      for (var i = 0; i < length; i++) {
+        this.set(new Molecule({
+          pos: i
+        }), i);
       }
+    }
+  }, {
+    key: "set",
+    value: function set(molecule, pos) {
+      this.grid[pos] = molecule;
+      this.types[pos] = molecule.type;
+    }
+  }, {
+    key: "setXY",
+    value: function setXY(molecule, x, y) {
+      return this.set(molecule, y * Globals.width.x + x);
     }
   }, {
     key: "tick",
     value: function tick() {
-      if (this.floating()) {
-        this.fall();
-      }
+      var grid = this.grid;
+      var types = this.types;
+      types.forEach(function (item, index) {
+        // Check area is not empty
+        if (item !== 1) {
+          var molecule = grid[index];
 
-      _get(_getPrototypeOf(Powder.prototype), "tick", this).call(this);
+          if (molecule.inactive) {
+            molecule.inactive = false;
+            return;
+          }
+
+          molecule.tick();
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      // Keep local references, significant speed up.
+      var grid = this.grid;
+      var colours = this.colours;
+      grid.forEach(function (molecule, pos) {
+        var colour = molecule.render();
+        colours[pos] = colour; // colours[pos] =
+        //     (colour.a << 24) | // alpha
+        //     (colour.b << 16) | // blue
+        //     (colour.g << 8 ) | // green
+        //      colour.r          // red
+      });
     }
   }, {
     key: "draw",
     value: function draw() {
-      _get(_getPrototypeOf(Powder.prototype), "draw", this).call(this);
+      this.imageData.data.set(this.buf8);
+      this.context.putImageData(this.imageData, 0, 0);
     }
   }]);
 
-  return Powder;
-}(Particle);
-
-module.exports = Powder;
-},{"./Particle.js":"molecules/Particle.js","../modules/Globals.js":"modules/Globals.js","../modules/Constants":"modules/Constants.js","./Empty.js":"molecules/Empty.js"}],"molecules/Snow.js":[function(require,module,exports) {
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var Powder = require('./Powder.js');
-
-var Constants = require('../modules/Constants');
-
-var Snow =
-/*#__PURE__*/
-function (_Powder) {
-  _inherits(Snow, _Powder);
-
-  function Snow(coords, options) {
-    var _this;
-
-    _classCallCheck(this, Snow);
-
-    if (typeof options === 'undefined') options = {};
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Snow).call(this, coords));
-    _this.type = Constants.molecules.Snow;
-    _this.colour = 'white';
-
-    if (options.draw) {
-      _this.draw();
-    }
-
-    return _this;
-  }
-
-  return Snow;
-}(Powder);
-
-module.exports = Snow;
-},{"./Powder.js":"molecules/Powder.js","../modules/Constants":"modules/Constants.js"}],"modules/Coords.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Coords =
-/*#__PURE__*/
-function () {
-  function Coords() {
-    _classCallCheck(this, Coords);
-  }
-
-  _createClass(Coords, null, [{
-    key: "toXY",
-    value: function toXY(item, width) {
-      return {
-        y: Math.floor(item / width),
-        x: item % width
-      };
-    }
-  }, {
-    key: "toSingle",
-    value: function toSingle(_ref, width) {
-      var x = _ref.x,
-          y = _ref.y;
-      return y * width + x;
-    }
-  }]);
-
-  return Coords;
+  return Grid;
 }();
 
-module.exports = Coords;
-},{}],"modules/Grid.js":[function(require,module,exports) {
+module.exports = Grid;
+},{}],"modules/Game.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -8450,318 +8271,53 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var Empty = require('../molecules/Empty.js');
 
-var Constants = require('./Constants.js');
+var Grid = require('./Grid.js');
 
-var Globals = require('./Globals.js');
-
-var Coords = require('./Coords.js');
-
-var Grid =
+var Game =
 /*#__PURE__*/
 function () {
-  function Grid(widthX, widthY) {
-    _classCallCheck(this, Grid);
+  function Game(target) {
+    _classCallCheck(this, Game);
 
-    this.widthX = widthX;
-    this.slim = new Uint8Array(widthX * widthY);
-    this.full = [];
-
-    for (var y = 0; y < widthY; y++) {
-      var row = [];
-
-      for (var x = 0; x < widthX; x++) {
-        row.push(new Empty({
-          x: x,
-          y: y
-        }, {
-          draw: true
-        }));
-      }
-
-      this.full.push(row);
-    } // this.full = (new Array(widthX)).map((_, index) => this.emptyRow(index, widthY))
-
+    var canvas = document.getElementById(target);
+    canvas.setAttribute('height', Globals.width.y);
+    canvas.setAttribute('width', Globals.width.x);
+    var context = canvas.getContext('2d');
+    Globals.grid = new Grid(context);
+    Globals.grid.fill(Empty);
   }
 
-  _createClass(Grid, [{
-    key: "emptyRow",
-    value: function emptyRow(y, len) {
-      return new Array(len).map(function (_, index) {
-        return new Empty({
-          y: y,
-          x: index
-        }, {
-          draw: true
-        });
-      });
+  _createClass(Game, [{
+    key: "loop",
+    value: function loop(time) {
+      Globals.grid.tick();
+      Globals.grid.render();
+      Globals.grid.draw();
+      meter.tick();
+      window.requestAnimationFrame(this.loop.bind(this));
     }
   }, {
-    key: "set",
-    value: function set(molecule) {
-      this.full[molecule.coords.x][molecule.coords.y] = molecule;
-      this.slim[Coords.toSingle(molecule.coords, this.widthX)] = molecule.type;
+    key: "start",
+    value: function start() {
+      window.requestAnimationFrame(this.loop.bind(this));
     }
   }]);
 
-  return Grid;
+  return Game;
 }();
 
-module.exports = Grid;
-},{"../molecules/Empty.js":"molecules/Empty.js","./Constants.js":"modules/Constants.js","./Globals.js":"modules/Globals.js","./Coords.js":"modules/Coords.js"}],"modules/WebGL.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var vertexShaderScript = "\n    attribute vec2 a_position;\n\n    uniform vec2 u_resolution;\n\n    void main() {\n        // convert the rectangle from pixels to 0.0 to 1.0\n        vec2 zeroToOne = a_position / u_resolution;\n\n        // convert from 0 -> 1 to 0 -> 2\n        vec2 zeroToTwo = zeroToOne * 2.0;\n\n        // convert from 0 -> 2 to -1 -> +1 (clipspace)\n        vec2 clipSpace = zeroToTwo - 1.0;\n\n        // Flip 0,0 from bottom left to conventional 2D top left.\n        gl_PointSize = 1.0;\n        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);\n    }\n";
-var fragmentShaderScript = "\n    precision mediump float;\n\n\tuniform vec4 u_color;\n\n\tvoid main() {\n  \t    gl_FragColor = u_color;\n\t}\n";
-
-var WebGL =
-/*#__PURE__*/
-function () {
-  function WebGL(id) {
-    _classCallCheck(this, WebGL);
-
-    this.canvas = document.getElementById(id);
-    this.gl = this.canvas.getContext("webgl", {
-      antialias: false
-    });
-    this.vertexShader = this.createShader(vertexShaderScript, this.gl.VERTEX_SHADER);
-    this.fragmentShader = this.createShader(fragmentShaderScript, this.gl.FRAGMENT_SHADER);
-    this.createGLProgram([this.vertexShader, this.fragmentShader]);
-    this.gl.useProgram(this.program); // Store color location.
-
-    this.colorLocation = this.gl.getUniformLocation(this.program, "u_color"); // Look up where the vertex data needs to go.
-
-    this.positionLocation = this.gl.getAttribLocation(this.program, "a_position"); // Set the resolution.
-
-    this.resolutionLocation = this.gl.getUniformLocation(this.program, "u_resolution");
-    this.gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height); // Create a buffer.
-
-    this.buffer = this.gl.createBuffer();
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
-    this.gl.enableVertexAttribArray(this.positionLocation); // Send the vertex data to the shader program.
-
-    this.gl.vertexAttribPointer(this.positionLocation, 2, this.gl.FLOAT, false, 0, 0); // Set background colour
-
-    this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-  }
-
-  _createClass(WebGL, [{
-    key: "createGLProgram",
-    value: function createGLProgram(shaders) {
-      this.program = this.gl.createProgram();
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = shaders[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var shader = _step.value;
-          this.gl.attachShader(this.program, shader);
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-
-      this.gl.linkProgram(this.program);
-      var linked = this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS);
-
-      if (!linked) {
-        var lastError = this.gl.getProgramInfoLog(this.program);
-        console.error("Error in program linking: " + lastError);
-        this.gl.deleteProgram(this.program);
-        this.program = null;
-      }
-    }
-  }, {
-    key: "createShader",
-    value: function createShader(shaderScriptText, shaderType) {
-      var shader = this.gl.createShader(shaderType);
-      this.gl.shaderSource(shader, shaderScriptText);
-      this.gl.compileShader(shader);
-      return shader;
-    }
-  }, {
-    key: "setColour",
-    value: function setColour(r, g, b, a) {
-      this.gl.uniform4f(this.colorLocation, r, g, b, a);
-    }
-  }, {
-    key: "setPixel",
-    value: function setPixel(x, y) {
-      this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array([x + 0.5, y + 0.5]), this.gl.STATIC_DRAW);
-      this.gl.drawArrays(this.gl.POINTS, 0, 1);
-    }
-  }]);
-
-  return WebGL;
-}();
-
-module.exports = WebGL;
-},{}],"index.js":[function(require,module,exports) {
+module.exports = Game;
+},{"../molecules/Empty.js":"molecules/Empty.js","./Grid.js":"modules/Grid.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("babel-polyfill");
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+// Allows us to use Promises, Symbols, etc.
+var Game = require('./modules/Game');
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-var Empty = require('./molecules/Empty');
-
-var Snow = require('./molecules/Snow');
-
-var Constants = require('./modules/Constants');
-
-var Globals = require('./modules/Globals');
-
-var Grid = require('./modules/Grid');
-
-var Coords = require('./modules/Coords');
-
-var pixelX = 520;
-var pixelY = 520;
-Globals.widthX = Constants.width.x / Constants.resolution;
-Globals.widthY = Constants.width.y / Constants.resolution;
-var widthX = Globals.widthX;
-if (parseInt(Globals.widthX) !== Globals.widthX) throw 'Invalid resolution for X';
-if (parseInt(Globals.widthY) !== Globals.widthY) throw 'Invalid resolution for Y';
-
-function pad3(num) {
-  return ('   ' + num).slice(-3);
-}
-
-function pause(_x) {
-  return _pause.apply(this, arguments);
-}
-
-function _pause() {
-  _pause = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee(time) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            return _context.abrupt("return", new Promise(function (resolve) {
-              setTimeout(resolve, time);
-            }));
-
-          case 1:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-  return _pause.apply(this, arguments);
-}
-
-function init() {
-  $('#game').attr('height', Globals.widthY * Constants.resolution);
-  $('#game').attr('width', Globals.widthX * Constants.resolution);
-  Globals.canvas = document.getElementById('game').getContext('2d');
-  Globals.grid = new Grid(Globals.widthX, Globals.widthY);
-}
-
-function loop(_x2) {
-  return _loop.apply(this, arguments);
-}
-
-function _loop() {
-  _loop = _asyncToGenerator(
-  /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee2(timestamp) {
-    var tickStart, slim, full, tickStop, x;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            meter.tickStart();
-            tickStart = performance.now();
-            slim = Globals.grid.slim;
-            full = Globals.grid.full;
-            slim.map(function (item, index) {
-              if (item !== 1) {
-                var _Coords$toXY = Coords.toXY(index, widthX),
-                    x = _Coords$toXY.x,
-                    y = _Coords$toXY.y;
-
-                var molecule = full[x][y];
-
-                if (molecule.inactive) {
-                  molecule.inactive = false;
-                  return;
-                }
-
-                molecule.tick();
-              }
-            });
-            tickStop = performance.now();
-
-            for (x = 0; x < Globals.widthX; x++) {
-              if (Math.random() > 0.999) {
-                Globals.grid.set(new Snow({
-                  x: x,
-                  y: 0
-                }, {
-                  draw: true
-                }));
-              }
-            }
-
-            console.log("tick ".concat(pad3(tickStop - tickStart), "ms")); // getFull ${pad3(getFullStop - getFullStart)}ms molecules ${pad3(moleculesStop - moleculesStart)}ms`)
-            // TODO: remove
-
-            meter.tick();
-            window.requestAnimationFrame(loop);
-
-          case 10:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, this);
-  }));
-  return _loop.apply(this, arguments);
-}
-
-var WebGL = require('./modules/WebGL.js');
-
-var webGL = new WebGL('game');
-console.time('draw'); // 0.2ms per call, 2,000 ms in total
-// webGL.setColour(1.0, 0.5, 0.0, 1.0)
-// for (let i = 0; i < 100; i++) {
-//     for (let j = 0; j < 100; j++) {
-//         webGL.setPixel(i, j)
-//     }
-// }
-
-for (var i = 0; i < 10000; i++) {
-  webGL.setPixel(100, 100);
-}
-
-console.timeEnd('draw');
-console.time('single');
-webGL.setColour(1.0, 0.5, 0.0, 1.0);
-webGL.setPixel(1, 1);
-console.timeEnd('single'); // init()
-// window.requestAnimationFrame(loop)
-},{"babel-polyfill":"../../../node_modules/babel-polyfill/lib/index.js","./molecules/Empty":"molecules/Empty.js","./molecules/Snow":"molecules/Snow.js","./modules/Constants":"modules/Constants.js","./modules/Globals":"modules/Globals.js","./modules/Grid":"modules/Grid.js","./modules/Coords":"modules/Coords.js","./modules/WebGL.js":"modules/WebGL.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var game = new Game(Globals.canvas);
+game.start();
+},{"babel-polyfill":"../../../node_modules/babel-polyfill/lib/index.js","./modules/Game":"modules/Game.js"}],"../../../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8788,7 +8344,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58960" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63883" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

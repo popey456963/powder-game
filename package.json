@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "parcel static\\js\\src\\index.js -d static\\js\\dist\\ --public-url \"/js/dist/\" --cache-dir static\\js\\.cache\\",
-    "nodemon": "nodemon -e js,css,html -i static\\js\\src\\"
+    "watch": "parcel static\\js\\src2\\index.js -d static\\js\\dist\\ --public-url \"/js/dist/\" --cache-dir static\\js\\.cache\\",
+    "nodemon": "nodemon -e js,css,html -i static\\js\\src2\\"
   },
   "keywords": [],
   "author": "",

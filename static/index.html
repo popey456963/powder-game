@@ -17,8 +17,14 @@
             Please use a canvas enabled browser.
         </canvas>
 
+        <script>
+            window.Globals = {
+                width: { x: 512, y: 512 },
+                canvas: 'game'
+            }
+        </script>
         <script src="/reload/reload.js"></script>
-        <script src="/js/src/fpsmeter.js"></script>
+        <script src="/js/lib/fpsmeter.js"></script>
         <script>
             var meter = new FPSMeter({
                 theme: 'dark',
@@ -32,7 +38,7 @@
                 history: 20
             });
         </script>
-        <script src="/js/src/jquery.js"></script>
+        <script src="/js/lib/jquery.js"></script>
         <script src="/js/dist/index.js"></script>
     </body>
 </html>
