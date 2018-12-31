@@ -8246,7 +8246,7 @@ function (_Powder) {
   _createClass(Snow, [{
     key: "render",
     value: function render() {
-      console.log('rendering snow');
+      // console.log('rendering snow')
       return 4294967295;
     }
   }, {
@@ -8387,11 +8387,9 @@ function () {
       this.types.forEach(function (item, index) {
         // Check area is not empty
         if (item !== 1) {
-          var molecule = _this.grid[index];
-
-          if (molecule.constructor.name === 'Snow') {
-            console.log('Ticking snow');
-          }
+          var molecule = _this.grid[index]; // if (molecule.constructor.name === 'Snow') {
+          //     console.log('Ticking snow')
+          // }
 
           if (molecule.inactive) {
             molecule.inactive = false;
@@ -8413,18 +8411,15 @@ function () {
       var colours = this.colours;
       this.types.forEach(function (item, index) {
         if (!item) return;
-        var molecule = grid[index];
-
-        if (molecule.constructor.name === 'Snow') {
-          console.log('Rendering snow');
-        }
+        var molecule = grid[index]; // if (molecule.constructor.name === 'Snow') {
+        //     console.log('Rendering snow')
+        // }
       });
       grid.forEach(function (molecule, pos) {
         if (!molecule) return;
-        var colour = molecule.render();
-
-        if (molecule.constructor.name === 'Snow') {// console.log('Rendering snow')
-        }
+        var colour = molecule.render(); // if (molecule.constructor.name === 'Snow') {
+        // console.log('Rendering snow')
+        // }
 
         colours[pos] = colour; // colours[pos] =
         //     (colour.a << 24) | // alpha

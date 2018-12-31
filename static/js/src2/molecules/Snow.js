@@ -6,7 +6,7 @@ class Snow extends Powder {
     }
 
     render() {
-        console.log('rendering snow')
+        // console.log('rendering snow')
         return 0b11111111111111111111111111111111
     }
 
