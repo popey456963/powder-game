@@ -1,0 +1,72 @@
+<canvas id="game" width="255" height="255"></canvas>
+<div id="batchSize"></div>
+<div id="time"></div>
+
+<script>
+const count = 16384
+const runs = 100
+
+const colours = []
+const positions = []
+
+// pregeneration script
+for (let i = 0; i < count * runs; i++) {
+    colours.push({
+        r: Math.random() * 255 << 0,
+        g: Math.random() * 255 << 0,
+        b: Math.random() * 255 << 0,
+        a: Math.random() * 255 << 0
+    })
+}
+
+for (let i = 0; i < count * runs; i++) {
+    positions.push({ x: Math.random() * 255 << 0, y: Math.random() * 255 << 0 })
+}
+
+const canvas = document.getElementById('game')
+const time = document.getElementById('time')
+const ctx = canvas.getContext('2d')
+
+ctx.clearRect(0, 0, 255, 255)
+
+document.getElementById('batchSize').innerHTML = `BatchSize: ${count}`
+
+const imageData = ctx.createImageData(255, 255)
+const buf = new ArrayBuffer(imageData.data.length)
+
+const buf8 = new Uint8ClampedArray(buf)
+const data = new Uint32Array(buf)
+</script>
+
+<script>
+// fastest single set via http://jsperf.com/setting-canvas-pixel/9
+setTimeout(() => {
+    //  1024 * 10 = 100-250ms
+    //  4096 * 10 = 700-900ms
+    // 16384 * 10 = 2000ms
+
+    let start = 0
+    const allStart = performance.now()
+    for (let i = 0; i < runs; i++) {
+        const singleStart = performance.now()
+        const max = start + count
+        for (let j = count; j < max; j++) {
+            const colour = colours[j]
+            const position = positions[j]
+
+            data[position.y * 255 + position.x] =
+                (colour.a << 24) |	// alpha
+                (colour.b << 16) |	// blue
+                (colour.g <<  8) |	// green
+                 colour.r		    // red
+        }
+
+        imageData.data.set(buf8)
+        ctx.putImageData(imageData, 0, 0)
+        document.getElementById('time').innerHTML += `Run ${i} took ${performance.now() - singleStart}ms.<br />`
+    }
+
+    start += count
+    document.getElementById('time').innerHTML += `All took ${performance.now() - allStart}ms.<br />`
+}, 5000)
+</script>
