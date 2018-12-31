@@ -8113,7 +8113,7 @@ function () {
   }, {
     key: "moveRelXY",
     value: function moveRelXY(x, y) {
-      return this.moveAbs(Globals.grid.relXY(this.pos, x, y));
+      return this.moveRel(y * Globals.width.x + x);
     }
   }]);
 
@@ -8269,7 +8269,34 @@ function (_Powder) {
 }(Powder);
 
 module.exports = Snow;
-},{"./Powder":"molecules/Powder.js"}],"modules/Grid.js":[function(require,module,exports) {
+},{"./Powder":"molecules/Powder.js"}],"modules/Utils.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Utils =
+/*#__PURE__*/
+function () {
+  function Utils() {
+    _classCallCheck(this, Utils);
+  }
+
+  _createClass(Utils, null, [{
+    key: "pause",
+    value: function pause(time) {
+      return new Promise(function (resolve) {
+        return setTimeout(resolve, time);
+      });
+    }
+  }]);
+
+  return Utils;
+}();
+
+module.exports = Utils;
+},{}],"modules/Grid.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -8344,9 +8371,8 @@ function () {
       // }
       this.grid[molecule.pos] = molecule;
       this.types[molecule.pos] = 0; // molecule.type
-
-      this.render();
-      this.draw();
+      // this.render()
+      // this.draw()
     }
   }, {
     key: "setXY",
@@ -8361,9 +8387,11 @@ function () {
       this.types.forEach(function (item, index) {
         // Check area is not empty
         if (item !== 1) {
-          var molecule = _this.grid[index]; // if (molecule.constructor.name === 'Snow') {
-          // console.log('Ticking snow')
-          // }
+          var molecule = _this.grid[index];
+
+          if (molecule.constructor.name === 'Snow') {
+            console.log('Ticking snow');
+          }
 
           if (molecule.inactive) {
             molecule.inactive = false;
@@ -8387,7 +8415,8 @@ function () {
         if (!item) return;
         var molecule = grid[index];
 
-        if (molecule.constructor.name === 'Snow') {// console.log('Rendering snow')
+        if (molecule.constructor.name === 'Snow') {
+          console.log('Rendering snow');
         }
       });
       grid.forEach(function (molecule, pos) {
@@ -8417,6 +8446,10 @@ function () {
 
 module.exports = Grid;
 },{}],"modules/Game.js":[function(require,module,exports) {
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -8426,6 +8459,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Empty = require('../molecules/Empty.js');
 
 var Snow = require('../molecules/Snow.js');
+
+var Utils = require('./Utils.js');
 
 var Grid = require('./Grid.js');
 
@@ -8446,22 +8481,48 @@ function () {
 
   _createClass(Game, [{
     key: "loop",
-    value: function loop(time) {
-      Globals.grid.tick();
-      Globals.grid.render();
-      Globals.grid.draw();
+    value: function () {
+      var _loop = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(time) {
+        var i;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                Globals.grid.tick();
+                Globals.grid.render();
+                Globals.grid.draw();
 
-      for (var i = 0; i < Globals.width.x; i++) {
-        if (Math.random() > 0.5) {
-          Globals.grid.set(new Snow({
-            pos: i
-          }));
-        }
+                for (i = 0; i < Globals.width.x; i++) {
+                  if (Math.random() > 0.5) {
+                    Globals.grid.set(new Snow({
+                      pos: i
+                    }));
+                  }
+                }
+
+                meter.tick();
+                _context.next = 7;
+                return Utils.pause(500);
+
+              case 7:
+                window.requestAnimationFrame(this.loop.bind(this));
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function loop(_x) {
+        return _loop.apply(this, arguments);
       }
 
-      meter.tick();
-      window.requestAnimationFrame(this.loop.bind(this));
-    }
+      return loop;
+    }()
   }, {
     key: "start",
     value: function start() {
@@ -8473,7 +8534,7 @@ function () {
 }();
 
 module.exports = Game;
-},{"../molecules/Empty.js":"molecules/Empty.js","../molecules/Snow.js":"molecules/Snow.js","./Grid.js":"modules/Grid.js"}],"index.js":[function(require,module,exports) {
+},{"../molecules/Empty.js":"molecules/Empty.js","../molecules/Snow.js":"molecules/Snow.js","./Utils.js":"modules/Utils.js","./Grid.js":"modules/Grid.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("babel-polyfill");

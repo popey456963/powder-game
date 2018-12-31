@@ -61,8 +61,8 @@ class Grid {
         this.grid[molecule.pos] = molecule
         this.types[molecule.pos] = 0 // molecule.type
 
-        this.render()
-        this.draw()
+        // this.render()
+        // this.draw()
     }
 
     setXY(molecule, x, y) {
@@ -75,9 +75,9 @@ class Grid {
             if (item !== 1) {
                 const molecule = this.grid[index]
 
-                // if (molecule.constructor.name === 'Snow') {
-                    // console.log('Ticking snow')
-                // }
+                if (molecule.constructor.name === 'Snow') {
+                    console.log('Ticking snow')
+                }
 
                 if (molecule.inactive) {
                     molecule.inactive = false
@@ -104,13 +104,13 @@ class Grid {
             const molecule = grid[index]
 
             if (molecule.constructor.name === 'Snow') {
-                // console.log('Rendering snow')
+                console.log('Rendering snow')
             }
         })
 
         grid.forEach((molecule, pos) => {
             if (!molecule) return
-            
+
             const colour = molecule.render()
 
             if (molecule.constructor.name === 'Snow') {

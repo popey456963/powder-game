@@ -25,7 +25,7 @@ class Particle {
     }
 
     moveRelXY(x, y) {
-        return this.moveAbs(Globals.grid.relXY(this.pos, x, y))
+        return this.moveRel(y * Globals.width.x + x)
     }
 }
 
