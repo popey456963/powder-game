@@ -81,3 +81,4 @@ typings/
 # Ignore the 'compiled' code 
 public/js/index.js
 public/js/index.map
+
