@@ -3,6 +3,7 @@ class Particle {
         this.options = options
 
         this.pos = this.options.pos
+        this.inactive = true
     }
 
     render() {

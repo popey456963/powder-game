@@ -1,13 +1,13 @@
 const Powder = require('./Powder')
 
-class Snow extends Powder {
+class Sand extends Powder {
     constructor(options) {
         super(options)
     }
 
     render() {
         // console.log('rendering snow')
-        return 0xFFFFFFFF
+        return 0xFF00FFFF
     }
 
     floating() {
@@ -23,4 +23,4 @@ class Snow extends Powder {
     }
 }
 
-module.exports = Snow
+module.exports = Sand
