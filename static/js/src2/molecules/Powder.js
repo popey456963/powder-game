@@ -8,6 +8,18 @@ class Powder extends Particle {
     fall() {
         this.moveRelXY(0, 1)
     }
+
+    render() {
+    	return 0xFFFF00FF; 
+    }
+
+    floating() {
+    	return false
+    }
+
+    tick() {
+    	super.tick()
+    }
 }
 
 module.exports = Powder

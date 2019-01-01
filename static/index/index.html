@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Powder Game</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0.0, minimal-ui" />
+
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="theme-color" content="#000000" />
+        <meta charset="UTF-8" />
+
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="icon" href="/img/faviconSmall.ico" type="image/x-icon">
+    </head>
+
+    <body>
+        <div id="content">
+            <header class="header">
+                <h1>Powder Game</h1>
+                <a href="/pages/about.html" target="_blank">About</a>
+            </header>
+            <main class="main">
+                <div id="upper"></div>
+                <div id="gameContainer">
+                    <canvas id="game" name="game" class="game">
+                        Please use a canvas enabled browser.
+                    </canvas>
+                </div>
+
+                <script>
+                    window.Globals = {
+                        width: { x: 64, y: 64 },
+                        canvas: 'game'
+                    }
+                    document.getElementById("upper").innerHTML = "<p>" + String(0o10) + "</p>" 
+                </script>
+                <script src="/reload/reload.js"></script>
+                <script src="/lib/fpsmeter.js"></script>
+                <script>
+                    var meter = new FPSMeter({
+                        theme: 'dark',
+
+                        left: 'auto',
+                        right: '5px',
+                        top: '5px',
+                        bottom: 'auto',
+
+                        graph: 1,
+                        history: 20
+                    });
+                </script>
+                <script src="/lib/jquery.js"></script>
+                <script src="/js/index.js"></script>
+            </main>
+        </div>
+    </body>
+</html>
