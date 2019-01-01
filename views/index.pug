@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    #content
+        main.main
+            #gameContainer
+                canvas#game.game Please use a canvas enabled browser.
+            
+            script.
+                window.Globals = {
+                    width: { x: 390, y: 290 },
+                    canvas: 'game'
+                }
+
+block scripts
+    script(src='/js/lib/jquery.js')
+    script(src='/js/index.js')

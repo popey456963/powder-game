@@ -27,16 +27,15 @@ class Game {
         Globals.grid.draw()
 
         for (let i = 0; i < Globals.width.x; i++) {
-            if (Math.random() < 0.33) {
+            if (Math.random() < 0.01) {
                 Globals.grid.set(new Snow({ pos: i }))
             }
-            else if (Math.random() > 0.67) {
+            else if (Math.random() > 0.99) {
                 Globals.grid.set(new Sand({ pos: i }))
             }
         }
 
-        meter.tick()
-        await Utils.pause(500)
+        if (development) { meter.tick() }
         window.requestAnimationFrame(this.loop.bind(this))
     }
 

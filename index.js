@@ -1,26 +1,19 @@
-const port = 9876; 
-
 const express = require('express')
 const reload = require('reload')
-const path = require('path')
 const app = express()
 
-app.use('/js', express.static('static/js/dist'))
-app.use('/lib', express.static('static/js/lib'))
-app.use('/css', express.static('static/css'))
-app.use('/img', express.static('static/img/dist'))
-app.use('/pages', express.static('static/pages'))
+const port = 9876
 
-app.all('/pages', (req, res) => {
-	res.redirect('/')
+app.set('view engine', 'pug')
+app.use(express.static('public'))
+app.use((_, res, next) => {
+    res.locals.development = process.env.NODE_ENV === 'development'
+    next()
 })
 
-app.all('/', (req, res) => {
-	res.sendFile(path.resolve('static/index/index.html'))
-})
+app.get('/', (req, res) => res.render('index'))
+app.get('/about', (req, res) => res.render('about'))
 
 reload(app)
 
-app.listen(port, () => {
-    console.log('Listening on port ' + String(port))
-})
+app.listen(port, () => console.log(`Listening on port ${port}`))

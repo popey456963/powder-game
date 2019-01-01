@@ -18,11 +18,11 @@
 	padding: 5px; 
 }
 
-#game {
+.game {
 	display: block;
 	border: 1px dashed blue;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: pixelated;
-	transform: scale(5);
+	transform: scale(2);
 	transform-origin: left top; 
 }
