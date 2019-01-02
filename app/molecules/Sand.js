@@ -10,15 +10,7 @@ class Sand extends Powder {
         return 0xFF00FFFF
     }
 
-    floating() {
-        return true
-    }
-
     tick() {
-        if (this.floating()) {
-            this.fall()
-        }
-
         super.tick()
     }
 }

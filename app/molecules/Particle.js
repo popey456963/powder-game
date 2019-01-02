@@ -28,6 +28,18 @@ class Particle {
     moveRelXY(x, y) {
         return this.moveRel(y * Globals.width.x + x)
     }
+
+    getAbs(pos) {
+        return Globals.grid.abs(pos)
+    }
+
+    getRel(pos) {
+        return this.getAbs(this.pos + pos)
+    }
+
+    getRelXY(x, y) {
+        return this.getRel(y * Globals.width.x + x)
+    }
 }
 
 module.exports = Particle

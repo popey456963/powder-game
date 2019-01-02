@@ -10,15 +10,7 @@ class Snow extends Powder {
         return 0xFFFFFFFF
     }
 
-    floating() {
-        return true
-    }
-
     tick() {
-        if (this.floating()) {
-            this.fall()
-        }
-
         super.tick()
     }
 }

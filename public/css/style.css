@@ -23,6 +23,6 @@
 	border: 1px dashed blue;
 	image-rendering: -moz-crisp-edges;
 	image-rendering: pixelated;
-	transform: scale(2);
+	transform: scale(5);
 	transform-origin: left top; 
 }

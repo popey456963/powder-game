@@ -14,10 +14,14 @@ class Powder extends Particle {
     }
 
     floating() {
-    	return false
+    	return this.getRelXY(0, 1).constructor.name === 'Empty'
     }
 
     tick() {
+        if (this.floating()) {
+            this.fall()
+        }
+
     	super.tick()
     }
 }
