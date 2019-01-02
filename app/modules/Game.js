@@ -64,6 +64,10 @@ class Game {
         this.stopped = true
         window.requestAnimationFrame(this.loop.bind(this))
     }
+
+    restart() {
+        Globals.grid.fill(Empty) 
+    }
 }
 
 module.exports = Game

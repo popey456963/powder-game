@@ -9,3 +9,5 @@ game.start()
 document.getElementById('start').onclick = function() { game.start() }
 document.getElementById('stop').onclick = function() { game.stop() }
 document.getElementById('tick').onclick = function() { game.tick() }
+document.getElementById('restart').onclick = function() { game.restart() } 
+
