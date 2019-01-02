@@ -5,6 +5,7 @@ const app = express()
 const port = 9876
 
 app.set('view engine', 'pug')
+app.set('views', 'renders\\views')
 app.use(express.static('public'))
 app.use((req, res, next) => {
     res.locals.development = process.env.NODE_ENV === 'development'
