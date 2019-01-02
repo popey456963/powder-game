@@ -3,6 +3,8 @@ const Particle = require('./Particle.js')
 class Block extends Particle {
     constructor(options) {
         super(options)
+
+        this.type = 100
     }
 
     render() {

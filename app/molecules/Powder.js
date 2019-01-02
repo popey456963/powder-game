@@ -3,10 +3,12 @@ const Particle = require('./Particle.js')
 class Powder extends Particle {
     constructor(options) {
         super(options)
+
+        this.type = 200
     }
 
     fall() {
-        this.moveRelXY(0, 1)
+        this.move(0, 1)
     }
 
     render() {
@@ -14,7 +16,7 @@ class Powder extends Particle {
     }
 
     floating() {
-    	return this.getRelXY(0, 1).constructor.name === 'Empty'
+    	return this.getType(0, 1) === Globals.molecules.Empty
     }
 
     tick() {

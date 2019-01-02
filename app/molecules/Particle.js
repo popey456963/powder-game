@@ -4,41 +4,36 @@ class Particle {
 
         this.pos = this.options.pos
         this.inactive = true
+        this.type = 0
     }
 
     render() {
-        return 0b11111111100000000000000010000000
+        return 0xFF800080
     }
 
     tick() {}
 
-    moveAbs(pos) {
-        Globals.grid.set(new Globals.Empty({ pos: this.pos }))
+    move(p, y) {
+        if (typeof y !== 'undefined') p += y * Globals.width.x
 
-        this.pos = pos
+        Globals.grid.setMolecule(new Globals.Empty({ pos: this.pos }))
+        
+        this.pos += p
 
-        Globals.grid.set(this)
+        Globals.grid.setMolecule(this)
         this.inactive = true
     }
 
-    moveRel(pos) {
-        return this.moveAbs(this.pos + pos)
+    getMolecule(p, y) {
+        if (typeof y !== 'undefined') p += y * Globals.width.x
+
+        return Globals.grid.getMolecule(this.pos + p)
     }
 
-    moveRelXY(x, y) {
-        return this.moveRel(y * Globals.width.x + x)
-    }
+    getType(p, y) {
+        if (typeof y !== 'undefined') p += y * Globals.width.x
 
-    getAbs(pos) {
-        return Globals.grid.abs(pos)
-    }
-
-    getRel(pos) {
-        return this.getAbs(this.pos + pos)
-    }
-
-    getRelXY(x, y) {
-        return this.getRel(y * Globals.width.x + x)
+        return Globals.grid.getType(this.pos + p)
     }
 }
 

@@ -20,39 +20,33 @@ class Grid {
         this.grid = new Array(Globals.width.x * Globals.width.y)
     }
 
-    abs(pos) {
-        return this.grid[pos]
+    getMolecule(p, y) {
+        if (typeof y !== 'undefined') p += y * Globals.width.x
+        return this.grid[p]
     }
 
-    absXY(x, y) {
-        return this.abs(y * Globals.width.x + x)
+    getType(p, y) {
+        if (typeof y !== 'undefined') p += y * Globals.width.x
+        return this.types[p]
     }
 
-    rel(pos, diff) {
-        // TODO: Add in safety checks
-        return this.abs(pos + diff)
-    }
+    setMolecule(molecule, force = false) {      
+        if (molecule.type !== Globals.molecules.Empty && this.getType(molecule.pos) !== Globals.molecules.Empty && !force) {
+            return false
+        }
 
-    relXY(pos, x, y) {
-        // TODO: Add in safety checks
-        return this.rel(pos, y * Globals.width.x + x)
+        this.grid[molecule.pos] = molecule
+        this.types[molecule.pos] = molecule.type
+
+        return true
     }
 
     fill(Molecule) {
         const length = Globals.width.x * Globals.width.y
 
         for (let i = 0; i < length; i++) {
-            this.set(new Molecule({ pos: i }))
+            this.setMolecule(new Molecule({ pos: i }))
         }
-    }
-
-    set(molecule) {
-        this.grid[molecule.pos] = molecule
-        this.types[molecule.pos] = 0 // molecule.type
-    }
-
-    setXY(molecule, x, y) {
-        return this.set(molecule, y * Globals.width.x + x)
     }
 
     tick() {

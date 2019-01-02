@@ -3,6 +3,8 @@ const Powder = require('./Powder')
 class Sand extends Powder {
     constructor(options) {
         super(options)
+
+        this.type = 201
     }
 
     render() {

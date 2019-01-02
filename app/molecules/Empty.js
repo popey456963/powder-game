@@ -3,10 +3,12 @@ const Particle = require('./Particle.js')
 class Empty extends Particle {
     constructor(options) {
         super(options)
+
+        this.type = 1
     }
 
     render() {
-        return 0b11111111000000000000000000000000
+        return 0xFF000000
     }
 }
 
