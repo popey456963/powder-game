@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "cross-env NODE_ENV=development parcel app\\index.js -d public\\js\\ --public-url \"/js/\" --cache-dir .cache\\",
+    "watch": "cross-env NODE_ENV=development parcel app\\app.js -d public\\js\\ --public-url \"/js/\" --cache-dir .cache\\",
     "nodemon": "cross-env NODE_ENV=development nodemon -e js,css,html -i app\\"
   },
   "keywords": [],
