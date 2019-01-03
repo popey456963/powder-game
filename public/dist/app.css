@@ -1,0 +1,23 @@
+#content {
+  background-color: #BBBBDD;
+  clear: both; }
+
+.header {
+  margin: auto;
+  padding-bottom: 10px;
+  width: 100%;
+  text-align: center; }
+
+.main {
+  margin: auto;
+  min-width: 50%;
+  text-align: center;
+  padding: 5px; }
+
+.game {
+  display: block;
+  border: 1px dashed blue;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  transform: scale(3);
+  transform-origin: left top; }
