@@ -104,16 +104,18 @@ class Game {
     }
 
     stop() {
-        Global.running = false
+        if (Globals.running) {
+            Globals.running = false
+        }
     }
 
     tick() {
-        Globals.running = true
+        Globals.running = false
         window.requestAnimationFrame(this.loop.bind(this))
     }
 
     reset() {
-        console.log('resetting grid')
+        console.log('Resetting Grid')
         Globals.grid.fill(Empty) 
     }
 }
