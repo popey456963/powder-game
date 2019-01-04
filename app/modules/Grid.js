@@ -47,7 +47,7 @@ class Grid {
         if (typeof start === 'number') start = Coords.toXY(start)
         if (typeof end === 'number') end = Coords.toXY(end)
 
-        for (const point of Shape.line(start, end)) {
+        for (const point of Shape.line(start, end, force)) {
             this.setMolecule(new Molecule({ pos: point.y * Globals.width.x + point.x }), force)
         }
     }
@@ -55,7 +55,7 @@ class Grid {
     drawPoint(Molecule, center, radius = 2, force = false) {
         if (typeof center === 'number') center = Coords.toXY(center)
 
-        for (const point of Shape.point(center, radius)) {
+        for (const point of Shape.point(center, radius, force)) {
             this.setMolecule(new Molecule({ pos: point.y * Globals.width.x + point.x }), force)
         }
     }
