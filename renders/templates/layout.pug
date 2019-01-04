@@ -13,19 +13,19 @@ html
         link(rel='icon', href='/img/favicon/faviconSmall.ico', type='image/x-icon')
     body
         #wrapper
-            //- header
-            //-     #titleContainer
-            //-         block header
-            //-     hr
-            //- nav
-            //-     #navigation
-            //-         unless (path == "/")
-            //-             a(href='/', target='_blank') Game
-            //-         unless (path == "/about")
-            //-             a(href='/about', target='_blank') About
-            //-         unless (path == "/particles")
-            //-             a(href='/particles', target='_blank') Particles
-            //-         a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
+            header
+                #titleContainer
+                    block header
+                hr
+            nav
+                #navigation
+                    unless (path == "/")
+                        a(href='/', target='_blank') Game
+                    unless (path == "/about")
+                        a(href='/about', target='_blank') About
+                    unless (path == "/particles")
+                        a(href='/particles', target='_blank') Particles
+                    a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
             //- main
             block content
 
