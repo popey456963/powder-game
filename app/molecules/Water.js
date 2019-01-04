@@ -4,7 +4,7 @@ class Water extends Powder {
     constructor(options) {
         super(options)
         
-        this.type = 205
+        this.type = Globals.molecules.Water
     }
 
     render() {

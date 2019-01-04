@@ -1,3 +1,14 @@
+// ===== CSS charset ===== 
+@charset "UTF-8";
+
+// ===== Base parameters for entire document ===== 
+* {
+	padding: 0; 
+	margin: 0; 
+	outline: none; 
+	box-sizing: border-box; 
+}
+
 body, .body {
 	position: absolute;
 
@@ -8,7 +19,8 @@ body, .body {
 
 	margin: 0;
 
-	background-color: #151515;
+	color: #000000;
+	background-color: #EEEEEE;
 }
 
 .controls {
@@ -33,7 +45,7 @@ body, .body {
 	top: 0;
 	right: 0;
 	left: 0;
-	max-width: calc(100%);
+	max-width: 100%;
 	margin: auto auto;
 }
 
@@ -48,39 +60,39 @@ body, .body {
 	image-rendering: pixelated;
 }
 
-// #content {
-// 	background-color: #BBBBDD; 
-// 	clear: both; 
-// }
+// ===== Styling for the header ===== 
+header {
+	margin: auto; 
+	padding-bottom: 10px; 
+	width: 100%; 
+	text-align: center; 
+}
 
-// header.header {
-// 	margin: auto; 
-// 	padding-bottom: 10px; 
-// 	width: 100%; 
-// 	text-align: center; 
-// }
+// ===== Styling for the navigation menu ===== 
+nav > #navigation {
+	display: flex; 
+	justify-content: center; 
+}
 
-// header.header > #navigation {
-// 	display: flex; 
-// 	justify-content: center; 
-// }
+nav > #navigation > a {
+	margin: 5px; 
+}
 
-// header.header > #navigation > a {
-// 	margin: 5px; 
-// }
+// ===== Styling for the body ===== 
+main {
+	padding: 5px; 
+	text-align: center; 
+}
 
-// .main {
-// 	margin: auto; 
-// 	min-width: 50%; 
-// 	text-align: center; 
-// 	padding: 5px; 
-// }
+// ===== Styling for the footer ===== 
+footer {
+	padding-top: 10px; 
+}
 
-// .game {
-// 	display: block;
-// 	border: 1px dashed blue;
-// 	image-rendering: -moz-crisp-edges;
-// 	image-rendering: pixelated;
-// 	transform-origin: left top;
-// 	height: 100%;
-// }
+main li {
+	list-style-position: inside; 
+}
+
+#information {
+	clear: both; 
+}

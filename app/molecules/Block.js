@@ -4,7 +4,7 @@ class Block extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = 100
+        this.type = Globals.molecules.Block
     }
 
     render() {

@@ -17,9 +17,11 @@ class Game {
         const canvas = document.getElementById(target)
 
         canvas.setAttribute('height', Globals.width.y)
+        console.log(canvas.getAttribute('height'))
         canvas.setAttribute('width', Globals.width.x)
 
         const context = canvas.getContext('2d')
+        //context.scale(Globals.scale, Globals.scale); 
 
         Globals.grid = new Grid(context)
         Globals.grid.fill(Empty)

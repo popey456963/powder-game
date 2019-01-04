@@ -1,5 +1,8 @@
 extends ..\\templates\\layout
 
+//- block header
+//-     h1#title Powder Game
+
 block content
     .body 
         canvas#game.game Please use a canvas enabled browser.
@@ -15,7 +18,7 @@ block content
 
             script.
                 window.Globals = {
-                    width: { x: 64, y: 64 },
+                    width: { x: 128, y: 128 },
                     scale: 1,
                     canvas: 'game',
                     running: false,

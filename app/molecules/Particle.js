@@ -4,7 +4,7 @@ class Particle {
 
         this.pos = this.options.pos
         this.inactive = true
-        this.type = 0
+        this.type = Globals.molecules.Particle
     }
 
     render() {
