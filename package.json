@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "cross-env NODE_ENV=development parcel app\\app.js -d public\\js\\ --public-url \"/js/\" --cache-dir .cache\\",
+    "watch": "cross-env NODE_ENV=development parcel app\\app.js -d public\\dist\\ --public-url \"/js/\" --cache-dir .cache\\",
     "nodemon": "cross-env NODE_ENV=development nodemon -e js,css,html,scss,pug,htm -i app\\"
   },
   "keywords": [],
@@ -17,6 +17,7 @@
     "reload": "^2.4.0"
   },
   "devDependencies": {
+    "autoprefixer": "^9.4.3",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -28,6 +29,7 @@
     "nodemon": "^1.18.9",
     "parcel": "^1.11.0",
     "parcel-bundler": "^1.11.0",
+    "postcss": "^7.0.7",
     "webpack": "^4.28.3"
   }
 }

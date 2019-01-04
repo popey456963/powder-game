@@ -8,7 +8,7 @@ html
         meta(name='theme-color', content='#000000')
         meta(charset='UTF-8')
 
-        link(rel='stylesheet', type='text/css', href='/css/style.css')
+        link(rel='stylesheet', type='text/css', href='/dist/app.css')
         link(rel='icon', href='/img/favicon/faviconSmall.ico', type='image/x-icon')
     body
         block header
@@ -20,7 +20,7 @@ html
         //- Automatic page reload and fps counter in development
         if development
             script(src='/reload/reload.js')
-            script(src='/js/lib/fpsmeter.js')
+            script(src='/lib/fpsmeter.js')
 
             script.
                 var development = #{development ? 'true' : 'false'}

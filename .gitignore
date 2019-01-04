@@ -79,5 +79,5 @@ typings/
 .vscode
 
 # Ignore the 'compiled' code 
-public/js
+public/dist/
 
