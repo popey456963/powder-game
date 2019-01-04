@@ -15,15 +15,20 @@ class Game {
     // The constructor to setup the game 
     constructor(target) {
         const canvas = document.getElementById(target)
-        const canvasContainer = document.getElementById(target + "Container")
+        //const canvasContainer = document.getElementById(target + "Container")
 
         canvas.setAttribute('height', Globals.width.y)
+        console.log(canvas.getAttribute('height'))
         canvas.setAttribute('width', Globals.width.x)
-        canvas.style.transform = `scale(${Globals.scale})`
+        //canvas.style.transform = `scale(${Globals.scale})`
+        canvas.style.width = String(Globals.width.x * Globals.scale) + "px"
+        //canvas.style.height = String(Globals.width.y * Globals.scale)
+        //console.log(canvas.getAttribute('height'))
 
-        canvasContainer.setAttribute('height', Globals.width.y)
+        //canvasContainer.setAttribute('height', Globals.width.y)
 
         const context = canvas.getContext('2d')
+        //context.scale(Globals.scale, Globals.scale); 
 
         Globals.grid = new Grid(context)
         Globals.grid.fill(Empty)

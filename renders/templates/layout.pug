@@ -3,40 +3,53 @@ html
     head
         title Powder Game
 
+        meta(charset='UTF-8')
+        meta(name='description' content='A game about falling powder')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0.0, minimal-ui')
         meta(name='msapplication-TileColor', content='#000000')
         meta(name='theme-color', content='#000000')
-        meta(charset='UTF-8')
 
         link(rel='stylesheet', type='text/css', href='/dist/app.css')
         link(rel='icon', href='/img/favicon/faviconSmall.ico', type='image/x-icon')
     body
-        block header
-            header.header
+        #wrapper
+            header
                 #titleContainer
-                    h1#title Powder Game
+                    block header
+                hr
+            nav
                 #navigation
-                    a(href='/about', target='_blank') About
+                    unless (path == "/")
+                        a(href='/', target='_blank') Game
+                    unless (path == "/about")
+                        a(href='/about', target='_blank') About
+                    unless (path == "/particles")
+                        a(href='/particles', target='_blank') Particles
                     a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
-        block content
+            main
+                block content
 
-        //- Automatic page reload and fps counter in development
-        if development
-            script(src='/reload/reload.js')
-            script(src='/lib/fpsmeter.js')
+                //- Automatic page reload and fps counter in development
+                if development
+                    script(src='/reload/reload.js')
+                    script(src='/lib/fpsmeter.js')
 
-            script.
-                var development = #{development ? 'true' : 'false'}
-                var meter = new FPSMeter({
-                    theme: 'dark',
-                    graph: 1,
-                    history: 20,
+                    script.
+                        var development = #{development ? 'true' : 'false'}
+                        var meter = new FPSMeter({
+                            theme: 'dark',
+                            graph: 1,
+                            history: 20,
 
-                    top: '5px',
-                    right: '5px',
-                    left: 'auto',
-                    bottom: 'auto'
-                })
+                            top: '5px',
+                            right: '5px',
+                            left: 'auto',
+                            bottom: 'auto'
+                        })
 
-        block scripts
+                block scripts
+            footer
+                hr
+                p Thank you for visiting. 
+                block footer
 

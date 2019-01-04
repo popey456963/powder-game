@@ -1,39 +1,44 @@
 extends ..\\templates\\layout
 
+block header
+    h1#title Powder Game
+
 block content
     #content
-        main.main
-            #gameContainer
-                canvas#game.game Please use a canvas enabled browser.
+        #gameContainer.gameContainer
+            canvas#game.game Please use a canvas enabled browser.
 
-            #controlButtons.buttonContainer
+        #controlButtons.buttonContainer
             button#start Start
             button#stop Stop
             button#tick Tick
             button#reset Reset
 
-            #floorButtons.buttonContainer
+        #floorButtons.buttonContainer
             button#makeFloor Make Floor
             button#removeFloor Remove Floor
 
-            script.
-                window.Globals = {
-                    width: { x: 64, y: 64 },
-                    scale: 6,
-                    canvas: 'game',
-                    running: false,
-                    molecules: {
-                        Particle: 0,
-                        Empty: 1,
-                        Block: 100,
-                        Powder: 200,
-                        Sand: 201,
-                        Snow: 202, 
-                        Oil: 203, 
-                        Salt: 204, 
-                        Water: 205
-                    }
+        #information.information
+            p This game is about falling sand. Sand falls. 
+
+        script.
+            window.Globals = {
+                width: { x: 128, y: 128 },
+                scale: 6,
+                canvas: 'game',
+                running: false,
+                molecules: {
+                    Particle: 0,
+                    Empty: 1,
+                    Block: 100,
+                    Powder: 200,
+                    Sand: 201,
+                    Snow: 202, 
+                    Oil: 203, 
+                    Salt: 204, 
+                    Water: 205
                 }
+            }
 
 block scripts
     script(src='/lib/jquery.js')

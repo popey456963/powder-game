@@ -4,7 +4,7 @@ class Oil extends Powder {
     constructor(options) {
         super(options)
 
-        this.type = 203
+        this.type = Globals.molecules.Oil
     }
 
     render() {

@@ -4,7 +4,7 @@ class Powder extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = 200
+        this.type = Globals.molecules.Powder
     }
 
     fall() {

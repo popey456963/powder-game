@@ -1,32 +1,80 @@
-#content {
-	background-color: #BBBBDD; 
-	clear: both; 
+// ===== State the charset ===== 
+@charset "UTF-8";
+
+// ===== Set base parameters for the whole document ===== 
+* {
+	padding: 0; 
+	margin: 0; 
+	outline: none; 
+	box-sizing: border-box; 
 }
 
-header.header {
+// ===== Styling for the main containing elements ===== 
+body {
+	background-color: #EEEEEE; 
+	color: #000000; 
+}
+
+#wrapper {
+	margin: 10px; 
+}
+
+// ===== Styling for the header ===== 
+header {
 	margin: auto; 
 	padding-bottom: 10px; 
 	width: 100%; 
 	text-align: center; 
 }
 
-header.header > #navigation {
+// ===== Styling for the navigation menu ===== 
+nav > #navigation {
 	display: flex; 
 	justify-content: center; 
 }
 
-header.header > #navigation > a {
+nav > #navigation > a {
 	margin: 5px; 
 }
 
-.main {
-	margin: auto; 
-	min-width: 50%; 
+// ===== Styling for the body ===== 
+main {
+	padding: 5px; 
 	text-align: center; 
+}
+
+// ===== Styling for the footer ===== 
+footer {
+	padding-top: 10px; 
+}
+
+// ===== Styling for the content 
+#content {
+	background-color: #BBBBDD; 
+}
+
+.gameContainer {
+	float: left; 
+}
+
+.buttonContainer {
 	padding: 5px; 
 }
 
-.game {
+.buttonContainer button {
+	padding: 5px; 
+	float: right; 
+}
+
+main li {
+	list-style-position: inside; 
+}
+
+#information {
+	clear: both; 
+}
+
+#game {
 	display: block;
 	border: 1px dashed blue;
 	image-rendering: -moz-crisp-edges;

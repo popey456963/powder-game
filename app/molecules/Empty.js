@@ -4,7 +4,7 @@ class Empty extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = 1
+        this.type = Globals.molecules.Empty
     }
 
     render() {

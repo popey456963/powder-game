@@ -5,7 +5,7 @@ class Salt extends Powder {
     constructor(options) {
         super(options)
 
-        this.type = 204
+        this.type = Globals.molecules.Salt
     }
 
     render() {

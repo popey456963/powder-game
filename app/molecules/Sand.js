@@ -4,7 +4,7 @@ class Sand extends Powder {
     constructor(options) {
         super(options)
 
-        this.type = 201
+        this.type = Globals.molecules.Sand
     }
 
     render() {
