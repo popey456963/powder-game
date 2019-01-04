@@ -6,6 +6,8 @@
  *  - full = Array of objects, describing metadata of each molecule
  */
 
+const Shape = require('./Shape')
+
 class Grid {
     constructor(context) {
         this.context = context
@@ -39,6 +41,23 @@ class Grid {
         this.types[molecule.pos] = molecule.type
 
         return true
+    }
+
+    drawLine(Molecule, start, end, force = false) {
+        if (typeof start === 'number') start = Coords.toXY(start)
+        if (typeof end === 'number') end = Coords.toXY(end)
+
+        for (const point of Shape.line(start, end)) {
+            this.setMolecule(new Molecule({ pos: point.y * Globals.width.x + point.x }), force)
+        }
+    }
+
+    drawPoint(Molecule, center, radius = 2, force = false) {
+        if (typeof center === 'number') center = Coords.toXY(center)
+
+        for (const point of Shape.point(center, radius)) {
+            this.setMolecule(new Molecule({ pos: point.y * Globals.width.x + point.x }), force)
+        }
     }
 
     fill(Molecule) {

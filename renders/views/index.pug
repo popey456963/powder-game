@@ -5,16 +5,18 @@ block content
         main.main
             #gameContainer
                 canvas#game.game Please use a canvas enabled browser.
-            
+
             button#start Start
             button#stop Stop
             button#tick Tick
-            button#restart Restart
+            button#reset Reset
 
             script.
                 window.Globals = {
-                    width: { x: 128, y: 128 },
+                    width: { x: 64, y: 64 },
+                    scale: 6,
                     canvas: 'game',
+                    running: false,
                     molecules: {
                         Particle: 0,
                         Empty: 1,
