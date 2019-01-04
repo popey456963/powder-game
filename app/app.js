@@ -1,6 +1,6 @@
 // Allows us to use Promises, Symbols, etc.
 import "babel-polyfill"
-import "..\\styles\\css\\style.scss"
+import "../styles/css/style.scss"
 
 const Game = require('./modules/Game')
 
