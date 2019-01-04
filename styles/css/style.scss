@@ -1,35 +1,86 @@
-#content {
-	background-color: #BBBBDD; 
-	clear: both; 
+body, .body {
+	position: absolute;
+
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	margin: 0;
+
+	background-color: #151515;
 }
 
-header.header {
-	margin: auto; 
-	padding-bottom: 10px; 
-	width: 100%; 
-	text-align: center; 
+.controls {
+	display: flex;
+	flex-wrap: wrap;
+	float: left;
 }
 
-header.header > #navigation {
-	display: flex; 
-	justify-content: center; 
-}
+.controls > button {
+	position: relative;
 
-header.header > #navigation > a {
-	margin: 5px; 
-}
+	min-width: 60px;
+	max-width: 200px;
+	flex-grow: 1;
 
-.main {
-	margin: auto; 
-	min-width: 50%; 
-	text-align: center; 
-	padding: 5px; 
+	cursor: pointer;
 }
 
 .game {
-	display: block;
-	border: 1px dashed blue;
-	image-rendering: -moz-crisp-edges;
-	image-rendering: pixelated;
-	transform-origin: left top; 
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	right: 0;
+	left: 0;
+	max-width: calc(100%);
+	margin: auto auto;
 }
+
+// Clean rendering
+.game {
+	image-rendering: crisp-edges;
+	-ms-interpolation-mode: nearest-neighbor;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: pixelated;
+}
+
+// #content {
+// 	background-color: #BBBBDD; 
+// 	clear: both; 
+// }
+
+// header.header {
+// 	margin: auto; 
+// 	padding-bottom: 10px; 
+// 	width: 100%; 
+// 	text-align: center; 
+// }
+
+// header.header > #navigation {
+// 	display: flex; 
+// 	justify-content: center; 
+// }
+
+// header.header > #navigation > a {
+// 	margin: 5px; 
+// }
+
+// .main {
+// 	margin: auto; 
+// 	min-width: 50%; 
+// 	text-align: center; 
+// 	padding: 5px; 
+// }
+
+// .game {
+// 	display: block;
+// 	border: 1px dashed blue;
+// 	image-rendering: -moz-crisp-edges;
+// 	image-rendering: pixelated;
+// 	transform-origin: left top;
+// 	height: 100%;
+// }

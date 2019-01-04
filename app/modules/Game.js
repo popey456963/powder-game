@@ -15,13 +15,9 @@ class Game {
     // The constructor to setup the game 
     constructor(target) {
         const canvas = document.getElementById(target)
-        const canvasContainer = document.getElementById(target + "Container")
 
         canvas.setAttribute('height', Globals.width.y)
         canvas.setAttribute('width', Globals.width.x)
-        canvas.style.transform = `scale(${Globals.scale})`
-
-        canvasContainer.setAttribute('height', Globals.width.y)
 
         const context = canvas.getContext('2d')
 
@@ -41,9 +37,12 @@ class Game {
         canvas.addEventListener('mousemove', e => this.updatePos(e), false)
         canvas.addEventListener('mouseenter', e => this.updatePos(e), false)
 
+        window.addEventListener('resize', e => this.resizeCanvas(), false)
 
         this.canvas = canvas
         this.context = context
+
+        this.resizeCanvas()
 
         this.x = 0
         this.y = 0
@@ -56,18 +55,13 @@ class Game {
         Globals.grid.draw()
 
         for (let i = 1; i < Globals.width.x - 1; i++) {
-            if (Math.random() < 0.005) {
-                Globals.grid.setMolecule(new Snow({ pos: i + Globals.width.x }))
-            }
-            else if (Math.random() > 0.995) {
-                Globals.grid.setMolecule(new Sand({ pos: i + Globals.width.x }))
-            }
-            else if (Math.random() > 0.993) {
-                Globals.grid.setMolecule(new Oil({ pos: i + Globals.width.x }))
-            }
-            else if (Math.random() > 0.988) {
-                Globals.grid.setMolecule(new Salt({ pos: i + Globals.width.x }))
-            }
+            const random = Math.random()
+            const pos = i + Globals.width.x
+
+            if (random < 0.001) Globals.grid.setMolecule(new Snow({ pos }))
+            if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
+            if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
+            if (random < 0.004) Globals.grid.setMolecule(new Oil({ pos }))
         }
 
         // await Utils.pause(500)
@@ -82,6 +76,12 @@ class Game {
             x: Math.round((clientX - left) / Globals.scale),
             y: Math.round((clientY - top) / Globals.scale)
         }
+    }
+
+    resizeCanvas() {
+        this.canvas.style.width = `${window.innerHeight * Globals.width.x / Globals.width.y}px`
+        this.canvas.style.height = `${window.innerHeight}px`
+        Globals.scale = window.innerHeight / Globals.width.y;
     }
 
     // Add a molecule 

@@ -15,8 +15,8 @@ class Coord {
             x = x.x
         }
 
-        if (x < 1 || x > Globals.width.x - 2) return false
-        if (y < 1 || y > Globals.width.y - 2) return false
+        if (x < 0 || x > Globals.width.x - 1) return false
+        if (y < 0 || y > Globals.width.y - 1) return false
 
         return true
     }

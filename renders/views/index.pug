@@ -1,25 +1,22 @@
 extends ..\\templates\\layout
 
 block content
-    #content
-        main.main
-            #gameContainer
-                canvas#game.game Please use a canvas enabled browser.
+    .body 
+        canvas#game.game Please use a canvas enabled browser.
 
-            #controlButtons.buttonContainer
+        .controls
             button#start Start
             button#stop Stop
             button#tick Tick
             button#reset Reset
 
-            #floorButtons.buttonContainer
             button#makeFloor Make Floor
             button#removeFloor Remove Floor
 
             script.
                 window.Globals = {
                     width: { x: 64, y: 64 },
-                    scale: 6,
+                    scale: 1,
                     canvas: 'game',
                     running: false,
                     molecules: {
