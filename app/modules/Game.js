@@ -30,10 +30,11 @@ class Game {
 
         canvas.addEventListener('mousedown', e => this.startSpawn(e), false)
         canvas.addEventListener('mouseup', e => this.stopSpawn(e), false)
-        canvas.addEventListener('mouseout', e => this.stopSpawn(e), false)
+        document.addEventListener('mouseup', e => this.stopSpawn(e), false)
 
         canvas.addEventListener('mousemove', e => this.updatePos(e), false)
         canvas.addEventListener('mouseenter', e => this.updatePos(e), false)
+
 
         this.canvas = canvas
         this.context = context
