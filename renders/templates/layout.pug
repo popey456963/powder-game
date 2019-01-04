@@ -13,8 +13,11 @@ html
     body
         block header
             header.header
-                h1 Powder Game
-                a(href='/about', target='_blank') About
+                #titleContainer
+                    h1#title Powder Game
+                #navigation
+                    a(href='/about', target='_blank') About
+                    a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
         block content
 
         //- Automatic page reload and fps counter in development

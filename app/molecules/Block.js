@@ -8,7 +8,7 @@ class Block extends Particle {
     }
 
     render() {
-        return 0xFF887A6C
+        return 0xFF887AFF
     }
 }
 

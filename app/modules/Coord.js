@@ -23,3 +23,4 @@ class Coord {
 }
 
 module.exports = Coord
+

@@ -1,14 +1,14 @@
 const Powder = require('./Powder')
 
-class Sand extends Powder {
+class Oil extends Powder {
     constructor(options) {
         super(options)
 
-        this.type = 201
+        this.type = 203
     }
 
     render() {
-        return 0xFF00FFFF
+        return 0xFF0000FF
     }
 
     tick() {
@@ -16,4 +16,4 @@ class Sand extends Powder {
     }
 }
 
-module.exports = Sand
+module.exports = Oil

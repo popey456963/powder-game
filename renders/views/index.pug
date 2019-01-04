@@ -6,10 +6,15 @@ block content
             #gameContainer
                 canvas#game.game Please use a canvas enabled browser.
 
+            #controlButtons.buttonContainer
             button#start Start
             button#stop Stop
             button#tick Tick
             button#reset Reset
+
+            #floorButtons.buttonContainer
+            button#makeFloor Make Floor
+            button#removeFloor Remove Floor
 
             script.
                 window.Globals = {
@@ -23,7 +28,10 @@ block content
                         Block: 100,
                         Powder: 200,
                         Sand: 201,
-                        Snow: 202
+                        Snow: 202, 
+                        Oil: 203, 
+                        Salt: 204, 
+                        Water: 205
                     }
                 }
 

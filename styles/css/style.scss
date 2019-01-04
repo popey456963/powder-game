@@ -3,11 +3,20 @@
 	clear: both; 
 }
 
-.header {
+header.header {
 	margin: auto; 
 	padding-bottom: 10px; 
 	width: 100%; 
 	text-align: center; 
+}
+
+header.header > #navigation {
+	display: flex; 
+	justify-content: center; 
+}
+
+header.header > #navigation > a {
+	margin: 5px; 
 }
 
 .main {

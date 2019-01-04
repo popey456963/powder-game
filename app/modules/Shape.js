@@ -39,3 +39,4 @@ class Shape {
 // console.log(Shape.point({ x: 3, y: 3 }, 2))
 
 module.exports = Shape
+

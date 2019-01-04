@@ -1,12 +1,18 @@
+// Imports 
 const Empty = require('../molecules/Empty.js')
 const Snow = require('../molecules/Snow.js')
 const Sand = require('../molecules/Sand.js')
+const Oil = require('../molecules/Oil.js')
+const Salt = require('../molecules/Salt.js')
+const Water = require('../molecules/Water.js')
 const Block = require('../molecules/Block.js')
 
 const Utils = require('./Utils.js')
 const Grid = require('./Grid.js')
 
+// The main game class 
 class Game {
+    // The constructor to setup the game 
     constructor(target) {
         const canvas = document.getElementById(target)
         const canvasContainer = document.getElementById(target + "Container")
@@ -23,10 +29,10 @@ class Game {
         Globals.grid.fill(Empty)
         Globals.Empty = Empty
 
-        Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: 0, y: Globals.width.y - 1 })
-        Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: Globals.width.x - 1, y: 0 })
-        Globals.grid.drawLine(Block, { x: Globals.width.x - 1, y: 0 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 })
-        Globals.grid.drawLine(Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 })
+        Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: 0, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: Globals.width.x - 1, y: 0 }, true)
+        Globals.grid.drawLine(Block, { x: Globals.width.x - 1, y: 0 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
 
         canvas.addEventListener('mousedown', e => this.startSpawn(e), false)
         canvas.addEventListener('mouseup', e => this.stopSpawn(e), false)
@@ -43,6 +49,7 @@ class Game {
         this.y = 0
     }
 
+    // The main game loop 
     async loop(time) {
         Globals.grid.tick()
         Globals.grid.render()
@@ -55,6 +62,12 @@ class Game {
             else if (Math.random() > 0.995) {
                 Globals.grid.setMolecule(new Sand({ pos: i + Globals.width.x }))
             }
+            else if (Math.random() > 0.993) {
+                Globals.grid.setMolecule(new Oil({ pos: i + Globals.width.x }))
+            }
+            else if (Math.random() > 0.988) {
+                Globals.grid.setMolecule(new Salt({ pos: i + Globals.width.x }))
+            }
         }
 
         // await Utils.pause(500)
@@ -62,6 +75,7 @@ class Game {
         if (Globals.running) window.requestAnimationFrame(this.loop.bind(this))
     }
 
+    // Get the relative x and y coordinates of an element 
     getRelativeLocation(element, { clientX, clientY }) {
         const { left, top } = element.getBoundingClientRect()
         return {
@@ -70,10 +84,12 @@ class Game {
         }
     }
 
+    // Add a molecule 
     spawn(Molecule, center) {
         Globals.grid.drawPoint(Molecule, center)
     }
 
+    // Spawn particles on click 
     startSpawn() {
         if (this.clickInterval) {
             clearInterval(this.clickInterval)
@@ -97,6 +113,7 @@ class Game {
         this.y = location.y
     }
 
+    // Buttons 
     start() {
         if (!Globals.running) {
             Globals.running = true
@@ -119,6 +136,16 @@ class Game {
         console.log('Resetting Grid')
         Globals.grid.fill(Empty) 
     }
+
+    makeFloor() {
+        Globals.grid.drawLine(Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+    }
+
+    removeFloor() {
+        console.log("Remove floor") 
+        Globals.grid.drawLine(Empty, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+    }
 }
 
+// Exports 
 module.exports = Game
