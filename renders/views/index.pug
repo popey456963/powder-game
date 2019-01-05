@@ -1,40 +1,50 @@
 extends ..\\templates\\layout
 
-//- block header
-//-     h1#title Powder Game
+block header
+    h1#title Powder Game
 
 block content
-    #gameWrapper 
-        canvas#game.game Please use a canvas enabled browser.
 
-        .controls
-            button#start Start
-            button#stop Stop
-            button#tick Tick
-            button#reset Reset
+    //- #gameWrapper 
+    //-    canvas#game.game Please use a canvas enabled browser.
+    //-
+    //-    .controls
+    #innerWrapper
+        .flex
+            .col.controls
+                button#start Start
+                button#stop Stop
+                button#tick Tick
+                button#reset Reset
 
-            button#makeFloor Make Floor
-            button#removeFloor Remove Floor
+                button#makeFloor Make Floor
+                button#removeFloor Remove Floor
 
-            script.
-                window.Globals = {
-                    width: { x: 128, y: 128 },
-                    scale: 1,
-                    canvas: 'game',
-                    running: false,
-                    molecules: {
-                        Particle: 0,
-                        Empty: 1,
-                        Block: 100,
-                        Powder: 200,
-                        Sand: 201,
-                        Snow: 202, 
-                        Oil: 203, 
-                        Salt: 204, 
-                        Water: 205
-                    }
-                }
+            .col.game_area
+                canvas#game.game Please use a canvas enabled browser.
+
+            .col
+                h1 This is a powder game.
+                p It includes falling powder.
 
 block scripts
+    script.
+            window.Globals = {
+                width: { x: 128, y: 128 },
+                scale: 1,
+                canvas: 'game',
+                running: false,
+                molecules: {
+                    Particle: 0,
+                    Empty: 1,
+                    Block: 100,
+                    Powder: 200,
+                    Sand: 201,
+                    Snow: 202, 
+                    Oil: 203, 
+                    Salt: 204, 
+                    Water: 205
+                }
+            }
     script(src='/lib/jquery.js')
     script(src='/dist/app.js')
