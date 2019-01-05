@@ -1,7 +1,7 @@
 doctype html
 html
     head
-        title Powder Game
+        title= "Powder Game " + path.substring(1, path.length)
 
         meta(charset='UTF-8')
         meta(name='description' content='A game about falling powder')
@@ -13,41 +13,43 @@ html
         link(rel='icon', href='/img/favicon/faviconSmall.ico', type='image/x-icon')
     body
         #wrapper
-            //- header
-            //-     #titleContainer
-            //-         block header
-            //-     hr
-            //- nav
-            //-     #navigation
-            //-         unless (path == "/")
-            //-             a(href='/', target='_blank') Game
-            //-         unless (path == "/about")
-            //-             a(href='/about', target='_blank') About
-            //-         unless (path == "/particles")
-            //-             a(href='/particles', target='_blank') Particles
-            //-         a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
-            //- main
-            block content
+            header
+                #titleContainer
+                    block header
+                hr
+            nav
+                #navigation
+                    unless (path == "/")
+                        a(href='/', target='_blank') Game
+                    unless (path == "/about")
+                        a(href='/about', target='_blank') About
+                    unless (path == "/particles")
+                        a(href='/particles', target='_blank') Particles
+                    a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
+            main
+                block content
 
             //- Automatic page reload and fps counter in development
-            if development
-                script(src='/reload/reload.js')
-                script(src='/lib/fpsmeter.js')
+            #scripts
+                noscript Please enable JavaScript. 
+                if development
+                    script(src='/reload/reload.js')
+                    script(src='/lib/fpsmeter.js')
 
-                script.
-                    var development = #{development ? 'true' : 'false'}
-                    var meter = new FPSMeter({
-                        theme: 'dark',
-                        graph: 1,
-                        history: 20,
+                    script.
+                        var development = #{development ? 'true' : 'false'}
+                        var meter = new FPSMeter({
+                            theme: 'dark',
+                            graph: 1,
+                            history: 20,
 
-                        top: '5px',
-                        right: '5px',
-                        left: 'auto',
-                        bottom: 'auto'
-                    })
+                            top: '5px',
+                            right: '5px',
+                            left: 'auto',
+                            bottom: 'auto'
+                        })
 
-            block scripts
+                block scripts
             footer
                 hr
                 p Thank you for visiting. 

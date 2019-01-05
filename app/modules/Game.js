@@ -144,8 +144,7 @@ class Game {
     }
 
     removeFloor() {
-        console.log("Remove floor") 
-        Globals.grid.drawLine(Empty, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Empty, { x: 1, y: Globals.width.y - 1 }, { x: Globals.width.x - 2, y: Globals.width.y - 1 }, true)
     }
 }
 

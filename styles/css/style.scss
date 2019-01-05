@@ -39,18 +39,16 @@ body, .body {
 	cursor: pointer;
 }
 
-.game {
+#game {
 	position: absolute;
 	bottom: 0;
 	top: 0;
 	right: 0;
 	left: 0;
 	max-width: 100%;
-	margin: auto auto;
-}
+	margin: auto;
 
-// Clean rendering
-.game {
+	// Clean rendering 
 	image-rendering: crisp-edges;
 	-ms-interpolation-mode: nearest-neighbor;
 	image-rendering: -webkit-optimize-contrast;
