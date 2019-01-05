@@ -1,15 +1,37 @@
 extends ..\\templates\\layout
 
 block header
-    h1#title Powder Game Particles
+    | Powder Game Particles
 
 block content
     article
-        p This game has the following particles. 
+        h2 Description
+        p This game has a number of particles of different types. These are outlined below.
+    article
+        h2 Powders
+        p Powder particles fall due to gravity.  
+        p This game has the following powder particles. 
         ul
-            li Oil
-            li Water
-            li Sand
-            li Snow
-            li Salt
+            li Sand - a yellow generic powder. 
+            li Snow - a white generic powder. 
+            li Salt - a beige powder that turns snow to water if it lands directly on top of snow. 
+    article
+        h2 Liquids
+        p Liquid particles fall due to gravity and move when they land. 
+        p This game has the following liquid particles. 
+        ul
+            li Oil - a generic liquid. 
+            li Water - a generic liquid. 
+    article
+        h2 Blocks
+        p Blocks do not move.
+        p Thus game has the following block particles. 
+        ul
+            li Block - a generic block particle
+    article
+        h2 Empty
+        p Empty particles are just empty space. 
+        p This game has the following empty particles. 
+        ul
+            lu Empty - a generic empty particle. 
 

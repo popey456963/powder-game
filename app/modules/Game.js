@@ -37,12 +37,14 @@ class Game {
         canvas.addEventListener('mousemove', e => this.updatePos(e), false)
         canvas.addEventListener('mouseenter', e => this.updatePos(e), false)
 
-        window.addEventListener('resize', e => this.resizeCanvas(), false)
+        window.addEventListener('resize', e => this.resizeCanvas(this.calculateSize()), false)
 
         this.canvas = canvas
         this.context = context
 
-        this.resizeCanvas()
+        this.size = this.calculateSize()
+        this.resizeCanvas(this.size)
+        console.log("The canvas size is: " + String(this.size) + "; the scale is: " + String(Globals.scale) + ". ")
 
         this.x = 0
         this.y = 0
@@ -80,22 +82,27 @@ class Game {
         }
     }
 
-    resizeCanvas() {
-        const widthRatio = window.innerWidth / Globals.width.x
-        const heightRatio = window.innerHeight / Globals.width.y
+    // Calculate and set the canvas size 
+    calculateSize() {
+        return window.innerHeight - Globals.heightOffset - 100
+    }
+
+    resizeCanvas(height) {
+        const widthRatio = height / Globals.width.x
+        const heightRatio = height / Globals.width.y
 
         if (widthRatio > heightRatio) {
             // We can display the menu off to the side.
-            this.canvas.style.width = `${window.innerHeight * Globals.width.x / Globals.width.y}px`
-            this.canvas.style.height = `${window.innerHeight}px`
+            this.canvas.style.width = `${height * Globals.width.x / Globals.width.y}px`
+            this.canvas.style.height = `${height}px`
 
-            Globals.scale = window.innerHeight / Globals.width.y
+            Globals.scale = height / Globals.width.y
         } else {
             // We can display the menu off to the bottom.
-            this.canvas.style.width = `${window.innerWidth}px`
-            this.canvas.style.height = `${window.innerWidth * Globals.width.y / Globals.width.x}px`
+            this.canvas.style.width = `${height}px`
+            this.canvas.style.height = `${height * Globals.width.y / Globals.width.x}px`
 
-            Globals.scale = window.innerWidth / Globals.width.x
+            Globals.scale = height / Globals.width.x
         }
     }
 

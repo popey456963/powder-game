@@ -1,37 +1,32 @@
 extends ..\\templates\\layout
 
 block header
-    h1#title Powder Game
+    | Powder Game
 
 block content
+    #innerWrapper.flex
+        article#controls.col
+            button#start Start
+            button#stop Stop
+            button#tick Tick
+            button#reset Reset
 
-    //- #gameWrapper 
-    //-    canvas#game.game Please use a canvas enabled browser.
-    //-
-    //-    .controls
-    #innerWrapper
-        .flex
-            .col.controls
-                button#start Start
-                button#stop Stop
-                button#tick Tick
-                button#reset Reset
+            button#makeFloor Make Floor
+            button#removeFloor Remove Floor
 
-                button#makeFloor Make Floor
-                button#removeFloor Remove Floor
+        article#gameArea.col
+            canvas(name="game")#game.game Please use a canvas enabled browser.
 
-            .col.game_area
-                canvas#game.game Please use a canvas enabled browser.
-
-            .col
-                h1 This is a powder game.
-                p It includes falling powder.
+        article#information.col
+            p This is a powder game.
+            p It includes falling powder.
 
 block scripts
     script.
             window.Globals = {
                 width: { x: 128, y: 128 },
                 scale: 1,
+                heightOffset: 100, 
                 canvas: 'game',
                 running: false,
                 molecules: {

@@ -15,8 +15,10 @@ html
         #wrapper
             header
                 #titleContainer
-                    block header
+                    h1#title
+                        block header
                 hr
+            
             nav
                 #navigation
                     unless (path == "/")
@@ -26,6 +28,7 @@ html
                     unless (path == "/particles")
                         a(href='/particles', target='_blank') Particles
                     a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
+
             main
                 block content
 
@@ -50,6 +53,7 @@ html
                         })
 
                 block scripts
+
             footer
                 hr
                 p Thank you for visiting. 
