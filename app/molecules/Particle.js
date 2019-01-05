@@ -33,7 +33,7 @@ class Particle {
     getType(p, y) {
         if (typeof y !== 'undefined') p += y * Globals.width.x
 
-        return Globals.grid.getType(this.pos + p)
+        return Globals.grid.getType(this.pos + p) || Globals.molecules.Empty
     }
 }
 
