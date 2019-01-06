@@ -14,7 +14,15 @@ block content
             button#makeFloor Make Floor
             button#removeFloor Remove Floor
 
-        article#gameArea.col
+            button#startGenerate Start Generate
+            button#stopGenerate Stop Generate
+
+            form(method="get" action="/" id="sizes")
+                input(type="number" min="100" max="1000" id="sizesx" class="setSizes" name="x")
+                input(type="number" min="100" max="1000" id="sizesy" class="setSizes" name="y")
+                input(type="submit" value="Submit" id="sizessubmit" name="submit")
+
+        article(name="gameArea")#gameArea.col
             canvas(name="game")#game.game Please use a canvas enabled browser.
 
         article#information.col
@@ -24,10 +32,23 @@ block content
 block scripts
     script.
             window.Globals = {
-                width: { x: 128, y: 128 },
+                width: { x: 300, y: 300 },
                 scale: 1,
-                heightOffset: 100, 
-                canvas: 'game',
+                sizeOffset: 100, 
+                ids: {
+                    canvas: 'game',
+                    container: 'gameArea',
+                    innerWrapper: 'innerWrapper',
+                    start: 'start',
+                    stop: 'stop',
+                    tick: 'tick',
+                    reset: 'reset',
+                    makeFloor: 'makeFloor',
+                    removeFloor: 'removeFloor',
+                    startGenerate: 'startGenerate',
+                    stopGenerate: 'stopGenerate',
+                    sizesForm: 'sizes'
+                },
                 running: false,
                 molecules: {
                     Particle: 0,
