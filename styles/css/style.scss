@@ -25,10 +25,13 @@ body {
 // ===== Styling for the header ===== 
 header {
 	text-align: center; 
-	text-decoration: underline;
 	padding-bottom: 10px; 
 }
 
+header h1 {
+	font-size: 3.5em; 
+	color: #111111;
+}
 
 // ===== Styling for the navigation menu ===== 
 nav {
@@ -58,7 +61,11 @@ main {
 	background-color: #CCCCCC;
 }
 
-main button {
+main input[type="number"] {
+	min-width: 100px; 
+}
+
+main button, main input {
 	margin: 5px;
 	padding: 5px;
 }
@@ -89,6 +96,7 @@ footer {
 .col {
 	margin: 10px;
 	border: 1px solid #000000; 
+	padding: 5px; 
 }
 
 #game {

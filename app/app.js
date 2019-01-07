@@ -8,6 +8,10 @@ const Game = require('./modules/Game')
 const game = new Game(Globals.ids.canvas)
 game.start()
 
+Globals.getCanvasSize = function() {
+	return document.getElementById(Globals.ids.canvas).getBoundingClientRect()
+}
+
 document.getElementById(Globals.ids.start).onclick = function() { game.start() }
 document.getElementById(Globals.ids.stop).onclick = function() { game.stop() }
 document.getElementById(Globals.ids.tick).onclick = function() { game.tick() }
