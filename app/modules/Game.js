@@ -2,6 +2,7 @@
 const Empty = require('../molecules/Empty.js')
 const Snow = require('../molecules/Snow.js')
 const Sand = require('../molecules/Sand.js')
+const Sage = require('../molecules/Sage.js')
 const Oil = require('../molecules/Oil.js')
 const Salt = require('../molecules/Salt.js')
 const Water = require('../molecules/Water.js')
@@ -64,6 +65,7 @@ class Game {
             if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
             if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
             if (random < 0.004) Globals.grid.setMolecule(new Oil({ pos }))
+            if (random < 0.005) Globals.grid.setMolecule(new Sage({ pos }))
         }
 
         // await Utils.pause(500)
