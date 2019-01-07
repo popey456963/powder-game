@@ -112,7 +112,7 @@ class Game {
         }
 
         this.clickInterval = setInterval(() => {
-            this.spawn(Snow, { x: this.x, y: this.y })
+            this.spawn(Water, { x: this.x, y: this.y })
         })
     }
 

@@ -1,6 +1,6 @@
-const Powder = require('./Powder')
+const Liquid = require('./Liquid')
 
-class Water extends Powder {
+class Water extends Liquid {
     constructor(options) {
         super(options)
         
