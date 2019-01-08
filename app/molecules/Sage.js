@@ -10,10 +10,6 @@ class Sage extends Powder {
     render() {
         return 0xFF00FF00
     }
-
-    tick() {
-        super.tick()
-    }
 }
 
 module.exports = Sage

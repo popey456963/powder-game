@@ -10,10 +10,6 @@ class Oil extends Liquid {
     render() {
         return 0xFF0000FF
     }
-
-    tick() {
-        super.tick()
-    }
 }
 
 module.exports = Oil

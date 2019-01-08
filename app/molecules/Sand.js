@@ -10,10 +10,6 @@ class Sand extends Powder {
     render() {
         return 0xFF00FFFF
     }
-
-    tick() {
-        super.tick()
-    }
 }
 
 module.exports = Sand
