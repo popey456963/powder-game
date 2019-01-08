@@ -11,16 +11,21 @@ const Block = require('../molecules/Block.js')
 const Utils = require('./Utils.js')
 const Grid = require('./Grid.js')
 
+const queryString = require('query-string')
+
 // The main game class 
 class Game {
     // The constructor to setup the game 
     constructor(target) {
         const canvas = document.getElementById(target)
+        this.parseSize()
 
         canvas.setAttribute('height', Globals.width.y)
         canvas.setAttribute('width', Globals.width.x)
 
         const context = canvas.getContext('2d')
+
+        this.sizes = this.calculateSizes()
 
         Globals.grid = new Grid(context)
         Globals.grid.fill(Empty)
@@ -38,15 +43,18 @@ class Game {
         canvas.addEventListener('mousemove', e => this.updatePos(e), false)
         canvas.addEventListener('mouseenter', e => this.updatePos(e), false)
 
-        window.addEventListener('resize', e => this.resizeCanvas(), false)
+        window.addEventListener('resize', e => this.resizeCanvas(this.calculateSizes()), false)
 
         this.canvas = canvas
         this.context = context
 
-        this.resizeCanvas()
+        this.resizeCanvas(this.calculateSizes())
+        console.log("The canvas sizes are: " + String(Globals.width.x) + " by " + String(Globals.width.y) + "; the scale is: " + String(Globals.scale) + ". ")
 
         this.x = 0
         this.y = 0
+
+        this.generate = true
 
         window.requestAnimationFrame(this.loop.bind(this))
     }
@@ -61,16 +69,34 @@ class Game {
             const random = Math.random()
             const pos = i + Globals.width.x
 
-            if (random < 0.001) Globals.grid.setMolecule(new Snow({ pos }))
-            if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
-            if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
-            if (random < 0.004) Globals.grid.setMolecule(new Oil({ pos }))
-            if (random < 0.005) Globals.grid.setMolecule(new Sage({ pos }))
+            if (this.generate) {
+                if (random < 0.001) Globals.grid.setMolecule(new Snow({ pos }))
+                if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
+                if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
+                if (random < 0.004) Globals.grid.setMolecule(new Oil({ pos }))
+                if (random < 0.005) Globals.grid.setMolecule(new Sage({ pos }))
+            }
         }
 
-        // await Utils.pause(500)
         if (development) meter.tick()
         window.requestAnimationFrame(this.loop.bind(this))
+    }
+
+    // Parse the size given in the URL bar 
+    parseSize() {
+        canvasSizes = queryString.parse(window.location.search)
+        if (canvasSizes.x != null && canvasSizes.x != undefined && canvasSizes.x != "") {
+            if (isNaN(canvasSizes["x"]) == false) {
+                Globals.width.x = parseInt(canvasSizes.x)
+            }
+        }
+        if (canvasSizes.y != null && canvasSizes.y != undefined && canvasSizes.y != "") {
+            if (isNaN(canvasSizes["y"]) == false) {
+                Globals.width.y = parseInt(canvasSizes.y)
+            }
+        }
+        document.getElementById(Globals.ids.sizesForm + "x").value = Globals.width.x
+        document.getElementById(Globals.ids.sizesForm + "y").value = Globals.width.y
     }
 
     // Get the relative x and y coordinates of an element 
@@ -82,22 +108,37 @@ class Game {
         }
     }
 
-    resizeCanvas() {
-        const widthRatio = window.innerWidth / Globals.width.x
-        const heightRatio = window.innerHeight / Globals.width.y
+    // Calculate and set the canvas size 
+    calculateSizes() {
+        rect = document.getElementById(Globals.ids.innerWrapper).getBoundingClientRect()
+        return {
+            innerWidth: Math.floor(rect.width),
+            width: window.innerWidth,
+            innerHeight: Math.floor(rect.height),
+            height: window.innerHeight,
+            x: Math.ceil(rect.x), 
+            y: Math.ceil(rect.y)
+        }
+    }
+
+    resizeCanvas(sizes) {
+        const widthRatio = (sizes.innerWidth - Globals.sizeOffset) / Globals.width.x
+        const heightRatio = (sizes.height - sizes.y - Globals.sizeOffset) / Globals.width.y
 
         if (widthRatio > heightRatio) {
             // We can display the menu off to the side.
-            this.canvas.style.width = `${window.innerHeight * Globals.width.x / Globals.width.y}px`
-            this.canvas.style.height = `${window.innerHeight}px`
+            this.canvas.style.width = `${Globals.width.x * heightRatio}px`
+            this.canvas.style.height = `${Globals.width.y * heightRatio}px`
 
-            Globals.scale = window.innerHeight / Globals.width.y
+            Globals.scale = heightRatio
+            console.log("hr")
         } else {
             // We can display the menu off to the bottom.
-            this.canvas.style.width = `${window.innerWidth}px`
-            this.canvas.style.height = `${window.innerWidth * Globals.width.y / Globals.width.x}px`
+            this.canvas.style.width = `${Globals.width.x * widthRatio}px`
+            this.canvas.style.height = `${Globals.width.y * widthRatio}px`
 
-            Globals.scale = window.innerWidth / Globals.width.x
+            Globals.scale = widthRatio
+            console.log("wr")
         }
     }
 
@@ -159,6 +200,14 @@ class Game {
 
     removeFloor() {
         Globals.grid.drawLine(Empty, { x: 1, y: Globals.width.y - 1 }, { x: Globals.width.x - 2, y: Globals.width.y - 1 }, true)
+    }
+
+    startGenerate() {
+        this.generate = true
+    }
+
+    stopGenerate() {
+        this.generate = false
     }
 }
 

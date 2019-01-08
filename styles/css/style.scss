@@ -9,85 +9,98 @@
 	box-sizing: border-box; 
 }
 
-
-#gameWrapper {
-	position: absolute;
-
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+// ===== Styling for the main containing elements ===== 
+body {
+	background-color: #FFFFFF; 
+	color: #000000; 
 }
 
-.flex {
-	display: flex;
+#wrapper {
+	background-color: #EEEEEE; 
+	border-radius: 6px; 
+	margin: 10px; 
+	padding: 5px; 
 }
 
-
-.col {
-	flex: 1;
-	margin: 20px;
+// ===== Styling for the header ===== 
+header {
+	text-align: center; 
+	padding-bottom: 10px; 
 }
 
-button {
-	margin: 10px;
+header h1 {
+	font-size: 3.5em; 
+	color: #111111;
+}
+
+// ===== Styling for the navigation menu ===== 
+nav {
+	position: sticky; 
+	text-align: center; 
+	padding: 5px; 
+	width: 15%; 
+	float: left; 
+	background-color: #8888DD; 
+	top: 5px; 
+}
+
+nav a {
+	width: 100%; 
+	display: block; 
+	background-color: #6666CC; 
+	color: #FFFFFF; 
+	margin: 2px; 
+	border: 1px solid #000000; 
+}
+
+// ===== Styling for the main page content ===== 
+main {
+	padding: 5px; 
+	width: 85%;
+	float: right; 
+	background-color: #CCCCCC;
+}
+
+main input[type="number"] {
+	min-width: 100px; 
+}
+
+main button, main input {
+	margin: 5px;
 	padding: 5px;
 }
 
-.game_area {
-	margin: 0px;
+main li {
+	list-style-position: inside; 
 }
 
-// body, .body {
-// 	position: absolute;
+// ===== Styling for the 'scripts' component ===== 
+div#scripts {
+	clear: both; 
+}
 
-// 	top: 0;
-// 	left: 0;
-// 	width: 100%;
-// 	height: 100%;
+// ===== Styling for the footer ===== 
+footer {
+	padding: 10px; 
+	background-color: #DDDDDD; 
+	border-radius: 0 0 6px 6px; 
+	margin: auto; 
+}
 
-// 	margin: 0;
+// ===== Styling for components within the pages ===== 
+.flex {
+	display: flex;
+	flex-wrap: wrap; 
+}
 
+.col {
+	margin: 10px;
+	border: 1px solid #000000; 
+	padding: 5px; 
+}
 
 #game {
-	position: absolute;
-	bottom: 0;
-	top: 0;
-	right: 0;
-	left: 0;
-	max-width: 100%;
-	margin: auto;
-
-// 	color: #000000;
-// 	background-color: #EEEEEE;
-// }
-
-// .controls {
-// 	display: flex;
-// 	flex-wrap: wrap;
-// 	float: left;
-// }
-
-// .controls > button {
-// 	position: relative;
-
-// 	min-width: 60px;
-// 	max-width: 200px;
-// 	flex-grow: 1;
-
-// 	cursor: pointer;
-// }
-
-// .game {
-// 	position: absolute;
-// 	bottom: 0;
-// 	top: 0;
-// 	right: 0;
-// 	left: 0;
-// 	max-width: 100%;
-// 	margin: auto auto;
-// }
-
+	border: 2px solid #33BB33; 
 
 	// Clean rendering 
 	image-rendering: crisp-edges;
@@ -99,39 +112,4 @@ button {
 	image-rendering: pixelated;
 }
 
-// ===== Styling for the header ===== 
-// header {
-// 	margin: auto; 
-// 	padding-bottom: 10px; 
-// 	width: 100%; 
-// 	text-align: center; 
-// }
 
-// // ===== Styling for the navigation menu ===== 
-// nav > #navigation {
-// 	display: flex; 
-// 	justify-content: center; 
-// }
-
-// nav > #navigation > a {
-// 	margin: 5px; 
-// }
-
-// // ===== Styling for the body ===== 
-// main {
-// 	padding: 5px; 
-// 	text-align: center; 
-// }
-
-// // ===== Styling for the footer ===== 
-// footer {
-// 	padding-top: 10px; 
-// }
-
-// main li {
-// 	list-style-position: inside; 
-// }
-
-// #information {
-// 	clear: both; 
-// }
