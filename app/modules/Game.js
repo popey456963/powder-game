@@ -2,6 +2,7 @@
 const Empty = require('../molecules/Empty.js')
 const Snow = require('../molecules/Snow.js')
 const Sand = require('../molecules/Sand.js')
+const Sage = require('../molecules/Sage.js')
 const Oil = require('../molecules/Oil.js')
 const Salt = require('../molecules/Salt.js')
 const Water = require('../molecules/Water.js')
@@ -30,7 +31,7 @@ class Game {
         Globals.grid.drawLine(Block, { x: Globals.width.x - 1, y: 0 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
         Globals.grid.drawLine(Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
 
-        canvas.addEventListener('mousedown', e => this.startSpawn(e), false)
+        canvas.addEventListener('mousedown', e => this.startSpawn(e), false)    
         canvas.addEventListener('mouseup', e => this.stopSpawn(e), false)
         document.addEventListener('mouseup', e => this.stopSpawn(e), false)
 
@@ -46,11 +47,13 @@ class Game {
 
         this.x = 0
         this.y = 0
+
+        window.requestAnimationFrame(this.loop.bind(this))
     }
 
     // The main game loop 
     async loop(time) {
-        Globals.grid.tick()
+        if (Globals.running || Globals.tick) { Globals.grid.tick(); Globals.tick = false }
         Globals.grid.render()
         Globals.grid.draw()
 
@@ -62,11 +65,12 @@ class Game {
             if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
             if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
             if (random < 0.004) Globals.grid.setMolecule(new Oil({ pos }))
+            if (random < 0.005) Globals.grid.setMolecule(new Sage({ pos }))
         }
 
         // await Utils.pause(500)
         if (development) meter.tick()
-        if (Globals.running) window.requestAnimationFrame(this.loop.bind(this))
+        window.requestAnimationFrame(this.loop.bind(this))
     }
 
     // Get the relative x and y coordinates of an element 
@@ -79,9 +83,22 @@ class Game {
     }
 
     resizeCanvas() {
-        this.canvas.style.width = `${window.innerHeight * Globals.width.x / Globals.width.y}px`
-        this.canvas.style.height = `${window.innerHeight}px`
-        Globals.scale = window.innerHeight / Globals.width.y;
+        const widthRatio = window.innerWidth / Globals.width.x
+        const heightRatio = window.innerHeight / Globals.width.y
+
+        if (widthRatio > heightRatio) {
+            // We can display the menu off to the side.
+            this.canvas.style.width = `${window.innerHeight * Globals.width.x / Globals.width.y}px`
+            this.canvas.style.height = `${window.innerHeight}px`
+
+            Globals.scale = window.innerHeight / Globals.width.y
+        } else {
+            // We can display the menu off to the bottom.
+            this.canvas.style.width = `${window.innerWidth}px`
+            this.canvas.style.height = `${window.innerWidth * Globals.width.y / Globals.width.x}px`
+
+            Globals.scale = window.innerWidth / Globals.width.x
+        }
     }
 
     // Add a molecule 
@@ -97,7 +114,7 @@ class Game {
         }
 
         this.clickInterval = setInterval(() => {
-            this.spawn(Snow, { x: this.x, y: this.y })
+            this.spawn(Water, { x: this.x, y: this.y })
         })
     }
 
@@ -117,7 +134,6 @@ class Game {
     start() {
         if (!Globals.running) {
             Globals.running = true
-            window.requestAnimationFrame(this.loop.bind(this))
         }
     }
 
@@ -129,7 +145,7 @@ class Game {
 
     tick() {
         Globals.running = false
-        window.requestAnimationFrame(this.loop.bind(this))
+        Globals.tick = true
     }
 
     reset() {
