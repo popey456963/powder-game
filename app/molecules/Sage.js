@@ -8,7 +8,7 @@ class Sage extends Powder {
     }
 
     render() {
-        return 0x99999999
+        return 0xFF00FF00
     }
 
     tick() {
