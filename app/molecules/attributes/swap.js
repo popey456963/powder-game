@@ -2,7 +2,7 @@
 module.exports = function swap(p, y) {
     if (typeof y !== 'undefined') p += y * Globals.width.x
 
-    return this.move(p)
+    // return this.move(p)
 
     const under = this.getMolecule(0, 1)
     under.pos = this.pos

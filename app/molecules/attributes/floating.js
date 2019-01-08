@@ -2,7 +2,7 @@
 module.exports = function floating(p, y) {
     return [
         Globals.molecules.Empty,
-        Globals.molecules.Water,
-        Globals.molecules.Oil
+        // Globals.molecules.Water,
+        // Globals.molecules.Oil
     ].includes(this.getType(0, 1))
 }
