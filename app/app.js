@@ -21,3 +21,6 @@ document.getElementById(Utils.ids.startGenerate).onclick = function() { game.sta
 document.getElementById(Utils.ids.stopGenerate).onclick = function() { game.stopGenerate() } 
 
 document.getElementById(Utils.ids.typesButton).onclick = function() { game.setSpawnType() }
+
+document.getElementById(Utils.ids.generateButton).onclick = function() { game.generateChance() }
+

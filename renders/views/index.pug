@@ -31,6 +31,10 @@ block content
             input(type="number" min="0" step="1" id="typesr" class="setTypes" name="r")
             button(type="button" id="typesButton" name="typesButton") Set Type
 
+            label(for="genc")= "Generate Chance: "
+            input(type="number" min="0" max="1" step="0.0001" id="genc" class="setGen" name="c")
+            button(type="button" id="genButton" name="genButton") Set Generation Chance            
+
         article(name="gameArea")#gameArea.col
             canvas(name="game")#game.game Please use a canvas enabled browser.
 

@@ -20,7 +20,9 @@ module.exports = {
         sizesForm: 'sizes',
         typesButton: 'typesButton',
         types: 'typest',
-        typesRadius: 'typesr'
+        typesRadius: 'typesr',
+        generateChance: 'genc', 
+        generateButton: 'genButton'
     },
     molecules: {
         Particle: 1,

@@ -26,7 +26,7 @@ class Game {
             radius: 2, 
             type: 100
         }
-        this.generateables = []
+        this.generateables = [201, 202, 204, 205, 301]
         this.generateChance = 0.001
         this.parseQuery()
 
@@ -153,7 +153,7 @@ class Game {
     // Get the molecules to generate 
     getGenerateables(ids) {
         molecules = []
-        for (let i = 0; (i < ids.length)/* && (i * this.generateChance < 1)*/; i++) {
+        for (let i = 0; (i < ids.length) && (i * this.generateChance < 1); i++) {
             molecules.push(this.moleculeFromId(ids[i]))
         }
         this.generateables = molecules
@@ -328,6 +328,13 @@ class Game {
         try {
             this.spawning.type = parseInt(document.getElementById(Utils.ids.types).value)
             this.spawning.radius = parseInt(document.getElementById(Utils.ids.typesRadius).value)
+        }
+        catch {}
+    }
+
+    setGenerationChance() {
+        try {
+            this.generateChance = parseInt(document.getElementById(Utils.ids.generateChance).value)
         }
         catch {}
     }

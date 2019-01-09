@@ -10,4 +10,11 @@ The server file to run is index.js. First of all, the JavaScript and CSS needs t
 - query-string
 - jQuery
 - fpsmeter
+- node-sass
+- reload
+- express
+- pug
+- Parcel
+- babel-polyfill
+- autoprefixer 
 
