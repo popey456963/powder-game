@@ -8,6 +8,10 @@ const Salt = require('../molecules/Salt.js')
 const Water = require('../molecules/Water.js')
 const Block = require('../molecules/Block.js')
 
+const Particle = require('../molecules/Particle.js')
+const Powder = require('../molecules/Powder.js')
+const Liquid = require('../molecules/Liquid.js')
+
 const Utils = require('./Utils.js')
 const Grid = require('./Grid.js')
 
@@ -18,7 +22,7 @@ class Game {
     // The constructor to setup the game 
     constructor(target) {
         const canvas = document.getElementById(target)
-        this.parseSize()
+        this.parseQuery()
 
         canvas.setAttribute('height', Globals.width.y)
         canvas.setAttribute('width', Globals.width.x)
@@ -61,6 +65,7 @@ class Game {
 
     // The main game loop 
     async loop(time) {
+        let tick = Globals.tick
         if (Globals.running || Globals.tick) { Globals.grid.tick(); Globals.tick = false }
         Globals.grid.render()
         Globals.grid.draw()
@@ -69,7 +74,7 @@ class Game {
             const random = Math.random()
             const pos = i + Globals.width.x
 
-            if (this.generate) {
+            if (this.generate && (Globals.running || tick)) {
                 if (random < 0.001) Globals.grid.setMolecule(new Snow({ pos }))
                 if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
                 if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
@@ -83,7 +88,7 @@ class Game {
     }
 
     // Parse the size given in the URL bar 
-    parseSize() {
+    parseQuery() {
         canvasSizes = queryString.parse(window.location.search)
         if (canvasSizes.x != null && canvasSizes.x != undefined && canvasSizes.x != "") {
             if (isNaN(canvasSizes["x"]) == false) {
@@ -95,8 +100,19 @@ class Game {
                 Globals.width.y = parseInt(canvasSizes.y)
             }
         }
+        if (canvasSizes.t != null && canvasSizes.t != undefined && canvasSizes.t != "") {
+            if (isNaN(canvasSizes["t"]) == false) {
+                Globals.spawning.type = parseInt(canvasSizes.t)
+            }
+        }
+        if (canvasSizes.r != null && canvasSizes.r != undefined && canvasSizes.r != "") {
+            if (isNaN(canvasSizes["r"]) == false) {
+                Globals.spawning.radius = parseInt(canvasSizes.r)
+            }
+        }
         document.getElementById(Globals.ids.sizesForm + "x").value = Globals.width.x
         document.getElementById(Globals.ids.sizesForm + "y").value = Globals.width.y
+        document.getElementById(Globals.ids.types).value = Globals.spawning.type
     }
 
     // Get the relative x and y coordinates of an element 
@@ -110,7 +126,7 @@ class Game {
 
     // Calculate and set the canvas size 
     calculateSizes() {
-        rect = document.getElementById(Globals.ids.innerWrapper).getBoundingClientRect()
+        let rect = document.getElementById(Globals.ids.innerWrapper).getBoundingClientRect()
         return {
             innerWidth: Math.floor(rect.width),
             width: window.innerWidth,
@@ -126,14 +142,14 @@ class Game {
         const heightRatio = (sizes.height - sizes.y - Globals.sizeOffset) / Globals.width.y
 
         if (widthRatio > heightRatio) {
-            // We can display the menu off to the side.
+            // Display the menu off to the side.
             this.canvas.style.width = `${Globals.width.x * heightRatio}px`
             this.canvas.style.height = `${Globals.width.y * heightRatio}px`
 
             Globals.scale = heightRatio
             console.log("hr")
         } else {
-            // We can display the menu off to the bottom.
+            // Display the menu off to the bottom.
             this.canvas.style.width = `${Globals.width.x * widthRatio}px`
             this.canvas.style.height = `${Globals.width.y * widthRatio}px`
 
@@ -142,9 +158,49 @@ class Game {
         }
     }
 
+    // Get molecule from id
+    moleculeFromId(id) {
+        if (id === Globals.molecules.Particle) {
+            return Particle
+        }
+        else if (id === Globals.molecules.Empty) {
+            return Empty
+        }
+        else if (id === Globals.molecules.Block) {
+            return Block
+        }
+        else if (id === Globals.molecules.Powder) {
+            return Powder
+        }
+        else if (id === Globals.molecules.Sage) {
+            return Sage
+        }
+        else if (id === Globals.molecules.Salt) {
+            return Salt
+        }
+        else if (id === Globals.molecules.Sand) {
+            return Sand
+        }
+        else if (id === Globals.molecules.Snow) {
+            return Snow
+        }
+        else if (id === Globals.molecules.Liquid) {
+            return Liquid
+        }
+        else if (id === Globals.molecules.Water) {
+            return Water
+        }
+        else if (id === Globals.molecules.Oil) {
+            return Oil
+        }
+        else {
+            return Empty
+        }
+    }
+
     // Add a molecule 
-    spawn(Molecule, center) {
-        Globals.grid.drawPoint(Molecule, center)
+    spawn(Molecule, center, radius) {
+        Globals.grid.drawPoint(Molecule, center, radius)
     }
 
     // Spawn particles on click 
@@ -155,7 +211,7 @@ class Game {
         }
 
         this.clickInterval = setInterval(() => {
-            this.spawn(Water, { x: this.x, y: this.y })
+            this.spawn(this.moleculeFromId(Globals.spawning.type), { x: this.x, y: this.y }, Globals.spawning.radius)
         })
     }
 
@@ -203,11 +259,22 @@ class Game {
     }
 
     startGenerate() {
-        this.generate = true
+        if (!this.generate) {
+            this.generate = true
+        }
     }
 
     stopGenerate() {
-        this.generate = false
+        if (this.generate) {
+            this.generate = false
+        }
+    }
+
+    setSpawnType() {
+        try {
+            Globals.spawning.type = parseInt(document.getElementById(Globals.ids.types).value)
+        }
+        catch {}
     }
 }
 

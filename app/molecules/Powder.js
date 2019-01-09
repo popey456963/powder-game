@@ -20,7 +20,7 @@ class Powder extends Particle {
     }
 }
 
-Particle.prototype.floating = require('./attributes/floating')
+Particle.prototype.floating = require('./attributes/floatingPowder')
 Particle.prototype.fall = require('./attributes/fall')
 
 module.exports = Powder
