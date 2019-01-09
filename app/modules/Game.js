@@ -90,29 +90,30 @@ class Game {
     // Parse the size given in the URL bar 
     parseQuery() {
         canvasSizes = queryString.parse(window.location.search)
-        if (canvasSizes.x != null && canvasSizes.x != undefined && canvasSizes.x != "") {
-            if (isNaN(canvasSizes["x"]) == false) {
-                Globals.width.x = parseInt(canvasSizes.x)
+        if (canvasSizes[Globals.queryNames.xSize] != null && canvasSizes[Globals.queryNames.xSize] != undefined && canvasSizes[Globals.queryNames.xSize] != "") {
+            if (isNaN(canvasSizes[Globals.queryNames.xSize]) == false) {
+                Globals.width.x = parseInt(canvasSizes[Globals.queryNames.xSize])
             }
         }
-        if (canvasSizes.y != null && canvasSizes.y != undefined && canvasSizes.y != "") {
-            if (isNaN(canvasSizes["y"]) == false) {
-                Globals.width.y = parseInt(canvasSizes.y)
+        if (canvasSizes[Globals.queryNames.ySize] != null && canvasSizes[Globals.queryNames.ySize] != undefined && canvasSizes[Globals.queryNames.ySize] != "") {
+            if (isNaN(canvasSizes[Globals.queryNames.ySize]) == false) {
+                Globals.width.y = parseInt(canvasSizes[Globals.queryNames.ySize])
             }
         }
-        if (canvasSizes.t != null && canvasSizes.t != undefined && canvasSizes.t != "") {
-            if (isNaN(canvasSizes["t"]) == false) {
-                Globals.spawning.type = parseInt(canvasSizes.t)
+        if (canvasSizes[Globals.queryNames.type] != null && canvasSizes[Globals.queryNames.type] != undefined && canvasSizes[Globals.queryNames.type] != "") {
+            if (isNaN(canvasSizes[Globals.queryNames.type]) == false) {
+                Globals.spawning.type = parseInt(canvasSizes[Globals.queryNames.type])
             }
         }
-        if (canvasSizes.r != null && canvasSizes.r != undefined && canvasSizes.r != "") {
-            if (isNaN(canvasSizes["r"]) == false) {
-                Globals.spawning.radius = parseInt(canvasSizes.r)
+        if (canvasSizes[Globals.queryNames.radius] != null && canvasSizes[Globals.queryNames.radius] != undefined && canvasSizes[Globals.queryNames.radius] != "") {
+            if (isNaN(canvasSizes[Globals.queryNames.radius]) == false) {
+                Globals.spawning.radius = parseInt(canvasSizes[Globals.queryNames.radius])
             }
         }
         document.getElementById(Globals.ids.sizesForm + "x").value = Globals.width.x
         document.getElementById(Globals.ids.sizesForm + "y").value = Globals.width.y
         document.getElementById(Globals.ids.types).value = Globals.spawning.type
+        document.getElementById(Globals.ids.typesRadius).value = Globals.spawning.radius
     }
 
     // Get the relative x and y coordinates of an element 
@@ -273,6 +274,7 @@ class Game {
     setSpawnType() {
         try {
             Globals.spawning.type = parseInt(document.getElementById(Globals.ids.types).value)
+            Globals.spawning.radius = parseInt(document.getElementById(Globals.ids.typesRadius).value)
         }
         catch {}
     }

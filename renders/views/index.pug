@@ -19,14 +19,15 @@ block content
 
             form(method="get" action="/" id="sizes")
                 label(for="sizesx")= "X Size: "
-                input(type="number" min="100" max="1000" id="sizesx" class="setSizes" name="x" required)
+                input(type="number" min="100" max="1000" step="1" id="sizesx" class="setSizes" name="x" required)
                 label(for="sizesy")= "Y Size: "
-                input(type="number" min="100" max="1000" id="sizesy" class="setSizes" name="y" required)
+                input(type="number" min="100" max="1000" step="1" id="sizesy" class="setSizes" name="y" required)
                 input(type="submit" value="Submit" id="sizessubmit" name="submit")
                 input(type="reset" value="Reset" id="sizesreset" name="reset")
 
-            input(type="number" min="1" id="typest" class="setTypes" name="t")
-            button(type="button" id="typesButton" class="setTypes" name="typesButton") Set Type
+            input(type="number" min="1" step="1" id="typest" class="setTypes" name="t")
+            input(type="number" min="1" step="1" id="typesr" class="setTypes" name="r")
+            button(type="button" id="typesButton" name="typesButton") Set Type
 
         article(name="gameArea")#gameArea.col
             canvas(name="game")#game.game Please use a canvas enabled browser.
@@ -55,7 +56,8 @@ block scripts
                     stopGenerate: 'stopGenerate',
                     sizesForm: 'sizes',
                     typesButton: 'typesButton',
-                    types: 'typest'
+                    types: 'typest',
+                    typesRadius: 'typesr'
                 },
                 running: false,
                 molecules: {
@@ -74,6 +76,12 @@ block scripts
                 spawning: {
                     radius: 2, 
                     type: 100
+                },
+                queryNames: {
+                    xSize: 'x', 
+                    ySize: 'y', 
+                    type: 't',
+                    radius: 'r'
                 }
             }
     script(src='/lib/jquery.js')
