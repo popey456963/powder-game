@@ -22,6 +22,12 @@ class Game {
     // The constructor to setup the game 
     constructor(target) {
         const canvas = document.getElementById(target)
+        this.spawning = {
+            radius: 2, 
+            type: 100
+        }
+        this.generateables = []
+        this.generateChance = 0.001
         this.parseQuery()
 
         canvas.setAttribute('height', Globals.width.y)
@@ -30,10 +36,13 @@ class Game {
         const context = canvas.getContext('2d')
 
         this.sizes = this.calculateSizes()
+        this.tick = false
+        this.running = false
+        this.sizeOffset = 100
+        this.getGenerateables(this.generateables)
 
         Globals.grid = new Grid(context)
         Globals.grid.fill(Empty)
-        Globals.Empty = Empty
 
         Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: 0, y: Globals.width.y - 1 }, true)
         Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: Globals.width.x - 1, y: 0 }, true)
@@ -65,8 +74,8 @@ class Game {
 
     // The main game loop 
     async loop(time) {
-        let tick = Globals.tick
-        if (Globals.running || Globals.tick) { Globals.grid.tick(); Globals.tick = false }
+        let tick = this.tick
+        if (this.running || this.tick) { Globals.grid.tick(); this.tick = false }
         Globals.grid.render()
         Globals.grid.draw()
 
@@ -74,12 +83,21 @@ class Game {
             const random = Math.random()
             const pos = i + Globals.width.x
 
-            if (this.generate && (Globals.running || tick)) {
-                if (random < 0.001) Globals.grid.setMolecule(new Snow({ pos }))
-                if (random < 0.002) Globals.grid.setMolecule(new Sand({ pos }))
-                if (random < 0.003) Globals.grid.setMolecule(new Salt({ pos }))
-                if (random < 0.004) Globals.grid.setMolecule(new Oil({ pos }))
-                if (random < 0.005) Globals.grid.setMolecule(new Sage({ pos }))
+            if (this.generate && (this.running || tick)) {
+                
+                for (let j = 0; j < this.generateables.length; j++) {
+                    if (random < (this.generateChance * (j + 1))) {
+                        Globals.grid.setMolecule(new this.generateables[j]({ pos }))
+                    }
+                }
+                
+                /*
+                if (random < this.generateChance * 1) Globals.grid.setMolecule(new Snow({ pos }))
+                if (random < this.generateChance * 2) Globals.grid.setMolecule(new Sand({ pos }))
+                if (random < this.generateChance * 3) Globals.grid.setMolecule(new Salt({ pos }))
+                if (random < this.generateChance * 4) Globals.grid.setMolecule(new Oil({ pos }))
+                if (random < this.generateChance * 5) Globals.grid.setMolecule(new Sage({ pos }))
+                */
             }
         }
 
@@ -90,30 +108,55 @@ class Game {
     // Parse the size given in the URL bar 
     parseQuery() {
         canvasSizes = queryString.parse(window.location.search)
-        if (canvasSizes[Globals.queryNames.xSize] != null && canvasSizes[Globals.queryNames.xSize] != undefined && canvasSizes[Globals.queryNames.xSize] != "") {
-            if (isNaN(canvasSizes[Globals.queryNames.xSize]) == false) {
-                Globals.width.x = parseInt(canvasSizes[Globals.queryNames.xSize])
+        if (development) {
+            console.log(canvasSizes)
+        }
+        if (canvasSizes[Utils.queryNames.xSize] != null && canvasSizes[Utils.queryNames.xSize] != undefined && canvasSizes[Utils.queryNames.xSize] != "") {
+            if (isNaN(canvasSizes[Utils.queryNames.xSize]) == false) {
+                Globals.width.x = parseInt(canvasSizes[Utils.queryNames.xSize])
             }
         }
-        if (canvasSizes[Globals.queryNames.ySize] != null && canvasSizes[Globals.queryNames.ySize] != undefined && canvasSizes[Globals.queryNames.ySize] != "") {
-            if (isNaN(canvasSizes[Globals.queryNames.ySize]) == false) {
-                Globals.width.y = parseInt(canvasSizes[Globals.queryNames.ySize])
+        if (canvasSizes[Utils.queryNames.ySize] != null && canvasSizes[Utils.queryNames.ySize] != undefined && canvasSizes[Utils.queryNames.ySize] != "") {
+            if (isNaN(canvasSizes[Utils.queryNames.ySize]) == false) {
+                Globals.width.y = parseInt(canvasSizes[Utils.queryNames.ySize])
             }
         }
-        if (canvasSizes[Globals.queryNames.type] != null && canvasSizes[Globals.queryNames.type] != undefined && canvasSizes[Globals.queryNames.type] != "") {
-            if (isNaN(canvasSizes[Globals.queryNames.type]) == false) {
-                Globals.spawning.type = parseInt(canvasSizes[Globals.queryNames.type])
+        if (canvasSizes[Utils.queryNames.type] != null && canvasSizes[Utils.queryNames.type] != undefined && canvasSizes[Utils.queryNames.type] != "") {
+            if (isNaN(canvasSizes[Utils.queryNames.type]) == false) {
+                this.spawning.type = parseInt(canvasSizes[Utils.queryNames.type])
             }
         }
-        if (canvasSizes[Globals.queryNames.radius] != null && canvasSizes[Globals.queryNames.radius] != undefined && canvasSizes[Globals.queryNames.radius] != "") {
-            if (isNaN(canvasSizes[Globals.queryNames.radius]) == false) {
-                Globals.spawning.radius = parseInt(canvasSizes[Globals.queryNames.radius])
+        if (canvasSizes[Utils.queryNames.radius] != null && canvasSizes[Utils.queryNames.radius] != undefined && canvasSizes[Utils.queryNames.radius] != "") {
+            if (isNaN(canvasSizes[Utils.queryNames.radius]) == false) {
+                this.spawning.radius = parseInt(canvasSizes[Utils.queryNames.radius])
             }
         }
-        document.getElementById(Globals.ids.sizesForm + "x").value = Globals.width.x
-        document.getElementById(Globals.ids.sizesForm + "y").value = Globals.width.y
-        document.getElementById(Globals.ids.types).value = Globals.spawning.type
-        document.getElementById(Globals.ids.typesRadius).value = Globals.spawning.radius
+        if (canvasSizes[Utils.queryNames.generate] != null && canvasSizes[Utils.queryNames.generate] != undefined && canvasSizes[Utils.queryNames.generate] != "") {
+            this.generateables = canvasSizes[Utils.queryNames.generate].split(",")
+        }
+        if (canvasSizes[Utils.queryNames.generateChance] != null && 
+            canvasSizes[Utils.queryNames.generateChance] != undefined && canvasSizes[Utils.queryNames.generateChance] != "") {
+            if (isNaN(canvasSizes[Utils.queryNames.generateChance]) == false) {
+                this.generateChance = parseFloat(canvasSizes[Utils.queryNames.generateChance])
+            }
+        }
+        document.getElementById(Utils.ids.sizesForm + "x").value = Globals.width.x
+        document.getElementById(Utils.ids.sizesForm + "y").value = Globals.width.y
+        document.getElementById(Utils.ids.types).value = this.spawning.type
+        document.getElementById(Utils.ids.typesRadius).value = this.spawning.radius
+        if (development) {
+            console.log(this.generateables)
+            console.log(this.generateChance)
+        }
+    }
+
+    // Get the molecules to generate 
+    getGenerateables(ids) {
+        molecules = []
+        for (let i = 0; (i < ids.length)/* && (i * this.generateChance < 1)*/; i++) {
+            molecules.push(this.moleculeFromId(ids[i]))
+        }
+        this.generateables = molecules
     }
 
     // Get the relative x and y coordinates of an element 
@@ -127,7 +170,7 @@ class Game {
 
     // Calculate and set the canvas size 
     calculateSizes() {
-        let rect = document.getElementById(Globals.ids.innerWrapper).getBoundingClientRect()
+        let rect = document.getElementById(Utils.ids.innerWrapper).getBoundingClientRect()
         return {
             innerWidth: Math.floor(rect.width),
             width: window.innerWidth,
@@ -139,59 +182,69 @@ class Game {
     }
 
     resizeCanvas(sizes) {
-        const widthRatio = (sizes.innerWidth - Globals.sizeOffset) / Globals.width.x
-        const heightRatio = (sizes.height - sizes.y - Globals.sizeOffset) / Globals.width.y
+        const widthRatio = (sizes.innerWidth - this.sizeOffset) / Globals.width.x
+        const heightRatio = (sizes.height - sizes.y - this.sizeOffset) / Globals.width.y
+        if (development) {
+            console.log(String(widthRatio) + " || " + String(heightRatio))
+        }
 
         if (widthRatio > heightRatio) {
+            // Use the height ratio 
             // Display the menu off to the side.
             this.canvas.style.width = `${Globals.width.x * heightRatio}px`
             this.canvas.style.height = `${Globals.width.y * heightRatio}px`
 
             Globals.scale = heightRatio
-            console.log("hr")
+            if (development) {
+                console.log("hr")
+            }
         } else {
+            // Use the width ratio 
             // Display the menu off to the bottom.
             this.canvas.style.width = `${Globals.width.x * widthRatio}px`
             this.canvas.style.height = `${Globals.width.y * widthRatio}px`
 
             Globals.scale = widthRatio
-            console.log("wr")
+            if (development) {
+                console.log("wr")
+            }
         }
     }
 
     // Get molecule from id
     moleculeFromId(id) {
-        if (id === Globals.molecules.Particle) {
+        id = String(id)
+        if (id === String(Utils.molecules.Particle)) {
             return Particle
         }
-        else if (id === Globals.molecules.Empty) {
+        else if (id === String(Utils.molecules.Empty)) {
             return Empty
         }
-        else if (id === Globals.molecules.Block) {
+        else if (id === String(Utils.molecules.Block)) {
             return Block
         }
-        else if (id === Globals.molecules.Powder) {
+        else if (id === String(Utils.molecules.Powder)) {
             return Powder
         }
-        else if (id === Globals.molecules.Sage) {
+        else if (id === String(Utils.molecules.Sage)) {
             return Sage
         }
-        else if (id === Globals.molecules.Salt) {
+        else if (id === String(Utils.molecules.Salt)) {
             return Salt
         }
-        else if (id === Globals.molecules.Sand) {
+        else if (id === String(Utils.molecules.Sand)) {
             return Sand
         }
-        else if (id === Globals.molecules.Snow) {
+        else if (id === String(Utils.molecules.Snow)) {
             return Snow
         }
-        else if (id === Globals.molecules.Liquid) {
+        else if (id === String(Utils.molecules.Liquid)) {
             return Liquid
         }
-        else if (id === Globals.molecules.Water) {
+        else if (id === String(Utils.molecules.Water)) {
             return Water
         }
-        else if (id === Globals.molecules.Oil) {
+        else if (id === String(Utils.molecules.Oil)) {
             return Oil
         }
         else {
@@ -212,7 +265,7 @@ class Game {
         }
 
         this.clickInterval = setInterval(() => {
-            this.spawn(this.moleculeFromId(Globals.spawning.type), { x: this.x, y: this.y }, Globals.spawning.radius)
+            this.spawn(this.moleculeFromId(this.spawning.type), { x: this.x, y: this.y }, this.spawning.radius)
         })
     }
 
@@ -230,20 +283,20 @@ class Game {
 
     // Buttons 
     start() {
-        if (!Globals.running) {
-            Globals.running = true
+        if (!this.running) {
+            this.running = true
         }
     }
 
     stop() {
-        if (Globals.running) {
-            Globals.running = false
+        if (this.running) {
+            this.running = false
         }
     }
 
     tick() {
-        Globals.running = false
-        Globals.tick = true
+        this.running = false
+        this.tick = true
     }
 
     reset() {
@@ -273,8 +326,8 @@ class Game {
 
     setSpawnType() {
         try {
-            Globals.spawning.type = parseInt(document.getElementById(Globals.ids.types).value)
-            Globals.spawning.radius = parseInt(document.getElementById(Globals.ids.typesRadius).value)
+            this.spawning.type = parseInt(document.getElementById(Utils.ids.types).value)
+            this.spawning.radius = parseInt(document.getElementById(Utils.ids.typesRadius).value)
         }
         catch {}
     }

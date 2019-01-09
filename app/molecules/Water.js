@@ -1,10 +1,11 @@
 const Liquid = require('./Liquid')
+const Utils = require('../modules/Utils')
 
 class Water extends Liquid {
     constructor(options) {
         super(options)
         
-        this.type = Globals.molecules.Water
+        this.type = Utils.molecules.Water
     }
 
     render() {

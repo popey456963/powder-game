@@ -1,10 +1,11 @@
 const Particle = require('./Particle.js')
+const Utils = require('../modules/Utils')
 
 class Powder extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = Globals.molecules.Powder
+        this.type = Utils.molecules.Powder
     }
 
     render() {

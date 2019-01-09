@@ -1,10 +1,11 @@
 const Powder = require('./Powder')
+const Utils = require('../modules/Utils')
 
 class Sand extends Powder {
     constructor(options) {
         super(options)
 
-        this.type = Globals.molecules.Sand
+        this.type = Utils.molecules.Sand
     }
 
     render() {

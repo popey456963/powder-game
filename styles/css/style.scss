@@ -118,4 +118,22 @@ footer p {
 	image-rendering: pixelated;
 }
 
+// ===== Adjustments for different screen widths ===== 
+@media only screen and (max-width: 918px) {
+	main {
+		float: none;
+		width: 100%;
+	}
+
+	main article {
+		width: 100%;
+	}
+
+	nav {
+		float: none; 
+		position: relative;
+		width: 100%;
+	}
+}
+
 
