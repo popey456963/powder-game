@@ -13,11 +13,13 @@ html
         link(rel='icon', href='/img/favicon/faviconSmall.ico', type='image/x-icon')
     body
         #wrapper
-            header
+            header#header
                 #titleContainer
-                    block header
+                    h1#title
+                        block header
                 hr
-            nav
+            
+            nav#nav
                 #navigation
                     unless (path == "/")
                         a(href='/', target='_blank') Game
@@ -26,7 +28,8 @@ html
                     unless (path == "/particles")
                         a(href='/particles', target='_blank') Particles
                     a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
-            main
+
+            main#main
                 block content
 
             //- Automatic page reload and fps counter in development
@@ -50,7 +53,8 @@ html
                         })
 
                 block scripts
-            footer
+
+            footer#footer
                 hr
                 p Thank you for visiting. 
                 block footer
