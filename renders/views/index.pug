@@ -18,16 +18,21 @@ block content
             button#stopGenerate Stop Generate
 
             form(method="get" action="/" id="sizes")
-                input(type="number" min="100" max="1000" id="sizesx" class="setSizes" name="x")
-                input(type="number" min="100" max="1000" id="sizesy" class="setSizes" name="y")
+                label(for="sizesx")= "X Size: "
+                input(type="number" min="100" max="1000" id="sizesx" class="setSizes" name="x" required)
+                label(for="sizesy")= "Y Size: "
+                input(type="number" min="100" max="1000" id="sizesy" class="setSizes" name="y" required)
                 input(type="submit" value="Submit" id="sizessubmit" name="submit")
+                input(type="reset" value="Reset" id="sizesreset" name="reset")
+
+            input(type="number" min="1" id="typest" class="setTypes" name="t")
+            button(type="button" id="typesButton" class="setTypes" name="typesButton") Set Type
 
         article(name="gameArea")#gameArea.col
             canvas(name="game")#game.game Please use a canvas enabled browser.
 
         article#information.col
-            p This is a powder game.
-            p It includes falling powder.
+            p This is a game about falling powder. Powder falls or can be created. 
 
 block scripts
     script.
@@ -35,6 +40,7 @@ block scripts
                 width: { x: 300, y: 300 },
                 scale: 1,
                 sizeOffset: 100, 
+                tick: false,
                 ids: {
                     canvas: 'game',
                     container: 'gameArea',
@@ -47,7 +53,9 @@ block scripts
                     removeFloor: 'removeFloor',
                     startGenerate: 'startGenerate',
                     stopGenerate: 'stopGenerate',
-                    sizesForm: 'sizes'
+                    sizesForm: 'sizes',
+                    typesButton: 'typesButton',
+                    types: 'typest'
                 },
                 running: false,
                 molecules: {
@@ -57,9 +65,15 @@ block scripts
                     Powder: 200,
                     Sand: 201,
                     Snow: 202, 
-                    Oil: 203, 
                     Salt: 204, 
-                    Water: 205
+                    Sage: 205,
+                    Liquid: 300,
+                    Oil: 301, 
+                    Water: 302
+                },
+                spawning: {
+                    radius: 2, 
+                    type: 100
                 }
             }
     script(src='/lib/jquery.js')

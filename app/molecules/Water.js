@@ -1,6 +1,6 @@
-const Powder = require('./Powder')
+const Liquid = require('./Liquid')
 
-class Water extends Powder {
+class Water extends Liquid {
     constructor(options) {
         super(options)
         
@@ -9,10 +9,6 @@ class Water extends Powder {
 
     render() {
         return 0xFFFF0000
-    }
-
-    tick() {
-        super.tick()
     }
 }
 

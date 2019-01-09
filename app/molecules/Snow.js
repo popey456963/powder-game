@@ -10,10 +10,6 @@ class Snow extends Powder {
     render() {
         return 0xFFFFFFFF
     }
-
-    tick() {
-        super.tick()
-    }
 }
 
 module.exports = Snow

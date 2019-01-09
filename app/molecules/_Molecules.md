@@ -6,7 +6,8 @@ Particle
 ├─── Powder
 │    ├─── Salt
 │    ├─── Snow
-│    └─── Sand
+│    ├─── Sand
+│    └─── Sage
 └─── Liquid
      ├─── Oil
      └─── Water

@@ -12,29 +12,11 @@ class Particle {
     }
 
     tick() {}
-
-    move(p, y) {
-        if (typeof y !== 'undefined') p += y * Globals.width.x
-
-        Globals.grid.setMolecule(new Globals.Empty({ pos: this.pos }))
-        
-        this.pos += p
-
-        Globals.grid.setMolecule(this)
-        this.inactive = true
-    }
-
-    getMolecule(p, y) {
-        if (typeof y !== 'undefined') p += y * Globals.width.x
-
-        return Globals.grid.getMolecule(this.pos + p)
-    }
-
-    getType(p, y) {
-        if (typeof y !== 'undefined') p += y * Globals.width.x
-
-        return Globals.grid.getType(this.pos + p) || Globals.molecules.Empty
-    }
 }
+
+Particle.prototype.getMolecule = require('./attributes/getMolecule')
+Particle.prototype.getType = require('./attributes/getType')
+Particle.prototype.move = require('./attributes/move')
+Particle.prototype.swap = require('./attributes/swap')
 
 module.exports = Particle

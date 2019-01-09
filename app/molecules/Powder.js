@@ -7,16 +7,8 @@ class Powder extends Particle {
         this.type = Globals.molecules.Powder
     }
 
-    fall() {
-        this.move(0, 1)
-    }
-
     render() {
     	return 0xFFFF00FF; 
-    }
-
-    floating() {
-    	return this.getType(0, 1) === Globals.molecules.Empty
     }
 
     tick() {
@@ -27,5 +19,8 @@ class Powder extends Particle {
     	super.tick()
     }
 }
+
+Particle.prototype.floating = require('./attributes/floatingPowder')
+Particle.prototype.fall = require('./attributes/fall')
 
 module.exports = Powder
