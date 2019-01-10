@@ -1,11 +1,16 @@
 const Particle = require('./Particle.js')
+const Utils = require('../modules/Utils')
 
 class Powder extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = Globals.molecules.Powder
+        this.type = Utils.molecules.Powder
         this.render = 0xFFFF00FF
+    }
+
+    resistance() {
+        return 0
     }
 
     tick() {
@@ -17,7 +22,7 @@ class Powder extends Particle {
     }
 }
 
-Particle.prototype.floating = require('./attributes/floating')
+Particle.prototype.floating = require('./attributes/floatingPowder')
 Particle.prototype.fall = require('./attributes/fall')
 
 module.exports = Powder

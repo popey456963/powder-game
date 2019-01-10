@@ -1,11 +1,11 @@
 extends ..\\templates\\layout
 
-//- block header
-//-     h1#title Powder Game
+block header
+    | Powder Game
 
 block content
-    .flex
-        .col.controls
+    #innerWrapper.flex
+        article#controls.col
             button#start Start
             button#stop Stop
             button#tick Tick
@@ -14,34 +14,38 @@ block content
             button#makeFloor Make Floor
             button#removeFloor Remove Floor
 
-        .col.game_area
-            canvas#game.game Please use a canvas enabled browser.
+            button#startGenerate Start Generate
+            button#stopGenerate Stop Generate
 
-        .col
-            h1 This is a powder game.
-            p It includes falling powder.
+            form(method="get" action="/" id="sizes")
+                label(for="sizesx")= "X Size: "
+                input(type="number" min="50" max="1000" step="1" id="sizesx" class="setSizes" name="x" required)
+                label(for="sizesy")= "Y Size: "
+                input(type="number" min="50" max="1000" step="1" id="sizesy" class="setSizes" name="y" required)
+                input(type="submit" value="Submit" id="sizessubmit" name="submit")
+                input(type="reset" value="Reset" id="sizesreset" name="reset")
 
-        script.
-            window.Globals = {
-                width: { x: 128, y: 128 },
-                scale: 1,
-                canvas: 'game',
-                running: false,
-                molecules: {
-                    Particle: 1,
-                    Empty: 2,
-                    Block: 100,
-                    Powder: 200,
-                    Sand: 201,
-                    Snow: 202, 
-                    Salt: 204, 
-                    Sage: 205,
-                    Liquid: 300,
-                    Oil: 301, 
-                    Water: 302,
-                }
-            }
+            label(for="typest")= "Pen Type: "
+            input(type="number" min="1" step="1" id="typest" class="setTypes" name="t")
+            label(for="typesr")= "Pen Size: "
+            input(type="number" min="0" step="1" id="typesr" class="setTypes" name="r")
+            button(type="button" id="typesButton" name="typesButton") Set Type
+
+            label(for="genc")= "Generate Chance: "
+            input(type="number" min="0" max="1" step="0.0001" id="genc" class="setGen" name="c")
+            button(type="button" id="genButton" name="genButton") Set Generation Chance            
+
+        article(name="gameArea")#gameArea.col
+            canvas(name="game")#game.game Please use a canvas enabled browser.
+
+        article#information.col
+            p This is a game about falling powder. Powder falls or can be created. 
 
 block scripts
+    script.
+        window.Globals = {
+            width: { x: 300, y: 300 },
+            scale: 1
+        }
     script(src='/lib/jquery.js')
     script(src='/dist/app.js')

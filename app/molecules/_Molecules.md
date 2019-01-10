@@ -2,11 +2,15 @@
 
 Particle
 ├─── Block
+│    ├─── Indestructible
+│    └─── Concrete
 ├─── Empty
 ├─── Powder
 │    ├─── Salt
 │    ├─── Snow
-│    └─── Sand
+│    ├─── Sand
+│    ├─── Soil
+│    └─── Sage
 └─── Liquid
      ├─── Oil
      └─── Water

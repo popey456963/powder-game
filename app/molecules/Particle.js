@@ -1,11 +1,17 @@
+const Utils = require('../modules/Utils')
+
 class Particle {
     constructor(options) {
         this.options = options
 
         this.pos = this.options.pos
         this.inactive = true
-        this.type = Globals.molecules.Particle
+        this.type = Utils.molecules.Particle
         this.render = 0xFF800080
+    }
+
+    resistance() {
+        return 1
     }
 
     tick() {}

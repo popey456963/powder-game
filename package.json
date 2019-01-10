@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "cross-env NODE_ENV=development parcel app/app.js -d public/dist/ --public-url '/js/' --cache-dir .cache/",
+    "build": "cross-env NODE_ENV=development parcel build app/app.js -d public/dist/ --cache-dir .cache/",
     "nodemon": "cross-env NODE_ENV=development nodemon -e js,css,html,scss,pug,htm -i app/"
   },
   "keywords": [],
@@ -14,6 +15,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "pug": "^2.0.3",
+    "query-string": "^6.2.0",
     "reload": "^2.4.0"
   },
   "devDependencies": {
