@@ -14,6 +14,10 @@ class Liquid extends Particle {
         return 0xFFFF00FF;
     }
 
+    resistance() {
+        return 0.5
+    }
+
     tick() {
         if (this.floating()) {
             this.fall()

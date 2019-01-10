@@ -12,6 +12,10 @@ class Powder extends Particle {
     	return 0xFFFF00FF; 
     }
 
+    resistance() {
+        return 1
+    }
+
     tick() {
         if (this.floating()) {
             this.fall()

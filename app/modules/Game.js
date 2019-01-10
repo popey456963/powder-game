@@ -5,8 +5,11 @@ const Sand = require('../molecules/Sand.js')
 const Sage = require('../molecules/Sage.js')
 const Oil = require('../molecules/Oil.js')
 const Salt = require('../molecules/Salt.js')
+const Soil = require('../molecules/Soil.js')
 const Water = require('../molecules/Water.js')
 const Block = require('../molecules/Block.js')
+const Concrete = require('../molecules/Concrete.js')
+const Indestructible = require('../molecules/Indestructible.js')
 
 const Particle = require('../molecules/Particle.js')
 const Powder = require('../molecules/Powder.js')
@@ -44,10 +47,10 @@ class Game {
         Globals.grid = new Grid(context)
         Globals.grid.fill(Empty)
 
-        Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: 0, y: Globals.width.y - 1 }, true)
-        Globals.grid.drawLine(Block, { x: 0, y: 0 }, { x: Globals.width.x - 1, y: 0 }, true)
-        Globals.grid.drawLine(Block, { x: Globals.width.x - 1, y: 0 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
-        Globals.grid.drawLine(Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Indestructible, { x: 0, y: 0 }, { x: 0, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Indestructible, { x: 0, y: 0 }, { x: Globals.width.x - 1, y: 0 }, true)
+        Globals.grid.drawLine(Indestructible, { x: Globals.width.x - 1, y: 0 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Indestructible, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
 
         canvas.addEventListener('mousedown', e => this.startSpawn(e), false)    
         canvas.addEventListener('mouseup', e => this.stopSpawn(e), false)
@@ -144,6 +147,7 @@ class Game {
         document.getElementById(Utils.ids.sizesForm + "y").value = Globals.width.y
         document.getElementById(Utils.ids.types).value = this.spawning.type
         document.getElementById(Utils.ids.typesRadius).value = this.spawning.radius
+        document.getElementById(Utils.ids.generateChance).value = this.generateChance
         if (development) {
             console.log(this.generateables)
             console.log(this.generateChance)
@@ -157,6 +161,7 @@ class Game {
             molecules.push(this.moleculeFromId(ids[i]))
         }
         this.generateables = molecules
+        console.log(this.generateables)
     }
 
     // Get the relative x and y coordinates of an element 
@@ -238,6 +243,9 @@ class Game {
         else if (id === String(Utils.molecules.Snow)) {
             return Snow
         }
+        else if (id === String(Utils.molecules.Soil)) {
+            return Soil
+        }
         else if (id === String(Utils.molecules.Liquid)) {
             return Liquid
         }
@@ -246,6 +254,12 @@ class Game {
         }
         else if (id === String(Utils.molecules.Oil)) {
             return Oil
+        }
+        else if (id === String(Utils.molecules.Concrete)) {
+            return Concrete
+        }
+        else if (id === String(Utils.molecules.Indestructible)) {
+            return Indestructible
         }
         else {
             return Empty
@@ -334,7 +348,7 @@ class Game {
 
     setGenerationChance() {
         try {
-            this.generateChance = parseInt(document.getElementById(Utils.ids.generateChance).value)
+            this.generateChance = parseFloat(document.getElementById(Utils.ids.generateChance).value)
         }
         catch {}
     }

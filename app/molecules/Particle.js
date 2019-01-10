@@ -13,6 +13,10 @@ class Particle {
         return 0xFF800080
     }
 
+    resistance() {
+        return 0
+    }
+
     tick() {}
 }
 

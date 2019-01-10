@@ -113,6 +113,15 @@ class Grid {
         this.imageData.data.set(this.buf8)
         this.context.putImageData(this.imageData, 0, 0)
     }
+
+    getSaveData() {
+        out = String(Globals.width.x) + "|" + String(Globals.width.y) + "|"
+        for (let i = 0; i < this.grid.length; i++) {
+            out += String(this.getType(i)) + ":" String(this.grid[i].render()) + ";"
+        }
+
+        return out
+    }
 }
 
 module.exports = Grid

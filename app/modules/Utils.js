@@ -3,7 +3,7 @@ module.exports = {
         return new Promise(resolve => setTimeout(resolve, time))
     },
     getCanvasSize: function() {
-
+        return document.getElementById(this.ids.canvas).getBoundingClientRect()
     },
 	ids: {
         canvas: 'game',
@@ -28,11 +28,14 @@ module.exports = {
         Particle: 1,
         Empty: 2,
         Block: 100,
+        Concrete: 101,
+        Indestructible: 102,
         Powder: 200,
         Sand: 201,
         Snow: 202, 
         Salt: 204, 
         Sage: 205,
+        Soil: 206,
         Liquid: 300,
         Oil: 301, 
         Water: 302

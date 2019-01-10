@@ -22,5 +22,5 @@ document.getElementById(Utils.ids.stopGenerate).onclick = function() { game.stop
 
 document.getElementById(Utils.ids.typesButton).onclick = function() { game.setSpawnType() }
 
-document.getElementById(Utils.ids.generateButton).onclick = function() { game.generateChance() }
+document.getElementById(Utils.ids.generateButton).onclick = function() { game.setGenerationChance() }
 
