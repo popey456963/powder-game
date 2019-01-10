@@ -11,7 +11,7 @@ class Liquid extends Particle {
         this.render = 0xFFFF00FF
     }
 
-    resistance() {
+    get resistance() {
         return 0.5
     }
 

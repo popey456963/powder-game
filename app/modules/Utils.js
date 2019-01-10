@@ -46,7 +46,8 @@ module.exports = {
         type: 't',
         radius: 'r',
         generate: 'g',
-        generateChance: 'c'
+        generateChance: 'c',
+        data: 'd'
     },
     widthOffset: 32
 }

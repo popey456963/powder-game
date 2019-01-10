@@ -8,7 +8,7 @@ class Indestructible extends Block {
         this.type = Utils.molecules.Indestructible
     }
 
-    resistance() {
+    get resistance() {
         return 1
     }
 }

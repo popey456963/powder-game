@@ -10,7 +10,7 @@ class Particle {
         this.render = 0xFF800080
     }
 
-    resistance() {
+    get resistance() {
         return 1
     }
 
@@ -21,5 +21,6 @@ Particle.prototype.getMolecule = require('./attributes/getMolecule')
 Particle.prototype.getType = require('./attributes/getType')
 Particle.prototype.move = require('./attributes/move')
 Particle.prototype.swap = require('./attributes/swap')
+Particle.prototype.explode = require('./attributes/explode')
 
 module.exports = Particle
