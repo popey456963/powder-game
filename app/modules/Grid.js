@@ -66,6 +66,15 @@ class Grid {
         }
     }
 
+    drawBoundaries(Molecule, width = 1, force = false) {
+        for (let i = 0; i < width; i++) {
+            this.drawLine(Molecule, { x: 0 + i, y: 0 + i }, { x: 0 + i, y: Globals.width.y - 1 - i }, force)
+            this.drawLine(Molecule, { x: 0 + i, y: 0 + i }, { x: Globals.width.x - 1 - i, y: 0 + i }, force)
+            this.drawLine(Molecule, { x: Globals.width.x - 1 - i, y: 0 + i }, { x: Globals.width.x - 1 - i, y: Globals.width.y - 1 - i }, force)
+            this.drawLine(Molecule, { x: 0 + i, y: Globals.width.y - 1 - i}, { x: Globals.width.x - 1 - i, y: Globals.width.y - 1 - i }, force)
+        }
+    }
+
     fill(Molecule) {
         const length = Globals.width.x * Globals.width.y
 
@@ -120,7 +129,7 @@ class Grid {
             out += String(this.getType(i)) + ":" + String(this.grid[i].render()) + ";"
         }
 
-        return out
+        return out.substr(0, out.length - 1)
     }
 }
 

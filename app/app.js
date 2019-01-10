@@ -11,7 +11,7 @@ game.start()
 
 document.getElementById(Utils.ids.start).onclick = function() { game.start() }
 document.getElementById(Utils.ids.stop).onclick = function() { game.stop() }
-document.getElementById(Utils.ids.tick).onclick = function() { game.tick() }
+document.getElementById(Utils.ids.tick).onclick = function() { game.doTick() }
 document.getElementById(Utils.ids.reset).onclick = function() { game.reset() }
 
 document.getElementById(Utils.ids.makeFloor).onclick = function() { game.makeFloor() }

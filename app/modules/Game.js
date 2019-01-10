@@ -47,10 +47,7 @@ class Game {
         Globals.grid = new Grid(context)
         Globals.grid.fill(Empty)
 
-        Globals.grid.drawLine(Indestructible, { x: 0, y: 0 }, { x: 0, y: Globals.width.y - 1 }, true)
-        Globals.grid.drawLine(Indestructible, { x: 0, y: 0 }, { x: Globals.width.x - 1, y: 0 }, true)
-        Globals.grid.drawLine(Indestructible, { x: Globals.width.x - 1, y: 0 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
-        Globals.grid.drawLine(Indestructible, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawBoundaries(Indestructible, 1, true)
 
         canvas.addEventListener('mousedown', e => this.startSpawn(e), false)    
         canvas.addEventListener('mouseup', e => this.stopSpawn(e), false)
@@ -142,6 +139,9 @@ class Game {
             if (isNaN(canvasSizes[Utils.queryNames.generateChance]) == false) {
                 this.generateChance = parseFloat(canvasSizes[Utils.queryNames.generateChance])
             }
+        }
+        if (canvasSizes[Utils.queryNames.data] != null && canvasSizes[Utils.queryNames.data] != undefined && canvasSizes[Utils.queryNames.data] != "") {
+            this.data = canvasSizes[Utils.queryNames.data]
         }
         document.getElementById(Utils.ids.sizesForm + "x").value = Globals.width.x
         document.getElementById(Utils.ids.sizesForm + "y").value = Globals.width.y
@@ -308,7 +308,7 @@ class Game {
         }
     }
 
-    tick() {
+    doTick() {
         this.running = false
         this.tick = true
     }
