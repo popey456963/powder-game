@@ -13,7 +13,7 @@ class Concrete extends Block {
     }
 
     resistance() {
-        return 0.05
+        return 0.95
     }
 }
 

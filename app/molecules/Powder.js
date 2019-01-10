@@ -13,7 +13,7 @@ class Powder extends Particle {
     }
 
     resistance() {
-        return 1
+        return 0
     }
 
     tick() {

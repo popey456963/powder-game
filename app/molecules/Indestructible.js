@@ -9,7 +9,7 @@ class Indestructible extends Block {
     }
 
     resistance() {
-        return 0
+        return 1
     }
 }
 

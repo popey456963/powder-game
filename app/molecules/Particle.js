@@ -14,7 +14,7 @@ class Particle {
     }
 
     resistance() {
-        return 0
+        return 1
     }
 
     tick() {}
