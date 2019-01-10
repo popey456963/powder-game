@@ -1,10 +1,11 @@
 const Particle = require('./Particle.js')
+const Utils = require('../modules/Utils')
 
 class Liquid extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = Globals.molecules.Liquid
+        this.type = Utils.molecules.Liquid
         this.lastMove = 0
         this.requiredMoves = 5
     }
@@ -13,12 +14,16 @@ class Liquid extends Particle {
         return 0xFFFF00FF;
     }
 
+    resistance() {
+        return 0.5
+    }
+
     tick() {
         if (this.floating()) {
             this.fall()
         } else if (this.lastMove > this.requiredMoves) {
-            const left = this.getType(-1, 0) === Globals.molecules.Empty
-            const right = this.getType(1, 0) === Globals.molecules.Empty
+            const left = this.getType(-1, 0) === Utils.molecules.Empty
+            const right = this.getType(1, 0) === Utils.molecules.Empty
 
             if (left && right) {
                 if (Math.random() > 0.5) this.move(-1, 0)
@@ -37,7 +42,7 @@ class Liquid extends Particle {
     }
 }
 
-Liquid.prototype.floating = require('./attributes/floating')
+Liquid.prototype.floating = require('./attributes/floatingLiquid')
 Liquid.prototype.fall = require('./attributes/fall')
 
 module.exports = Liquid

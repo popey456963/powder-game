@@ -6,7 +6,9 @@
  *  - full = Array of objects, describing metadata of each molecule
  */
 
+const Empty = require('../molecules/Empty.js')
 const Shape = require('./Shape')
+const Utils = require('./Utils')
 
 class Grid {
     constructor(context) {
@@ -33,7 +35,7 @@ class Grid {
     }
 
     setMolecule(molecule, force = false) {      
-        if (molecule.type !== Globals.molecules.Empty && this.getType(molecule.pos) !== Globals.molecules.Empty && !force) {
+        if (molecule.type !== Utils.molecules.Empty && this.getType(molecule.pos) !== Utils.molecules.Empty && !force) {
             return false
         }
 
@@ -41,6 +43,10 @@ class Grid {
         this.types[molecule.pos] = molecule.type
 
         return true
+    }
+
+    setEmpty(position, force = false) {
+        this.setMolecule(new Empty({ pos: position }), force)
     }
 
     drawLine(Molecule, start, end, force = false) {
@@ -106,6 +112,15 @@ class Grid {
     draw() {
         this.imageData.data.set(this.buf8)
         this.context.putImageData(this.imageData, 0, 0)
+    }
+
+    getSaveData() {
+        out = String(Globals.width.x) + "|" + String(Globals.width.y) + "|"
+        for (let i = 0; i < this.grid.length; i++) {
+            out += String(this.getType(i)) + ":" + String(this.grid[i].render()) + ";"
+        }
+
+        return out
     }
 }
 

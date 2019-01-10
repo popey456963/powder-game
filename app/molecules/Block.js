@@ -1,10 +1,11 @@
 const Particle = require('./Particle.js')
+const Utils = require('../modules/Utils')
 
 class Block extends Particle {
     constructor(options) {
         super(options)
 
-        this.type = Globals.molecules.Block
+        this.type = Utils.molecules.Block
     }
 
     render() {

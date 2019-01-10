@@ -1,16 +1,16 @@
 const Powder = require('./Powder')
 const Utils = require('../modules/Utils')
 
-class Sage extends Powder {
+class Soil extends Powder {
     constructor(options) {
         super(options)
 
-        this.type = Utils.molecules.Sage
+        this.type = Utils.molecules.Soil
     }
 
     render() {
-        return 0xFF00FF00
+        return 0xFF66A0CB
     }
 }
 
-module.exports = Sage
+module.exports = Soil
