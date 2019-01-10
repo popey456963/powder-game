@@ -5,10 +5,7 @@ class Particle {
         this.pos = this.options.pos
         this.inactive = true
         this.type = Globals.molecules.Particle
-    }
-
-    render() {
-        return 0xFF800080
+        this.render = 0xFF800080
     }
 
     tick() {}

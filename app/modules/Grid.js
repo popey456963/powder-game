@@ -6,6 +6,7 @@
  *  - full = Array of objects, describing metadata of each molecule
  */
 
+const Coords = require('./Coords')
 const Shape = require('./Shape')
 
 class Grid {
@@ -44,6 +45,7 @@ class Grid {
     }
 
     drawLine(Molecule, start, end, force = false) {
+        console.log(typeof start, typeof end)
         if (typeof start === 'number') start = Coords.toXY(start)
         if (typeof end === 'number') end = Coords.toXY(end)
 
@@ -53,6 +55,7 @@ class Grid {
     }
 
     drawPoint(Molecule, center, radius = 2, force = false) {
+        console.log(typeof center)
         if (typeof center === 'number') center = Coords.toXY(center)
 
         for (const point of Shape.point(center, radius, force)) {
@@ -92,9 +95,7 @@ class Grid {
         grid.forEach((molecule, pos) => {
             if (!molecule) return
 
-            const colour = molecule.render()
-
-            colours[pos] = colour
+            colours[pos] = molecule.render
             // colours[pos] =
             //     (colour.a << 24) | // alpha
             //     (colour.b << 16) | // blue

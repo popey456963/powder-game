@@ -1,5 +1,5 @@
 // Returns the points that make up certain shapes
-const Coord = require('./Coord')
+const Coords = require('./Coords')
 
 class Shape {
     constructor() {}
@@ -11,7 +11,7 @@ class Shape {
         let points = []
        
         while (true) {
-            if (force || Coord.limit(from)) points.push({ x: from.x, y: from.y })
+            if (force || Coords.limit(from)) points.push({ x: from.x, y: from.y })
             if (from.x === to.x && from.y === to.y) break;
             let e2 = err;
             if (e2 > -dx) { err -= dy; from.x += sx; }
@@ -27,7 +27,7 @@ class Shape {
         for (let x = center.x - radius; x <= center.x + radius; x++) {
             const yRange = radius * Math.sin(Math.acos((center.x - x) / radius))
             for (let y = center.y - yRange; y <= center.y + yRange; y++) {
-                if (force || Coord.limit(x, Math.round(y))) points.push({ x, y: Math.round(y) })
+                if (force || Coords.limit(x, Math.round(y))) points.push({ x, y: Math.round(y) })
             }
         }
 

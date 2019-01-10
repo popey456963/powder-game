@@ -5,14 +5,7 @@ class Oil extends Liquid {
         super(options)
 
         this.type = Globals.molecules.Oil
-    }
-
-    render() {
-        return 0xFF0000FF
-    }
-
-    tick() {
-        super.tick()
+        this.render = 0xFF0000FF
     }
 }
 

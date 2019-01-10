@@ -6,10 +6,7 @@ class Salt extends Powder {
         super(options)
 
         this.type = Globals.molecules.Salt
-    }
-
-    render() {
-        return 0xFFBBDDDD
+        this.render = 0xFFBBDDDD
     }
 
     tick() {

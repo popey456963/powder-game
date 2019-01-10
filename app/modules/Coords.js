@@ -1,4 +1,4 @@
-class Coord {
+class Coords {
     constructor() {}
 
     static toXY(p) {
@@ -22,5 +22,5 @@ class Coord {
     }
 }
 
-module.exports = Coord
+module.exports = Coords
 

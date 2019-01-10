@@ -7,10 +7,7 @@ class Liquid extends Particle {
         this.type = Globals.molecules.Liquid
         this.lastMove = 0
         this.requiredMoves = 5
-    }
-
-    render() {
-        return 0xFFFF00FF;
+        this.render = 0xFFFF00FF
     }
 
     tick() {

@@ -5,14 +5,7 @@ class Snow extends Powder {
         super(options)
 
         this.type = Globals.molecules.Snow
-    }
-
-    render() {
-        return 0xFFFFFFFF
-    }
-
-    tick() {
-        super.tick()
+        this.render = 0xFFFFFFFF
     }
 }
 

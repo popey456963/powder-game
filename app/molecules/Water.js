@@ -5,14 +5,7 @@ class Water extends Liquid {
         super(options)
         
         this.type = Globals.molecules.Water
-    }
-
-    render() {
-        return 0xFFFF0000
-    }
-
-    tick() {
-        super.tick()
+        this.render = 0xFFFF0000
     }
 }
 

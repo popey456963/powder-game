@@ -5,10 +5,7 @@ class Block extends Particle {
         super(options)
 
         this.type = Globals.molecules.Block
-    }
-
-    render() {
-        return 0xFF887AFF
+        this.render = 0xFF887AFF
     }
 }
 

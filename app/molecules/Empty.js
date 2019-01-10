@@ -5,10 +5,7 @@ class Empty extends Particle {
         super(options)
 
         this.type = Globals.molecules.Empty
-    }
-
-    render() {
-        return 0xFF000000
+        this.render = 0xFF000000
     }
 }
 

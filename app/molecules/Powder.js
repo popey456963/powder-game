@@ -5,10 +5,7 @@ class Powder extends Particle {
         super(options)
 
         this.type = Globals.molecules.Powder
-    }
-
-    render() {
-    	return 0xFFFF00FF; 
+        this.render = 0xFFFF00FF
     }
 
     tick() {

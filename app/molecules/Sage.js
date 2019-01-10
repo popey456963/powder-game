@@ -5,14 +5,7 @@ class Sage extends Powder {
         super(options)
 
         this.type = Globals.molecules.Sage
-    }
-
-    render() {
-        return 0xFF00FF00
-    }
-
-    tick() {
-        super.tick()
+        this.render = 0xFF00FF00
     }
 }
 
