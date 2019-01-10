@@ -117,7 +117,7 @@ class Grid {
     getSaveData() {
         out = String(Globals.width.x) + "|" + String(Globals.width.y) + "|"
         for (let i = 0; i < this.grid.length; i++) {
-            out += String(this.getType(i)) + ":" String(this.grid[i].render()) + ";"
+            out += String(this.getType(i)) + ":" + String(this.grid[i].render()) + ";"
         }
 
         return out
