@@ -6,7 +6,7 @@
  *  - full = Array of objects, describing metadata of each molecule
  */
 
-const Empty = require('../molecules/Empty.js')
+const Molecule = require('./Molecule')
 const Coords = require('./Coords')
 const Shape = require('./Shape')
 const Utils = require('./Utils')
@@ -47,7 +47,7 @@ class Grid {
     }
 
     setEmpty(position, force = false) {
-        this.setMolecule(new Empty({ pos: position }), force)
+        this.setMolecule(new Molecule.Empty({ pos: position }), force)
     }
 
     drawLine(Molecule, start, end, force = false) {
