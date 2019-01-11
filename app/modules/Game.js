@@ -335,7 +335,7 @@ class Game {
         for (let i = 0; i < contentsData.length; i++) {
             //console.log(i)
             let Molecule = this.moleculeFromId(contentsData[i].split("*")[0])
-            Globals.grid.setMolecule(new Molecule({ i }), true)
+            Globals.grid.setMolecule(new Molecule({ pos: i }), true)
             //console.log(Molecule)
         }
         return false
