@@ -39,7 +39,7 @@ class Liquid extends Particle {
     }
 }
 
-Liquid.prototype.floating = require('./attributes/floatingLiquid')
+Liquid.prototype.floating = require('./attributes/floating')([Utils.molecules.Empty])
 Liquid.prototype.fall = require('./attributes/fall')
 
 module.exports = Liquid

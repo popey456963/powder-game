@@ -22,7 +22,7 @@ class Powder extends Particle {
     }
 }
 
-Particle.prototype.floating = require('./attributes/floatingPowder')
+Particle.prototype.floating = require('./attributes/floating')([Utils.molecules.Empty, Utils.molecules.Water, Utils.molecules.Oil])
 Particle.prototype.fall = require('./attributes/fall')
 
 module.exports = Powder
