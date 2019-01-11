@@ -61,7 +61,6 @@ class Grid {
     }
 
     drawPoint(Molecule, center, radius = 2, force = false) {
-        console.log(typeof center)
         if (typeof center === 'number') center = Coords.toXY(center)
 
         for (const point of Shape.point(center, radius, force)) {
@@ -91,9 +90,9 @@ class Grid {
             // Check area is not empty
             if (item !== 1) {
                 const molecule = this.grid[index]
-                console.log(molecule)
-                console.log(index)
-                console.log(this.grid.length)
+                // console.log(molecule)
+                // console.log(index)
+                // console.log(this.grid.length)
 
                 if (molecule.inactive) {
                     molecule.inactive = false

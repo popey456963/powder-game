@@ -1,22 +1,6 @@
-// Imports 
-const Empty = require('../molecules/Empty.js')
-const Snow = require('../molecules/Snow.js')
-const Sand = require('../molecules/Sand.js')
-const Sage = require('../molecules/Sage.js')
-const Oil = require('../molecules/Oil.js')
-const Salt = require('../molecules/Salt.js')
-const Soil = require('../molecules/Soil.js')
-const Water = require('../molecules/Water.js')
-const Block = require('../molecules/Block.js')
-const Concrete = require('../molecules/Concrete.js')
-const Indestructible = require('../molecules/Indestructible.js')
-
-const Particle = require('../molecules/Particle.js')
-const Powder = require('../molecules/Powder.js')
-const Liquid = require('../molecules/Liquid.js')
-
-const Utils = require('./Utils.js')
-const Grid = require('./Grid.js')
+const Molecule = require('./Molecule')
+const Utils = require('./Utils')
+const Grid = require('./Grid')
 
 const queryString = require('query-string')
 
@@ -52,10 +36,10 @@ class Game {
 
         // Instantiate and fill the grid 
         Globals.grid = new Grid(context)
-        if (this.parseStartData()) Globals.grid.fill(Empty)
+        if (this.parseStartData()) Globals.grid.fill(Molecule.Empty)
 
         // Draw the boundaries 
-        Globals.grid.drawBoundaries(Indestructible, this.boundaryWidth, true)
+        Globals.grid.drawBoundaries(Molecule.Indestructible, this.boundaryWidth, true)
 
         // Add event listeners 
         canvas.addEventListener('mousedown', e => this.startSpawn(e), false)    
@@ -190,7 +174,7 @@ class Game {
     getGenerateables(ids) {
         molecules = []
         for (let i = 0; (i < ids.length) && (i * this.generateChance < 1); i++) {
-            molecules.push(this.moleculeFromId(ids[i]))
+            molecules.push(Molecule.fromId(ids[i]))
         }
         this.generateables = molecules
     }
@@ -247,59 +231,9 @@ class Game {
         }
     }
 
-    // Get molecule from id
-    moleculeFromId(id) {
-        id = String(id)
-        if (id === String(Utils.molecules.Particle)) {
-            return Particle
-        }
-        else if (id === String(Utils.molecules.Empty)) {
-            return Empty
-        }
-        else if (id === String(Utils.molecules.Block)) {
-            return Block
-        }
-        else if (id === String(Utils.molecules.Concrete)) {
-            return Concrete
-        }
-        else if (id === String(Utils.molecules.Indestructible)) {
-            return Indestructible
-        }
-        else if (id === String(Utils.molecules.Powder)) {
-            return Powder
-        }
-        else if (id === String(Utils.molecules.Sage)) {
-            return Sage
-        }
-        else if (id === String(Utils.molecules.Salt)) {
-            return Salt
-        }
-        else if (id === String(Utils.molecules.Sand)) {
-            return Sand
-        }
-        else if (id === String(Utils.molecules.Snow)) {
-            return Snow
-        }
-        else if (id === String(Utils.molecules.Soil)) {
-            return Soil
-        }
-        else if (id === String(Utils.molecules.Liquid)) {
-            return Liquid
-        }
-        else if (id === String(Utils.molecules.Water)) {
-            return Water
-        }
-        else if (id === String(Utils.molecules.Oil)) {
-            return Oil
-        }
-        else {
-            return Empty
-        }
-    }
-
-    // Add a molecule 
-    spawn(Molecule, center, radius) {
-        Globals.grid.drawPoint(Molecule, center, radius)
+    // Add a particle 
+    spawn(Particle, center, radius) {
+        Globals.grid.drawPoint(Particle, center, radius)
     }
 
     // Spawn particles on click 
@@ -310,7 +244,7 @@ class Game {
         }
 
         this.clickInterval = setInterval(() => {
-            this.spawn(this.moleculeFromId(this.spawning.type), { x: this.x, y: this.y }, this.spawning.radius)
+            this.spawn(Molecule.fromId(this.spawning.type), { x: this.x, y: this.y }, this.spawning.radius)
         })
     }
 
@@ -334,8 +268,8 @@ class Game {
         console.log(contentsData)
         for (let i = 0; i < contentsData.length; i++) {
             //console.log(i)
-            let Molecule = this.moleculeFromId(contentsData[i].split("*")[0])
-            Globals.grid.setMolecule(new Molecule({ pos: i }), true)
+            let Particle = Molecule.fromId(parseInt(contentsData[i].split("*")[0]))
+            Globals.grid.setMolecule(new Particle({ pos: i }), true)
             //console.log(Molecule)
         }
         return false
@@ -361,15 +295,15 @@ class Game {
 
     reset() {
         console.log('Resetting Grid')
-        Globals.grid.fill(Empty) 
+        Globals.grid.fill(Molecule.Empty) 
     }
 
     makeFloor() {
-        Globals.grid.drawLine(Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Molecule.Block, { x: 0, y: Globals.width.y - 1 }, { x: Globals.width.x - 1, y: Globals.width.y - 1 }, true)
     }
 
     removeFloor() {
-        Globals.grid.drawLine(Empty, { x: 1, y: Globals.width.y - 1 }, { x: Globals.width.x - 2, y: Globals.width.y - 1 }, true)
+        Globals.grid.drawLine(Molecule.Empty, { x: 1, y: Globals.width.y - 1 }, { x: Globals.width.x - 2, y: Globals.width.y - 1 }, true)
     }
 
     startGenerate() {
