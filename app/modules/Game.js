@@ -24,31 +24,40 @@ const queryString = require('query-string')
 class Game {
     // The constructor to setup the game 
     constructor(target) {
+        // Set the initial values 
         const canvas = document.getElementById(target)
         this.spawning = {
             radius: 2, 
             type: 100
         }
-        this.generateables = [201, 202, 204, 205, 301]
+        this.generateableIds = [201, 202, 204, 205, 301]
         this.generateChance = 0.001
+        this.generate = true
+        this.boundaryWidth = 1
+        this.data = ""
         this.parseQuery()
 
         canvas.setAttribute('height', Globals.width.y)
         canvas.setAttribute('width', Globals.width.x)
 
+        // Get the canvas context 
         const context = canvas.getContext('2d')
 
+        // Get the 'second level' values 
         this.sizes = this.calculateSizes()
         this.tick = false
         this.running = false
         this.sizeOffset = 100
-        this.getGenerateables(this.generateables)
+        this.getGenerateables(this.generateableIds)
 
+        // Instantiate and fill the grid 
         Globals.grid = new Grid(context)
-        Globals.grid.fill(Empty)
+        if (this.parseStartData()) Globals.grid.fill(Empty)
 
-        Globals.grid.drawBoundaries(Indestructible, 1, true)
+        // Draw the boundaries 
+        Globals.grid.drawBoundaries(Indestructible, this.boundaryWidth, true)
 
+        // Add event listeners 
         canvas.addEventListener('mousedown', e => this.startSpawn(e), false)    
         canvas.addEventListener('mouseup', e => this.stopSpawn(e), false)
         document.addEventListener('mouseup', e => this.stopSpawn(e), false)
@@ -58,17 +67,19 @@ class Game {
 
         window.addEventListener('resize', e => this.resizeCanvas(this.calculateSizes()), false)
 
+        // Store the canvas and context 
         this.canvas = canvas
         this.context = context
 
+        // Set the canvas size 
         this.resizeCanvas(this.calculateSizes())
         console.log("The canvas sizes are: " + String(Globals.width.x) + " by " + String(Globals.width.y) + "; the scale is: " + String(Globals.scale) + ". ")
 
+        // Set mouse position 
         this.x = 0
         this.y = 0
 
-        this.generate = true
-
+        // Start animation 
         window.requestAnimationFrame(this.loop.bind(this))
     }
 
@@ -95,7 +106,7 @@ class Game {
                 if (random < this.generateChance * 1) Globals.grid.setMolecule(new Snow({ pos }))
                 if (random < this.generateChance * 2) Globals.grid.setMolecule(new Sand({ pos }))
                 if (random < this.generateChance * 3) Globals.grid.setMolecule(new Salt({ pos }))
-                if (random < this.generateChance * 4) Globals.grid.setMolecule(new Oil({ pos }))
+                if (random < this.generateChance * 4) Globals.grid.setMolecule(new Oil ({ pos }))
                 if (random < this.generateChance * 5) Globals.grid.setMolecule(new Sage({ pos }))
                 */
             }
@@ -105,43 +116,64 @@ class Game {
         window.requestAnimationFrame(this.loop.bind(this))
     }
 
-    // Parse the size given in the URL bar 
+    // Parse the data given in the URL bar 
     parseQuery() {
-        canvasSizes = queryString.parse(window.location.search)
+        queryData = queryString.parse(window.location.search)
         if (development) {
-            console.log(canvasSizes)
+            console.log(queryData)
         }
-        if (canvasSizes[Utils.queryNames.xSize] != null && canvasSizes[Utils.queryNames.xSize] != undefined && canvasSizes[Utils.queryNames.xSize] != "") {
-            if (isNaN(canvasSizes[Utils.queryNames.xSize]) == false) {
-                Globals.width.x = parseInt(canvasSizes[Utils.queryNames.xSize])
+        if (queryData[Utils.queryNames.xSize] != null && queryData[Utils.queryNames.xSize] != undefined && queryData[Utils.queryNames.xSize] != "") {
+            if (isNaN(queryData[Utils.queryNames.xSize]) == false) {
+                Globals.width.x = parseInt(queryData[Utils.queryNames.xSize])
             }
         }
-        if (canvasSizes[Utils.queryNames.ySize] != null && canvasSizes[Utils.queryNames.ySize] != undefined && canvasSizes[Utils.queryNames.ySize] != "") {
-            if (isNaN(canvasSizes[Utils.queryNames.ySize]) == false) {
-                Globals.width.y = parseInt(canvasSizes[Utils.queryNames.ySize])
+        if (queryData[Utils.queryNames.ySize] != null && queryData[Utils.queryNames.ySize] != undefined && queryData[Utils.queryNames.ySize] != "") {
+            if (isNaN(queryData[Utils.queryNames.ySize]) == false) {
+                Globals.width.y = parseInt(queryData[Utils.queryNames.ySize])
             }
         }
-        if (canvasSizes[Utils.queryNames.type] != null && canvasSizes[Utils.queryNames.type] != undefined && canvasSizes[Utils.queryNames.type] != "") {
-            if (isNaN(canvasSizes[Utils.queryNames.type]) == false) {
-                this.spawning.type = parseInt(canvasSizes[Utils.queryNames.type])
+        if (queryData[Utils.queryNames.type] != null && queryData[Utils.queryNames.type] != undefined && queryData[Utils.queryNames.type] != "") {
+            if (isNaN(queryData[Utils.queryNames.type]) == false) {
+                this.spawning.type = parseInt(queryData[Utils.queryNames.type])
             }
         }
-        if (canvasSizes[Utils.queryNames.radius] != null && canvasSizes[Utils.queryNames.radius] != undefined && canvasSizes[Utils.queryNames.radius] != "") {
-            if (isNaN(canvasSizes[Utils.queryNames.radius]) == false) {
-                this.spawning.radius = parseInt(canvasSizes[Utils.queryNames.radius])
+        if (queryData[Utils.queryNames.radius] != null && queryData[Utils.queryNames.radius] != undefined && queryData[Utils.queryNames.radius] != "") {
+            if (isNaN(queryData[Utils.queryNames.radius]) == false) {
+                this.spawning.radius = parseInt(queryData[Utils.queryNames.radius])
             }
         }
-        if (canvasSizes[Utils.queryNames.generate] != null && canvasSizes[Utils.queryNames.generate] != undefined && canvasSizes[Utils.queryNames.generate] != "") {
-            this.generateables = canvasSizes[Utils.queryNames.generate].split(",")
+        if (queryData[Utils.queryNames.generate] != null && queryData[Utils.queryNames.generate] != undefined && queryData[Utils.queryNames.generate] != "") {
+            this.generateableIds = queryData[Utils.queryNames.generate].split(",")
         }
-        if (canvasSizes[Utils.queryNames.generateChance] != null && 
-            canvasSizes[Utils.queryNames.generateChance] != undefined && canvasSizes[Utils.queryNames.generateChance] != "") {
-            if (isNaN(canvasSizes[Utils.queryNames.generateChance]) == false) {
-                this.generateChance = parseFloat(canvasSizes[Utils.queryNames.generateChance])
+        if (queryData[Utils.queryNames.generateChance] != null && 
+            queryData[Utils.queryNames.generateChance] != undefined && queryData[Utils.queryNames.generateChance] != "") {
+            if (isNaN(queryData[Utils.queryNames.generateChance]) == false) {
+                this.generateChance = parseFloat(queryData[Utils.queryNames.generateChance])
             }
         }
-        if (canvasSizes[Utils.queryNames.data] != null && canvasSizes[Utils.queryNames.data] != undefined && canvasSizes[Utils.queryNames.data] != "") {
-            this.data = canvasSizes[Utils.queryNames.data]
+        if (queryData[Utils.queryNames.start] != null && queryData[Utils.queryNames.start] != undefined && queryData[Utils.queryNames.start] != "") {
+            this.data = queryData[Utils.queryNames.start]
+            console.log(this.data)
+        }
+        if (queryData[Utils.queryNames.submit] != null && queryData[Utils.queryNames.submit] != undefined && queryData[Utils.queryNames.submit] != "") {
+        }
+        if (queryData[Utils.queryNames.boundaryWidth] != null && 
+            queryData[Utils.queryNames.boundaryWidth] != undefined && queryData[Utils.queryNames.boundaryWidth] != "") {
+            if (isNaN(queryData[Utils.queryNames.boundaryWidth]) == false) {
+                this.boundaryWidth = parseInt(queryData[Utils.queryNames.boundaryWidth])
+            }
+        }
+        if (queryData[Utils.queryNames.doGenerate] != null && 
+            queryData[Utils.queryNames.doGenerate] != undefined && queryData[Utils.queryNames.doGenerate] != "") {
+            if (isNaN(queryData[Utils.queryNames.doGenerate]) == false) {
+                let doGenerate = parseInt(queryData[Utils.queryNames.doGenerate])
+                if (doGenerate > 0) {
+                    this.generate = true
+                }
+                else {
+                    this.generate = false
+                }
+            }
         }
         document.getElementById(Utils.ids.sizesForm + "x").value = Globals.width.x
         document.getElementById(Utils.ids.sizesForm + "y").value = Globals.width.y
@@ -161,7 +193,6 @@ class Game {
             molecules.push(this.moleculeFromId(ids[i]))
         }
         this.generateables = molecules
-        console.log(this.generateables)
     }
 
     // Get the relative x and y coordinates of an element 
@@ -228,6 +259,12 @@ class Game {
         else if (id === String(Utils.molecules.Block)) {
             return Block
         }
+        else if (id === String(Utils.molecules.Concrete)) {
+            return Concrete
+        }
+        else if (id === String(Utils.molecules.Indestructible)) {
+            return Indestructible
+        }
         else if (id === String(Utils.molecules.Powder)) {
             return Powder
         }
@@ -254,12 +291,6 @@ class Game {
         }
         else if (id === String(Utils.molecules.Oil)) {
             return Oil
-        }
-        else if (id === String(Utils.molecules.Concrete)) {
-            return Concrete
-        }
-        else if (id === String(Utils.molecules.Indestructible)) {
-            return Indestructible
         }
         else {
             return Empty
@@ -293,6 +324,21 @@ class Game {
 
         this.x = location.x
         this.y = location.y
+    }
+
+    // Parse start data
+    parseStartData() {
+        if (this.data === "") return true
+        if (String(Globals.width.x) + "$" + String(Globals.width.y) !== this.data.split("!")[0]) return true
+        contentsData = this.data.split("!")[1].split("$")
+        console.log(contentsData)
+        for (let i = 0; i < contentsData.length; i++) {
+            //console.log(i)
+            let Molecule = this.moleculeFromId(contentsData[i].split("*")[0])
+            Globals.grid.setMolecule(new Molecule({ i }), true)
+            //console.log(Molecule)
+        }
+        return false
     }
 
     // Buttons 

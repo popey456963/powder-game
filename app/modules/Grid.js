@@ -91,6 +91,9 @@ class Grid {
             // Check area is not empty
             if (item !== 1) {
                 const molecule = this.grid[index]
+                console.log(molecule)
+                console.log(index)
+                console.log(this.grid.length)
 
                 if (molecule.inactive) {
                     molecule.inactive = false
@@ -125,9 +128,9 @@ class Grid {
     }
 
     getSaveData() {
-        out = String(Globals.width.x) + "|" + String(Globals.width.y) + "|"
+        out = String(Globals.width.x) + "$" + String(Globals.width.y) + "!"
         for (let i = 0; i < this.grid.length; i++) {
-            out += String(this.getType(i)) + ":" + String(this.grid[i].render()) + ";"
+            out += String(this.getType(i)) + "*" + String(this.grid[i].render()) + "$"
         }
 
         return out.substr(0, out.length - 1)

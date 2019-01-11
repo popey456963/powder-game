@@ -47,7 +47,10 @@ module.exports = {
         radius: 'r',
         generate: 'g',
         generateChance: 'c',
-        data: 'd'
+        start: 's',
+        submit: 'submit',
+        boundaryWidth: 'b',
+        doGenerate: 'd'
     },
     widthOffset: 32
 }
