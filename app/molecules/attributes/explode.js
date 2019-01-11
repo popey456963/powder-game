@@ -1,14 +1,13 @@
-const Coord = require('../../modules/Coords')
 
-module.exports = function explode(p, y) {
-	if (typeof y === 'undefined') {
-		point = Coord.toXY(p)
-		x = point.x
-		y = point.y
-	}
-	distance = Math.pow(Math.pow(x, 2) + Math.pow(y, 2), 0.5)
-
-    if (this.resistance < Math.random()) {
+// Calculate the chance of removing this block if it is within an explosion radius
+// Radius is the explosion radius; distance is the distance from the explosion. 
+module.exports = function explode(radius, distance) {
+    if (calculateEffectiveResistance(radius, distance, this.resistance) < Math.random()) {
     	Globals.grid.setEmpty(this.pos)
     }
+}
+
+function calculateEffectiveResistance(radius, distance, resistance) {
+	if (distance > radius) return 1
+	return (1-Math.exp(-distance/radius)*resistance)
 }

@@ -51,7 +51,6 @@ class Grid {
     }
 
     drawLine(Molecule, start, end, force = false) {
-        console.log(typeof start, typeof end)
         if (typeof start === 'number') start = Coords.toXY(start)
         if (typeof end === 'number') end = Coords.toXY(end)
 
@@ -61,7 +60,6 @@ class Grid {
     }
 
     drawPoint(Molecule, center, radius = 2, force = false) {
-        console.log(typeof center)
         if (typeof center === 'number') center = Coords.toXY(center)
 
         for (const point of Shape.point(center, radius, force)) {

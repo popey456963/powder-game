@@ -10,6 +10,7 @@ const Water = require('../molecules/Water.js')
 const Block = require('../molecules/Block.js')
 const Concrete = require('../molecules/Concrete.js')
 const Indestructible = require('../molecules/Indestructible.js')
+const Explosive = require('../molecules/Explosive.js')
 
 const Particle = require('../molecules/Particle.js')
 const Powder = require('../molecules/Powder.js')
@@ -290,6 +291,9 @@ class Game {
         }
         else if (id === String(Utils.molecules.Oil)) {
             return Oil
+        }
+        else if (id === String(Utils.molecules.Explosive)) {
+            return Explosive
         }
         else {
             return Empty

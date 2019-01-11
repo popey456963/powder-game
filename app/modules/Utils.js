@@ -38,7 +38,8 @@ module.exports = {
         Soil: 206,
         Liquid: 300,
         Oil: 301, 
-        Water: 302
+        Water: 302,
+        Explosive: 400
     },
     queryNames: {
         xSize: 'x', 
