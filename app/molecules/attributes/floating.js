@@ -1,4 +1,4 @@
-const Utils = require('../../modules/Utils')
+
 
 // Gives a particle the ability to work out if it's floating or not.
 module.exports = (materials) => {

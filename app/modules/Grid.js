@@ -51,7 +51,6 @@ class Grid {
     }
 
     drawLine(Molecule, start, end, force = false) {
-        console.log(typeof start, typeof end)
         if (typeof start === 'number') start = Coords.toXY(start)
         if (typeof end === 'number') end = Coords.toXY(end)
 
@@ -90,9 +89,6 @@ class Grid {
             // Check area is not empty
             if (item !== 1) {
                 const molecule = this.grid[index]
-                // console.log(molecule)
-                // console.log(index)
-                // console.log(this.grid.length)
 
                 if (molecule.inactive) {
                     molecule.inactive = false

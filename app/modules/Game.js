@@ -137,7 +137,6 @@ class Game {
         }
         if (queryData[Utils.queryNames.start] != null && queryData[Utils.queryNames.start] != undefined && queryData[Utils.queryNames.start] != "") {
             this.data = queryData[Utils.queryNames.start]
-            console.log(this.data)
         }
         if (queryData[Utils.queryNames.submit] != null && queryData[Utils.queryNames.submit] != undefined && queryData[Utils.queryNames.submit] != "") {
         }
@@ -265,7 +264,7 @@ class Game {
         if (this.data === "") return true
         if (String(Globals.width.x) + "$" + String(Globals.width.y) !== this.data.split("!")[0]) return true
         contentsData = this.data.split("!")[1].split("$")
-        console.log(contentsData)
+        if (contentsData.length !== Globals.width.x * Globals.width.y) return true
         for (let i = 0; i < contentsData.length; i++) {
             //console.log(i)
             let Particle = Molecule.fromId(parseInt(contentsData[i].split("*")[0]))

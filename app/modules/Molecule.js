@@ -1,21 +1,23 @@
 const moleculesById = {
-    1: require("../molecules/Particle"),
-    2: require("../molecules/Empty"),
+    1: require('../molecules/Particle'),
+    2: require('../molecules/Empty'),
 
-    100: require("../molecules/Block"),
-    101: require("../molecules/Concrete"),
-    102: require("../molecules/Indestructible"),
+    100: require('../molecules/Block'),
+    101: require('../molecules/Concrete'),
+    102: require('../molecules/Indestructible'),
 
-    200: require("../molecules/Powder"),
-    201: require("../molecules/Sand"),
-    202: require("../molecules/Snow"),
-    204: require("../molecules/Salt"),
-    205: require("../molecules/Sage"),
-    206: require("../molecules/Soil"),
+    200: require('../molecules/Powder'),
+    201: require('../molecules/Sand'),
+    202: require('../molecules/Snow'),
+    204: require('../molecules/Salt'),
+    205: require('../molecules/Sage'),
+    206: require('../molecules/Soil'),
 
-    300: require("../molecules/Liquid"),
-    301: require("../molecules/Oil"),
-    302: require("../molecules/Water")
+    300: require('../molecules/Liquid'),
+    301: require('../molecules/Oil'),
+    302: require('../molecules/Water'),
+
+    400: require('../molecules/Explosive')
 }
 
 const moleculesByName = Object.keys(moleculesById).reduce((p, v) => ({
