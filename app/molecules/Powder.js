@@ -7,10 +7,7 @@ class Powder extends Particle {
 
         this.type = Utils.molecules.Powder
         this.render = 0xFFFF00FF
-    }
-
-    get resistance() {
-        return 0
+        this.resistance = 0
     }
 
     tick() {

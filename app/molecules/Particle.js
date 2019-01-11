@@ -8,10 +8,7 @@ class Particle {
         this.inactive = true
         this.type = Utils.molecules.Particle
         this.render = 0xFF800080
-    }
-
-    get resistance() {
-        return 1
+        this.resistance = 1
     }
 
     tick() {}

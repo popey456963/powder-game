@@ -9,14 +9,8 @@ class Explosive extends Block {
         //this.doExplosion = options.doExplosion
         this.doExplosion = true
         this.radius = 8
-    }
-
-    render() {
-        return 0xFFBBBBBB
-    }
-
-    get resistance() {
-        return 0.95
+        this.render = 0xFFBBBBBB
+        this.resistance = 0.95
     }
 
     tick() {

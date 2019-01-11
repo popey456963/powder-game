@@ -6,14 +6,8 @@ class Concrete extends Block {
         super(options)
 
         this.type = Utils.molecules.Concrete
-    }
-
-    render() {
-        return 0xFFBBBBBB
-    }
-
-    get resistance() {
-        return 0.95
+        this.render = 0xFFBBBBBB
+        this.resistance = 0.95
     }
 }
 

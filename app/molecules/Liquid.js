@@ -9,10 +9,7 @@ class Liquid extends Particle {
         this.lastMove = 0
         this.requiredMoves = 5
         this.render = 0xFFFF00FF
-    }
-
-    get resistance() {
-        return 0.5
+        this.resistance = 0.5
     }
 
     tick() {

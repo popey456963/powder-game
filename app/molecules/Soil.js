@@ -6,10 +6,7 @@ class Soil extends Powder {
         super(options)
 
         this.type = Utils.molecules.Soil
-    }
-
-    render() {
-        return 0xFF66A0CB
+        this.render = 0xFF66A0CB
     }
 }
 

@@ -6,6 +6,7 @@ class Indestructible extends Block {
         super(options)
 
         this.type = Utils.molecules.Indestructible
+        this.resistance = 1
     }
 
     get resistance() {
