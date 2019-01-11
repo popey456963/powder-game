@@ -18,3 +18,6 @@ The server file to run is index.js. First of all, the JavaScript and CSS needs t
 - babel-polyfill
 - autoprefixer 
 
+## Desired Features
+- [ ] Explosions
+- [ ] WebGL
