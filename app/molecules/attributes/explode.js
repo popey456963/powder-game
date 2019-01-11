@@ -1,4 +1,4 @@
-const Coord = require('../../modules/Coord.js')
+const Coord = require('../../modules/Coords.js')
 
 module.exports = function explode(p, y) {
 	if (typeof y === 'undefined') {
