@@ -17,7 +17,9 @@ const moleculesById = {
     301: require('../molecules/Oil'),
     302: require('../molecules/Water'),
 
-    400: require('../molecules/Explosive')
+    400: require('../molecules/Explosive'), 
+
+    500: require('../molecules/Fire')
 }
 
 const moleculesByName = Object.keys(moleculesById).reduce((p, v) => ({

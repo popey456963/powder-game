@@ -39,7 +39,8 @@ module.exports = {
         Liquid: 300,
         Oil: 301, 
         Water: 302,
-        Explosive: 400
+        Explosive: 400,
+        Fire: 500
     },
     queryNames: {
         xSize: 'x', 

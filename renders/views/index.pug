@@ -25,6 +25,10 @@ block content
                 input(type="submit" value="Submit" id="sizessubmit" name="submit")
                 input(type="reset" value="Reset" id="sizesreset" name="reset")
 
+            if development
+                p Development
+            else
+                p Release
             label(for="typest")= "Pen Type: "
             input(type="number" min="1" step="1" id="typest" class="setTypes" name="t")
             label(for="typesr")= "Pen Size: "
@@ -46,6 +50,9 @@ block scripts
         window.Globals = {
             width: { x: 300, y: 300 },
             scale: 1
+        }
+        if (development) {
+            var externals = {}
         }
     script(src='/lib/jquery.js')
     script(src='/dist/app.js')
