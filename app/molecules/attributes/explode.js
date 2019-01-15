@@ -3,11 +3,12 @@
 // Radius is the explosion radius; distance is the distance from the explosion. 
 module.exports = function explode(radius, distance) {
     if (calculateEffectiveResistance(radius, distance, this.resistance) < Math.random()) {
-    	Globals.grid.setEmpty(this.pos)
+    	Globals.grid.setEmpty(this.pos, true)
     }
 }
 
 function calculateEffectiveResistance(radius, distance, resistance) {
+	if (resistance == 1) return 1
 	if (distance > radius) return 1
-	return (1-Math.exp(-distance/radius)*resistance)
+	return (1-Math.exp(-distance/radius)*(resistance))
 }

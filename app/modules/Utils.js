@@ -30,6 +30,8 @@ module.exports = {
         Block: 100,
         Concrete: 101,
         Indestructible: 102,
+        Wax: 103, 
+        Spout: 104,
         Powder: 200,
         Sand: 201,
         Snow: 202, 

@@ -5,6 +5,8 @@ const moleculesById = {
     100: require('../molecules/Block'),
     101: require('../molecules/Concrete'),
     102: require('../molecules/Indestructible'),
+    103: require('../molecules/Wax'),
+    104: require('../molecules/Spout'),
 
     200: require('../molecules/Powder'),
     201: require('../molecules/Sand'),
