@@ -39,7 +39,7 @@ block content
             canvas(name="game")#game.game Please use a canvas enabled browser.
 
         article#information.col
-            p This is a game about falling powder. Powder falls or can be created. 
+            p This is a game about falling powder. Powder falls or can be created.  You are #{req.user ? 'logged in' : 'logged out'}
 
 block scripts
     script.

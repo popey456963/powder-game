@@ -5,18 +5,33 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "cross-env NODE_ENV=development parcel app/app.js -d public/dist/ --public-url '/js/' --cache-dir .cache/",
-    "build": "cross-env NODE_ENV=development parcel build app/app.js -d public/dist/ --cache-dir .cache/",
+    "watch": "cross-env NODE_ENV=development parcel app/app.js -d public/dist/ --public-url '/js/' --cache-dir .cache/ --no-cache",
+    "build": "cross-env NODE_ENV=development parcel build app/app.js -d public/dist/ --cache-dir .cache/ --no-cache",
     "nodemon": "cross-env NODE_ENV=development nodemon -e js,css,html,scss,pug,htm -i app/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "append-query": "^2.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
+    "mongodb": "^3.1.10",
+    "mongoose": "^5.4.4",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pug": "^2.0.3",
     "query-string": "^6.2.0",
-    "reload": "^2.4.0"
+    "reload": "^2.4.0",
+    "req-flash": "0.0.3",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^9.4.3",

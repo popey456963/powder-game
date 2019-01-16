@@ -22,7 +22,7 @@ Authors are listed in AUTHORS.MD.
 - autoprefixer 
 
 ## Desired Features
-- [ ] Explosions
+- [ ] Explosions 
 - [ ] WebGL
 - [ ] Licence 
 - [ ] UI
