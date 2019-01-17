@@ -24,7 +24,6 @@ Authors are listed in AUTHORS.MD.
 ## Desired Features
 - [ ] Explosions 
 - [ ] WebGL
-- [ ] Licence 
 - [ ] UI
 - [ ] Query format 
 - [ ] Save/Load function
