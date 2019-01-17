@@ -32,4 +32,6 @@ The licence for this project is the Mozilla Public License Version 2.0. It is in
 - [ ] Save/Load function
 - [ ] User system 
 - [ ] Fire 
+- [ ] Add serve-favicon 
+- [ ] Add app.locals.pretty = true  for development
 
