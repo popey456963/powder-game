@@ -6,7 +6,8 @@ import "../styles/css/style.scss"
 const Game = require('./modules/Game')
 const Utils = require('./modules/Utils')
 
-const game = new Game(Utils.ids.canvas)
+window.Debug = require('./modules/Debug')
+window.game = new Game(Utils.ids.canvas)
 game.start()
 
 document.getElementById(Utils.ids.start).onclick = function() { game.start() }

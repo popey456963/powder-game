@@ -1,0 +1,40 @@
+extends ../templates/layout
+
+block content
+  .container
+
+      form(action='/login', method='post')
+        h3 Login
+
+        - console.log(success, error)
+        if success.length
+          blockquote
+            em= success
+        if error.length
+          blockquote
+            em= error
+
+        fieldset
+          input(type='hidden', name='goto', value=req.query.goto)
+
+          label(for='username') Username
+          input(type='text', name='username', placeholder='minimal_design' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
+
+          label(for='password') Password
+          input(type='password', name='password')#password
+
+          input(type='submit', value='login').button-outline
+
+      form(action='/register',  method='post')
+        h3 Register
+
+        fieldset
+          input(type='hidden', name='goto', value=req.query.goto)
+
+          label(for='username') Username
+          input(type='text', name='username', placeholder='minimal_design' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
+
+          label(for='password') Password
+          input(type='password', name='password')#password
+
+          input(type='submit', value='register').button-outline
