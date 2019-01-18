@@ -81,3 +81,6 @@ typings/
 # Ignore the 'compiled' code 
 public/dist/
 
+# Ignore sublime projects 
+.sublime/
+

@@ -9,6 +9,9 @@ The server file to run is index.js. First of all, the JavaScript and CSS needs t
 ## Authors
 Authors are listed in AUTHORS.MD. 
 
+## Licence
+The licence for this project is the Mozilla Public License Version 2.0. It is in the LICENSE file. 
+
 ## Libraries Used
 - query-string
 - jQuery
@@ -22,9 +25,8 @@ Authors are listed in AUTHORS.MD.
 - autoprefixer 
 
 ## Desired Features
-- [ ] Explosions 
+- [ ] Explosions
 - [ ] WebGL
-- [ ] Licence 
 - [ ] UI
 - [ ] Query format 
 - [ ] Save/Load function
