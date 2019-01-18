@@ -7,10 +7,11 @@ class Explosive extends Block {
 
         this.type = Utils.molecules.Explosive
         //this.doExplosion = options.doExplosion
-        this.doExplosion = true
+        this.doExplosion = false
         this.radius = 8
         this.render = 0xFFBBBBBB
         this.resistance = 0.95
+        this.combustChance = 0.3
     }
 
     tick() {

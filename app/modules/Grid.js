@@ -50,6 +50,10 @@ class Grid {
         this.setMolecule(new Molecule.Empty({ pos: position }), force)
     }
 
+    setFire(position, force = false) {
+        this.setMolecule(new Molecule.Fire({ pos: position }), force)
+    }
+
     drawLine(Molecule, start, end, force = false) {
         if (typeof start === 'number') start = Coords.toXY(start)
         if (typeof end === 'number') end = Coords.toXY(end)

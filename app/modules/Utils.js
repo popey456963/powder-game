@@ -30,6 +30,8 @@ module.exports = {
         Block: 100,
         Concrete: 101,
         Indestructible: 102,
+        Wax: 103, 
+        Spout: 104,
         Powder: 200,
         Sand: 201,
         Snow: 202, 
@@ -39,7 +41,8 @@ module.exports = {
         Liquid: 300,
         Oil: 301, 
         Water: 302,
-        Explosive: 400
+        Explosive: 400,
+        Fire: 500
     },
     queryNames: {
         xSize: 'x', 
