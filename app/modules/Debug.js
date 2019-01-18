@@ -16,7 +16,6 @@ class Debug {
             count++
 
             if (count > 100) {
-                if (count === 101) console.log('And more...')
                 return
             }
 
@@ -30,7 +29,7 @@ class Debug {
                     colours.push('color: grey;')
                     
                     if (typeof value === 'number') {
-                        colours.push('color: cyan;')
+                        colours.push('color: aquamarine;')
                         colours.push('')
                         return `%c${key}%c=%c${value}%c`
                     } else if (typeof value === 'boolean') {
@@ -47,6 +46,8 @@ class Debug {
 
             console.log(`[x=${x}, y=${y}] %c${molecule.constructor.name} ${keys}`, `font-weight: bold;`, ...colours)
         })
+
+        if (count > 100) { console.log(`And %c${count - 100}%cmore molecules...`,  'color: aquamarine;') }
     }
 }
 
