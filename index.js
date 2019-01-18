@@ -5,9 +5,11 @@ const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const flash = require('express-flash')
 const mongoose = require('mongoose')
+const favicon = require('serve-favicon')
 const express = require('express')
 const morgan = require('morgan')
 const reload = require('reload')
+const path = require('path')
 
 const Passport = require('./modules/Passport')
 
@@ -19,6 +21,7 @@ const Passport = require('./modules/Passport')
     const db = (await MongoClient.connect('mongodb://localhost:27017/', { useNewUrlParser: true })).db('powder_game')
     mongoose.connect('mongodb://localhost:27017/powder_game', { useNewUrlParser: true })
 
+    app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon', 'faviconSmall.ico')))
     app.set('view engine', 'pug')
     app.set('views', 'renders/views')
     app.use(express.static('public'))
@@ -42,6 +45,7 @@ const Passport = require('./modules/Passport')
         })
         res.locals.req = req
         res.locals.development = process.env.NODE_ENV === 'development'
+        app.locals.pretty = process.env.NODE_ENV === 'development'
         res.locals.path = req.path
         next()
     })
