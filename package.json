@@ -9,7 +9,12 @@
     "build": "cross-env NODE_ENV=development parcel build app/app.js -d public/dist/ --cache-dir .cache/ --no-cache",
     "nodemon": "cross-env NODE_ENV=development nodemon -e js,css,html,scss,pug,htm -i app/"
   },
-  "keywords": ["node", "powder", "game", "web"],
+  "keywords": [
+    "node",
+    "powder",
+    "game",
+    "web"
+  ],
   "homepage": "https://github.com/popey456963/powder-game",
   "author": "aappleton8, Codefined",
   "license": "MPL-2.0",
@@ -23,8 +28,8 @@
     "express": "^4.16.4",
     "express-flash": "0.0.2",
     "express-session": "^1.15.6",
-    "mongodb": "^3.1.10",
-    "mongoose": "^5.4.4",
+    "mongodb": "^3.1.12",
+    "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",

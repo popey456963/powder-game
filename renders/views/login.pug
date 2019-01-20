@@ -18,12 +18,12 @@ block content
           input(type='hidden', name='goto', value=req.query.goto)
 
           label(for='username') Username
-          input(type='text', name='username', placeholder='minimal_design' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
+          input(type='text', name='username', placeholder='Username' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
 
           label(for='password') Password
-          input(type='password', name='password')#password
+          input(type='password', name='password', placeholder='Password')#password
 
-          input(type='submit', value='login').button-outline
+          input(type='submit', value='Login').button-outline
 
       form(action='/register',  method='post')
         h3 Register
@@ -32,9 +32,9 @@ block content
           input(type='hidden', name='goto', value=req.query.goto)
 
           label(for='username') Username
-          input(type='text', name='username', placeholder='minimal_design' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
+          input(type='text', name='username', placeholder='Username' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
 
           label(for='password') Password
-          input(type='password', name='password')#password
+          input(type='password', name='password', placeholder='Password')#password
 
-          input(type='submit', value='register').button-outline
+          input(type='submit', value='Register').button-outline
