@@ -84,3 +84,6 @@ public/dist/
 # Ignore sublime projects 
 .sublime/
 
+# Ignore mongodb 
+data/
+
