@@ -31,7 +31,10 @@ class Game {
         this.sizes = this.calculateSizes()
         this.tick = false
         this.running = false
-        this.sizeOffset = 100
+        this.sizeOffset = {
+            width: 100, 
+            height: 100
+        }
         this.getGenerateables(this.generateableIds)
 
         // Instantiate and fill the grid 
@@ -187,6 +190,15 @@ class Game {
         }
     }
 
+    // Set the width and height offsets 
+    setWidthOffset(offset) {
+        this.sizeOffset.width = offset
+    }
+
+    setHeightOffset(offset) {
+        this.sizeOffset.height = offset
+    }
+
     // Calculate and set the canvas size 
     calculateSizes() {
         let rect = document.getElementById(Utils.ids.innerWrapper).getBoundingClientRect()
@@ -201,8 +213,8 @@ class Game {
     }
 
     resizeCanvas(sizes) {
-        const widthRatio = (sizes.innerWidth - this.sizeOffset) / Globals.width.x
-        const heightRatio = (sizes.height - sizes.y - this.sizeOffset) / Globals.width.y
+        const widthRatio = (sizes.innerWidth - this.sizeOffset.width) / Globals.width.x
+        const heightRatio = (sizes.height - this.sizeOffset.height) / Globals.width.y
         if (development) {
             console.log(String(widthRatio) + " || " + String(heightRatio))
         }

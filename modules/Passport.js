@@ -12,6 +12,7 @@ class Passport {
     constructor() {
         this.router = express()
 
+        /*
         this.router.use((req, res, next) => {
             Object.assign(res.locals, {
                 success: req.flash('success'),
@@ -19,6 +20,7 @@ class Passport {
             })
             next()
         })
+        */
 
         this.router.set('view engine', 'pug')
         this.router.set('views', [__dirname + '/../renders/views/'])

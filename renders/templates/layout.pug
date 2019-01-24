@@ -20,15 +20,24 @@ html
                 hr
             
             nav#nav
+                #user
+                    p You are #{req.user ? 'logged in' : 'logged out'}
+                #status
+                    if development
+                        p Development
+                    else
+                        p Release
                 #navigation
                     unless (path == "/")
-                        a(href='/', target='_blank') Game
+                        a(href='/') Game
                     unless (path == "/about")
-                        a(href='/about', target='_blank') About
+                        a(href='/about') About
                     unless (path == "/particles")
-                        a(href='/particles', target='_blank') Particles
+                        a(href='/particles') Particles
                     unless (path == "/login")
-                        a(href='/login', target='_blank') Login / Register
+                        a(href='/login') Login / Register
+                    unless (path == "/gallery")
+                        a(href='/gallery') Gallery
                     a(href='https://github.com/popey456963/powder-game/', target='_blank') Github
 
             main#main
@@ -59,6 +68,6 @@ html
             footer#footer
                 hr
                 p The falling sand game is by aappleton8 and Codefined. 
-                p The falling sand game is copyright (c) aappletonu and Codefined, 2018 - 2019. 
+                p The falling sand game is copyright (c) aappleton8 and Codefined, 2018 - 2019. The licence is available #[a(href='https://github.com/popey456963/powder-game/blob/master/LICENSE', target='_blank') here] on Github
                 p Thank you for visiting. 
                 block footer

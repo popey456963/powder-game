@@ -2,6 +2,7 @@
 import "babel-polyfill"
 import "query-string"
 import "../styles/css/style.scss"
+import "../styles/css/game.scss"
 
 const Game = require('./modules/Game')
 const Utils = require('./modules/Utils')

@@ -44,6 +44,11 @@ nav {
 	top: 5px; 
 }
 
+nav #user {
+	padding: 5px; 
+	font-size: 1em; 
+}
+
 nav a {
 	width: 100%; 
 	display: block; 
@@ -74,6 +79,26 @@ main li {
 	list-style-position: inside; 
 }
 
+main .messages span {
+	display: block;
+}
+
+main .successes {
+	background-color: #55FF55; 
+}
+
+main .errors {
+	background-color: #FF5555; 
+}
+
+main .informational {
+	background-color: #5555FF; 
+}
+
+main .loginforms article {
+	margin: 10px; 
+}
+
 // ===== Styling for the 'scripts' component ===== 
 div#scripts {
 	clear: both; 
@@ -97,25 +122,13 @@ footer p {
 .flex {
 	display: flex;
 	flex-wrap: wrap; 
+	justify-content: center; 
 }
 
 .col {
 	margin: 10px;
 	border: 1px solid #000000; 
 	padding: 5px; 
-}
-
-#game {
-    border: 2px solid #33BB33; 
-
-    // Clean rendering 
-    image-rendering: crisp-edges;
-    -ms-interpolation-mode: nearest-neighbor;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -o-crisp-edges;
-    image-rendering: pixelated;
 }
 
 // ===== Adjustments for different screen widths ===== 

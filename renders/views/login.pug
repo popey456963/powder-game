@@ -1,40 +1,60 @@
 extends ../templates/layout
 
+block header
+  | Login/Register
+
 block content
-  .container
+  #innerWrapper.loginforms
+    article#messagesContainer
+      //- console.log(messages)
+      //- console.log(messages.Success, messages.Error)
 
-      form(action='/login', method='post')
+      if (messages.Success) 
+        - successMessages = []
+        .messages.successes 
+          for val, index in messages.Success
+            if (successMessages.indexOf(val) == -1)
+              span.success= val
+              - successMessages.push(val)
+      if messages.Error
+        - errorMessages = []
+        .messages.errors 
+          for val, index in messages.Error
+            if (errorMessages.indexOf(val) == -1)
+              span.error= val
+            - errorMessages.push(val)
+      if messages.Information
+        - informationMessages = []
+        .messages.informational 
+          for val, index in messages.Information
+            if (informationMessages.indexOf(val) == -1)
+              span.information= val
+            - informationMessages.push(val)
+
+    article#loginForm
+      form(action='/login', method='post')#login
         h3 Login
-
-        - console.log(success, error)
-        if success.length
-          blockquote
-            em= success
-        if error.length
-          blockquote
-            em= error
-
         fieldset
           input(type='hidden', name='goto', value=req.query.goto)
 
-          label(for='username') Username
-          input(type='text', name='username', placeholder='Username' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
+          label(for='lusername') Username
+          input(type='text', name='username', placeholder='Username' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#lusername
 
-          label(for='password') Password
-          input(type='password', name='password', placeholder='Password')#password
+          label(for='lpassword') Password
+          input(type='password', name='password', placeholder='Password')#lpassword
 
           input(type='submit', value='Login').button-outline
 
-      form(action='/register',  method='post')
+    article#registerForm
+      form(action='/register',  method='post')#register
         h3 Register
-
         fieldset
           input(type='hidden', name='goto', value=req.query.goto)
 
-          label(for='username') Username
-          input(type='text', name='username', placeholder='Username' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#username
+          label(for='rusername') Username
+          input(type='text', name='username', placeholder='Username' autocorrect='off', spellcheck='false', autocapitalize='off', autofocus='true')#rusername
 
-          label(for='password') Password
-          input(type='password', name='password', placeholder='Password')#password
+          label(for='rpassword') Password
+          input(type='password', name='password', placeholder='Password')#rpassword
 
           input(type='submit', value='Register').button-outline

@@ -39,10 +39,13 @@ const Passport = require('./modules/Passport')
     }))
     app.use(flash())
     app.use((req, res, next) => {
-        Object.assign(res.locals, {
+        /*Object.assign(res.locals, {
             success: req.flash('success'),
             error: req.flash('error')
-        })
+        })*/
+        req.flash("Success", "Success message")
+        req.flash("Error", "Error message")
+        req.flash("Information", "Informational message")
         res.locals.req = req
         res.locals.development = process.env.NODE_ENV === 'development'
         app.locals.pretty = process.env.NODE_ENV === 'development'
@@ -55,6 +58,7 @@ const Passport = require('./modules/Passport')
     app.get('/', (req, res) => res.render('index'))
     app.get('/about', (req, res) => res.render('about'))
     app.get('/particles', (req, res) => res.render('particles'))
+    app.get('/gallery', (req, res) => res.render('gallery'))
 
     reload(app)
 
